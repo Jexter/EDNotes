@@ -1,0 +1,9 @@
+﻿
+* Add illegal status on commodities
+* Make sure user can’t enter system duplicates (names)
+
+* Maybe put loading operations in tasks?
+* Add dynamic search to systems and stations
+* Make sure empty lists aren't ugly
+* Have proper titles on each page
+* Check if notifyDataSetChanged() is called unnecessarily

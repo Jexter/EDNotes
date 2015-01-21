@@ -1,0 +1,29 @@
+<resources>
+
+
+
+    <style name="text_big">
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="text_medium">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="text_small">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="text_tiny">
+        <item name="android:textSize">8sp</item>
+    </style>
+
+    <!--
+        <style name="navdrawer_main_title_style">
+            <item name="android:textColor">@color/navdrawer_main_title</item>
+            <item name="android:textSize">14dp</item>
+            <item name="android:shadowRadius">1</item>
+            <item name="android:shadowColor">#000000</item>
+        </style>
+    -->
+</resources>
