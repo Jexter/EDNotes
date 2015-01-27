@@ -9,10 +9,12 @@ import java.util.ArrayList;
 public class CommodityCategory  implements Serializable {
     private ArrayList<Commodity> commodities;
     private String name;
+    private int id;
 
-    public CommodityCategory(ArrayList<Commodity> commodities, String name) {
+    public CommodityCategory(ArrayList<Commodity> commodities, String name, int id) {
         this.commodities = commodities;
         this.name = name;
+        this.id = id;
     }
 
     public ArrayList<Commodity> getCommodities() {
@@ -25,6 +27,10 @@ public class CommodityCategory  implements Serializable {
 
     public String getName() {
         return name;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public void setName(String name) {

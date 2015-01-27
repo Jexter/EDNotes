@@ -1,9 +1,20 @@
-﻿
+﻿* Remove + from commodities screen
+* Make matchmaking screen
+* Input type validation on systems, stations and commodity prices
 * Add illegal status on commodities
 * Make sure user can’t enter system duplicates (names)
 
-* Maybe put loading operations in tasks?
-* Add dynamic search to systems and stations
-* Make sure empty lists aren't ugly
-* Have proper titles on each page
+* Put loading operations in tasks :)
 * Check if notifyDataSetChanged() is called unnecessarily
+* Make sure empty lists aren't ugly
+
+
+---
+
+DONE
+* Have proper titles on each page
+* Generate proper market
+
+
+
+

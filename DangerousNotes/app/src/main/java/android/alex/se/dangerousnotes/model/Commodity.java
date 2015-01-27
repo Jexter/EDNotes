@@ -8,12 +8,12 @@ import java.io.Serializable;
 public class Commodity  implements Serializable {
     private String name;
     private int price;
-    private Availability supply;
+    private Availability availability;
+    private int id;
 
-    public Commodity(String name, int price, Availability supply) {
+    public Commodity(String name, int id) {
         this.name = name;
-        this.price = price;
-        this.supply = supply;
+        this.id = id;
     }
 
     public String getName() {
@@ -32,12 +32,15 @@ public class Commodity  implements Serializable {
         this.price = price;
     }
 
-    public Availability getSupply() {
-        return supply;
+    public Availability getAvailability() {
+        return availability;
     }
 
-    public void setSupply(Availability supply) {
-        this.supply = supply;
+    public void setAvailability(Availability availability) {
+        this.availability = availability;
     }
 
+    public int getId() {
+        return id;
+    }
 }

@@ -3,7 +3,7 @@ package android.alex.se.dangerousnotes.model;
 import java.io.Serializable;
 
 public enum Availability  implements Serializable {
- None, Low, Med, High;
+ SUPPLY, DEMAND;
 
     /*
  @Override public String toString() {

@@ -3,6 +3,7 @@ package android.alex.se.dangerousnotes.adapters;
 
 import android.alex.se.dangerousnotes.R;
 import android.alex.se.dangerousnotes.common.Utils;
+import android.alex.se.dangerousnotes.model.Availability;
 import android.alex.se.dangerousnotes.model.Commodity;
 import android.alex.se.dangerousnotes.model.CommodityCategory;
 import android.alex.se.dangerousnotes.model.Station;
@@ -13,6 +14,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Typeface;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -143,13 +145,20 @@ public class CommoditiesListAdapter extends BaseAdapter {
                     //currentHeaderPositionIndex = Utils.contains(positionsForHeaders, position);
 
                     final Commodity commodity = station.getCategories().get(currentHeaderPositionIndex).getCommodities().get(position - positionsForHeaders[currentHeaderPositionIndex] - 1);
-                    String priceString = "NOT SET";
+                    String priceString = "";
 
                     if(commodity.getPrice() != 0) {
                         priceString = String.valueOf(commodity.getPrice()) + " CR";
                     }
 
+                    String supplyString = "";
+
+                    if(commodity.getAvailability() != null) {
+                        supplyString = String.valueOf(commodity.getAvailability()) + "";
+                    }
+
                     viewHolder.price_textview.setText(priceString);
+                    viewHolder.supply_textview.setText(supplyString);
                     viewHolder.commodity_name_textview.setText(commodity.getName());
 
 
@@ -167,7 +176,7 @@ public class CommoditiesListAdapter extends BaseAdapter {
 
                                 final EditText userInput = (EditText) promptsView.findViewById(R.id.price_edittext);
                                 //supply_button = (ToggleButton) promptsView.findViewById(R.id.supply_button);
-                                Switch demand_button = (Switch) promptsView.findViewById(R.id.demand_button);
+                                final Switch demand_button = (Switch) promptsView.findViewById(R.id.demand_button);
                                 TextView price_title_textview = (TextView) promptsView.findViewById(R.id.price_title_textview);
                                 TextView demand_title_textview = (TextView) promptsView.findViewById(R.id.demand_title_textview);
 
@@ -176,6 +185,7 @@ public class CommoditiesListAdapter extends BaseAdapter {
                                 //supply_button.setTypeface(font);
                                 demand_button.setTypeface(font);
                                 userInput.setTypeface(font);
+                                userInput.setRawInputType(InputType.TYPE_CLASS_NUMBER);
                                 price_title_textview.setTypeface(font);
                                 demand_title_textview.setTypeface(font);
 
@@ -189,6 +199,7 @@ public class CommoditiesListAdapter extends BaseAdapter {
                                                         // get user input and set it to result
                                                         // edit text
                                                         commodity.setPrice(Integer.valueOf(userInput.getText().toString()));
+                                                        commodity.setAvailability(demand_button.isChecked() ? Availability.SUPPLY : Availability.DEMAND);
                                                         Storage.saveSystem(system);
                                                         notifyDataSetChanged();
                                                     }
