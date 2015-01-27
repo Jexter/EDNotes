@@ -3,7 +3,9 @@ package android.alex.se.dangerousnotes.adapters;
 
 import android.alex.se.dangerousnotes.R;
 import android.alex.se.dangerousnotes.common.Utils;
-import android.alex.se.dangerousnotes.model.*;
+import android.alex.se.dangerousnotes.model.Commodity;
+import android.alex.se.dangerousnotes.model.CommodityCategory;
+import android.alex.se.dangerousnotes.model.Station;
 import android.alex.se.dangerousnotes.model.System;
 import android.alex.se.dangerousnotes.persistence.Storage;
 import android.app.Activity;
@@ -17,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 
 
@@ -163,8 +166,21 @@ public class CommoditiesListAdapter extends BaseAdapter {
                                 alertDialogBuilder.setView(promptsView);
 
                                 final EditText userInput = (EditText) promptsView.findViewById(R.id.price_edittext);
+                                //supply_button = (ToggleButton) promptsView.findViewById(R.id.supply_button);
+                                Switch demand_button = (Switch) promptsView.findViewById(R.id.demand_button);
+                                TextView price_title_textview = (TextView) promptsView.findViewById(R.id.price_title_textview);
+                                TextView demand_title_textview = (TextView) promptsView.findViewById(R.id.demand_title_textview);
 
-                                // set dialog message
+
+                                Typeface font = Typeface.createFromAsset(activity.getAssets(), "fonts/eurostile.TTF");
+                                //supply_button.setTypeface(font);
+                                demand_button.setTypeface(font);
+                                userInput.setTypeface(font);
+                                price_title_textview.setTypeface(font);
+                                demand_title_textview.setTypeface(font);
+
+
+                            // set dialog message
                                 alertDialogBuilder
                                         .setCancelable(false)
                                         .setPositiveButton("OK",
@@ -177,9 +193,9 @@ public class CommoditiesListAdapter extends BaseAdapter {
                                                         notifyDataSetChanged();
                                                     }
                                                 })
-                                        .setNegativeButton("Cancel",
+                                        .setNegativeButton("CANCEL",
                                                 new DialogInterface.OnClickListener() {
-                                                    public void onClick(DialogInterface dialog,int id) {
+                                                    public void onClick(DialogInterface dialog, int id) {
                                                         dialog.cancel();
                                                     }
                                                 });
@@ -187,8 +203,12 @@ public class CommoditiesListAdapter extends BaseAdapter {
                                 // create alert dialog
                                 AlertDialog alertDialog = alertDialogBuilder.create();
 
+
+
                                 // show it
                                 alertDialog.show();
+                                alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTypeface(font);
+                                alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTypeface(font);
 
                             }
 
@@ -211,8 +231,7 @@ public class CommoditiesListAdapter extends BaseAdapter {
     }
 
 	private static class ViewHolder {
-		TextView commodity_name_textview, price_textview, supply_textview;
-        TextView category_name_textview;
+		TextView commodity_name_textview, price_textview, supply_textview, category_name_textview;
 	}
 	
 	public void setStationAndSystem(Station station, System system) {

@@ -13,36 +13,48 @@
         android:orientation="horizontal"
         >
 
-        <Button
-            android:id="@+id/supply_button"
+        <TextView
+            android:id="@+id/demand_title_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Supply"/>
+            android:text="SUPPLY/DEMAND:"
+            style="@style/text_medium" />
 
-        <Button
+        <Switch
             android:id="@+id/demand_button"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Demand"/>
+            android:textOn="SUPPLY"
+            android:textOff="DEMAND"
+            style="@style/text_medium"/>
 
 
     </LinearLayout>
 
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/price_container"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="horizontal"
+        >
         <TextView
             android:id="@+id/price_title_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Price: "
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:text="PRICE:"
+            style="@style/text_medium"/>
 
         <EditText
             android:id="@+id/price_edittext"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            style="@style/text_medium">
 
             <requestFocus />
 
         </EditText>
-
+    </LinearLayout>
 
 </LinearLayout>
