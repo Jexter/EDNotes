@@ -136,7 +136,7 @@ public class StationListFragment extends Fragment {
                                         loadedSystem = Storage.loadSystem(systemName);
                                         adapter.setSystem(loadedSystem);
                                         adapter.notifyDataSetChanged();
-                                        dialog.cancel();
+                                        //dialog.cancel();
                                     }
                                     else {
                                         Log.d("Dialog for new systems says:", "input name invalid");

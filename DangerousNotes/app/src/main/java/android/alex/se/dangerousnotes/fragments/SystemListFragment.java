@@ -1,17 +1,16 @@
 package android.alex.se.dangerousnotes.fragments;
 
+import android.alex.se.dangerousnotes.R;
 import android.alex.se.dangerousnotes.adapters.SystemListAdapter;
 import android.alex.se.dangerousnotes.common.Utils;
 import android.alex.se.dangerousnotes.model.MiniSystem;
 import android.alex.se.dangerousnotes.persistence.Storage;
 import android.app.Activity;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -19,11 +18,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
-import android.alex.se.dangerousnotes.R;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -166,7 +162,7 @@ public class SystemListFragment extends Fragment {
 
                                         adapter.setSystems(miniSystems);
                                         adapter.notifyDataSetChanged();
-                                        dialog.cancel();
+                                        //dialog.cancel();
                                     }
                                     else {
                                         Log.d("Dialog for new systems says:", "input name invalid");

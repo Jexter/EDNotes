@@ -112,20 +112,29 @@ public class Utils {
     }
 
     public static boolean validateSystemName(String systemName) {
-        boolean isValid = true;
-
-
-
-        return isValid;
+        return systemName.matches(AppConstants.SYSTEM_NAME_REGEX);
     }
 
     public static boolean validateStationName(String stationName) {
-        boolean isValid = true;
-
-
-
-        return isValid;
+        return stationName.matches(AppConstants.STATION_NAME_REGEX);
     }
+
+
+    public static boolean validateCommodityPrice(String price) {
+
+        boolean regexMatches = price.matches(AppConstants.COMMODITY_PRICE_REGEX);
+
+        if(!regexMatches) {
+            return false;
+        }
+        else {
+            return Integer.valueOf(price) < AppConstants.MAX_COMMODITY_PRICE ? true : false;
+        }
+
+    }
+
+
+
 }
 
 

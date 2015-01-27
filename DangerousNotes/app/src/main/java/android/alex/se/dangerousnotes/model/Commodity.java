@@ -1,6 +1,7 @@
 package android.alex.se.dangerousnotes.model;
 
 import java.io.Serializable;
+import java.util.HashMap;
 
 /**
  * Created by atkin_000 on 2014-12-18.
@@ -10,10 +11,21 @@ public class Commodity  implements Serializable {
     private int price;
     private Availability availability;
     private int id;
+    private String notes;
+    private HashMap<String, Object> misc;
 
     public Commodity(String name, int id) {
         this.name = name;
         this.id = id;
+        misc = new HashMap<String, Object>();
+    }
+
+    public HashMap<String, Object> getMisc() {
+        return misc;
+    }
+
+    public void setMisc(HashMap<String, Object> misc) {
+        this.misc = misc;
     }
 
     public String getName() {
@@ -42,5 +54,13 @@ public class Commodity  implements Serializable {
 
     public int getId() {
         return id;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 }

@@ -196,12 +196,17 @@ public class CommoditiesListAdapter extends BaseAdapter {
                                         .setPositiveButton("OK",
                                                 new DialogInterface.OnClickListener() {
                                                     public void onClick(DialogInterface dialog,int id) {
-                                                        // get user input and set it to result
-                                                        // edit text
-                                                        commodity.setPrice(Integer.valueOf(userInput.getText().toString()));
-                                                        commodity.setAvailability(demand_button.isChecked() ? Availability.SUPPLY : Availability.DEMAND);
-                                                        Storage.saveSystem(system);
-                                                        notifyDataSetChanged();
+                                                        String comPrice = userInput.getText().toString();
+                                                        boolean isValid = Utils.validateCommodityPrice(comPrice);
+
+                                                        if(isValid) {
+                                                            commodity.setPrice(Integer.valueOf(comPrice));
+                                                            commodity.setAvailability(demand_button.isChecked() ? Availability.SUPPLY : Availability.DEMAND);
+                                                            Storage.saveSystem(system);
+                                                            notifyDataSetChanged();
+                                                        }
+
+
                                                     }
                                                 })
                                         .setNegativeButton("CANCEL",
