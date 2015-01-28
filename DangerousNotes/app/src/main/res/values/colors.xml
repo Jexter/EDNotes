@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<color name="color_one">#FFFFFF</color>
-    <color name="color_two">#000000</color>
-    <color name="color_three">#777777</color>
-    <color name="color_four">#FF0000</color>
+	<color name="color_one">#FFEBEBEB</color>
+    <color name="color_two">#FF191718</color>
+    <color name="color_three">#FF281B19</color>
+    <color name="color_four">#FFF06810</color>
 
 
 </resources>

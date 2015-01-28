@@ -5,7 +5,7 @@
 	    android:layout_height="wrap_content"
 	    android:orientation="horizontal"
         android:layout_margin="@dimen/item_outer_margin"
-        android:background="@color/color_two"
+        android:background="@color/color_three"
     >
 
     <LinearLayout
@@ -14,12 +14,13 @@
         android:orientation="horizontal"
         android:layout_width="0dp"
         android:layout_weight="3"
+        android:layout_gravity="center_vertical"
         >
         <TextView
             android:id="@+id/commodity_name_textview"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            style="@style/text_small"
+            style="@style/text_medium"
             android:textColor="@color/color_four"
             android:gravity="left"
             android:padding="@dimen/item_inner_padding"
@@ -27,19 +28,18 @@
     </LinearLayout>
     <LinearLayout
         android:id="@+id/availability_container"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_width="0dp"
-        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:gravity="center_vertical"
         >
         <TextView
             android:id="@+id/supply_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/text_medium"
+            style="@style/text_tiny"
             android:textColor="@color/color_one"
-            android:gravity="center"
-            android:padding="@dimen/item_inner_padding"
+            android:layout_marginRight="4dp"
             />
         <TextView
             android:id="@+id/price_textview"
@@ -47,8 +47,7 @@
             android:layout_height="wrap_content"
             style="@style/text_small"
             android:textColor="@color/color_one"
-            android:gravity="left"
-            android:padding="@dimen/item_inner_padding"
+            android:layout_marginRight="4dp"
             />
     </LinearLayout>
 </LinearLayout>

@@ -8,8 +8,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Spannable;
 import android.text.SpannableString;
-import android.view.Menu;
-import android.view.MenuItem;
 
 
 public class CommoditiesListActivity extends ActionBarActivity {
@@ -34,7 +32,7 @@ public class CommoditiesListActivity extends ActionBarActivity {
 //        actionBar.setTitle(mTitle);
     }
 
-
+/*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -56,5 +54,5 @@ public class CommoditiesListActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
+*/
 }

@@ -5,7 +5,8 @@
 	    android:layout_height="wrap_content"
 	    android:orientation="vertical"
         android:layout_margin="@dimen/item_outer_margin"
-        android:background="@color/color_two"
+        android:background="@color/color_three"
+        android:gravity="center_vertical"
     >
 
         <LinearLayout
@@ -19,11 +20,12 @@
                 android:id="@+id/system_name_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/text_medium"
+                style="@style/text_big"
                 android:textColor="@color/color_four"
                 android:gravity="left"
             />
         </LinearLayout>
+    <!--
         <LinearLayout
                 android:id="@+id/other_info_container"
                 android:layout_width="match_parent"
@@ -49,4 +51,5 @@
                 android:gravity="right"
             />
         </LinearLayout>
+        -->
 	</LinearLayout>

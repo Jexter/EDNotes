@@ -8,6 +8,7 @@ import android.alex.se.dangerousnotes.persistence.Storage;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -20,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -136,7 +138,7 @@ public class SystemListFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.add_new_system) {
             LayoutInflater li = LayoutInflater.from(getActivity());
-            View promptsView = li.inflate(R.layout.commodity_info_prompt, null);
+            View promptsView = li.inflate(R.layout.new_system_prompt, null);
 
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
 
@@ -144,6 +146,13 @@ public class SystemListFragment extends Fragment {
             alertDialogBuilder.setView(promptsView);
 
             final EditText userInput = (EditText) promptsView.findViewById(R.id.price_edittext);
+            TextView new_system_popup_title_textview = (TextView) promptsView.findViewById(R.id.new_system_popup_title_textview);
+            TextView new_system_title_textview = (TextView) promptsView.findViewById(R.id.new_system_title_textview);
+
+            Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "fonts/eurostile.TTF");
+            userInput.setTypeface(font);
+            new_system_popup_title_textview.setTypeface(font);
+            new_system_title_textview.setTypeface(font);
 
             // set dialog message
             alertDialogBuilder
@@ -162,14 +171,13 @@ public class SystemListFragment extends Fragment {
 
                                         adapter.setSystems(miniSystems);
                                         adapter.notifyDataSetChanged();
-                                        //dialog.cancel();
                                     }
                                     else {
                                         Log.d("Dialog for new systems says:", "input name invalid");
                                     }
                                 }
                             })
-                    .setNegativeButton("Cancel",
+                    .setNegativeButton("CANCEL",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     dialog.cancel();
@@ -181,6 +189,8 @@ public class SystemListFragment extends Fragment {
 
             // show it
             alertDialog.show();
+            alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTypeface(font);
+            alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTypeface(font);
 
             return true;
         }

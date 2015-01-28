@@ -4,7 +4,6 @@ package android.alex.se.dangerousnotes.adapters;
 import android.alex.se.dangerousnotes.R;
 import android.alex.se.dangerousnotes.activities.StationListActivity;
 import android.alex.se.dangerousnotes.common.AppConstants;
-import android.alex.se.dangerousnotes.common.Utils;
 import android.alex.se.dangerousnotes.model.MiniSystem;
 import android.alex.se.dangerousnotes.persistence.Storage;
 import android.app.Activity;
@@ -88,8 +87,8 @@ public class SystemListAdapter extends BaseAdapter {
 		
 					viewHolder = new ViewHolder();
 					viewHolder.system_name_textview = (TextView) convertView.findViewById(R.id.system_name_textview);
-					viewHolder.station_count_textView = (TextView) convertView.findViewById(R.id.station_count_textview);
-					viewHolder.last_visited_textview = (TextView) convertView.findViewById(R.id.last_visited_textview);
+					//viewHolder.station_count_textView = (TextView) convertView.findViewById(R.id.station_count_textview);
+					//viewHolder.last_visited_textview = (TextView) convertView.findViewById(R.id.last_visited_textview);
 
 					convertView.setTag(viewHolder);
 				}
@@ -100,12 +99,12 @@ public class SystemListAdapter extends BaseAdapter {
 				final MiniSystem miniSystem = miniSystems[position];
 				
 				viewHolder.system_name_textview.setText(miniSystem.getName());
-                viewHolder.last_visited_textview.setText(Utils.getDateAsTimePassed(miniSystem.getLastVisited()));
+                //viewHolder.last_visited_textview.setText(Utils.getDateAsTimePassed(miniSystem.getLastVisited()));
 
                 String stationCountText = "No stations entered here yet";
                 stationCountText = miniSystem.getStationCount() + " stations";
 
-                viewHolder.station_count_textView.setText(stationCountText);
+               // viewHolder.station_count_textView.setText(stationCountText);
 
 
 				convertView.setOnClickListener(new OnClickListener() {
@@ -167,7 +166,7 @@ public class SystemListAdapter extends BaseAdapter {
 	}
 
 	private static class ViewHolder {
-		TextView system_name_textview, station_count_textView, last_visited_textview;
+		TextView system_name_textview;//, station_count_textView;//, last_visited_textview;
 	}
 	
 	public void setSystems(MiniSystem[] miniSystems) {

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/layout_root"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/item_inner_padding"
+
+        >
+
+        <TextView
+            android:id="@+id/new_station_popup_title_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="NEW STATION IN "
+            style="@style/text_big"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            />
+<!--
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/availability_container"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="horizontal"
+        android:gravity="left"
+
+        >
+
+        <TextView
+            android:id="@+id/demand_title_textview"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:text="SELECT:"
+            style="@style/text_medium"
+            android:layout_gravity="center_vertical"
+            android:gravity="left"
+            />
+
+        <Switch
+            android:id="@+id/demand_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textOn="SUPPLY"
+            android:textOff="DEMAND"
+            android:layout_gravity="center_vertical"
+            style="@style/text_small"/>
+
+    </LinearLayout>
+
+-->
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/price_container"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:id="@+id/new_station_title_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="NAME:"
+
+            style="@style/text_medium"/>
+
+        <EditText
+            android:id="@+id/price_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/text_medium">
+
+            <requestFocus />
+
+        </EditText>
+    </LinearLayout>
+
+</LinearLayout>
