@@ -19,7 +19,7 @@ public class Station  implements Serializable {
         this.categories = categories;
         this.name = name;
         lastVisited = new Date();
-        lastVisited.setTime(lastVisited.getTime()-(1000*60*60));
+
         misc = new HashMap<String, Object>();
     }
 

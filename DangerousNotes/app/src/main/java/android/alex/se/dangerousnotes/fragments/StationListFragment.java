@@ -139,7 +139,7 @@ public class StationListFragment extends Fragment {
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     String stationName = userInput.getText().toString();
-                                    boolean isValid = Utils.validateStationName(stationName);
+                                    boolean isValid = Utils.validateStationName(stationName, systemName);
 
                                     if (isValid) {
                                         Storage.createAndSaveNewStationForSystem(systemName, stationName);

@@ -19,10 +19,11 @@
                 android:id="@+id/station_name_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/text_medium"
+                style="@style/text_big"
                 android:textColor="@color/color_four"
                 android:gravity="left"
             />
+            <!--
             <TextView
                 android:id="@+id/last_visited_textview"
                 android:layout_width="wrap_content"
@@ -31,5 +32,6 @@
                 android:textColor="@color/color_one"
                 android:gravity="left"
                 />
+                -->
         </LinearLayout>
 	</LinearLayout>

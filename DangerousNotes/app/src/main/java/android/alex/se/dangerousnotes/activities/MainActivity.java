@@ -1,22 +1,16 @@
 package android.alex.se.dangerousnotes.activities;
 
 import android.alex.se.dangerousnotes.R;
+import android.alex.se.dangerousnotes.common.Utils;
 import android.alex.se.dangerousnotes.fragments.NavigationDrawerFragment;
 import android.alex.se.dangerousnotes.fragments.SystemListFragment;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.EditText;
 
 
 public class MainActivity extends ActionBarActivity
@@ -40,9 +34,13 @@ public class MainActivity extends ActionBarActivity
         mNavigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
 
+
+        getSupportActionBar().setTitle(Utils.getTitleWithFont(this, mTitle));
+
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
     }
+
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
@@ -60,7 +58,7 @@ public class MainActivity extends ActionBarActivity
         ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setTitle(mTitle);
+        actionBar.setTitle(Utils.getTitleWithFont(this, mTitle));
     }
 
     @Override

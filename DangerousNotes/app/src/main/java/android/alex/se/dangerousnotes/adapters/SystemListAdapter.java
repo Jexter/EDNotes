@@ -11,6 +11,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -86,7 +87,9 @@ public class SystemListAdapter extends BaseAdapter {
 					convertView = layoutInflater_issue.inflate(R.layout.system_list_item, null);
 		
 					viewHolder = new ViewHolder();
+                    Typeface font = Typeface.createFromAsset(activity.getAssets(), "fonts/eurostile.TTF");
 					viewHolder.system_name_textview = (TextView) convertView.findViewById(R.id.system_name_textview);
+                    viewHolder.system_name_textview.setTypeface(font);
 					//viewHolder.station_count_textView = (TextView) convertView.findViewById(R.id.station_count_textview);
 					//viewHolder.last_visited_textview = (TextView) convertView.findViewById(R.id.last_visited_textview);
 

@@ -2,7 +2,12 @@ package android.alex.se.dangerousnotes.common;
 
 import android.alex.se.dangerousnotes.model.Commodity;
 import android.alex.se.dangerousnotes.model.CommodityCategory;
+import android.alex.se.dangerousnotes.model.MiniSystem;
 import android.alex.se.dangerousnotes.model.Station;
+import android.alex.se.dangerousnotes.persistence.Storage;
+import android.app.Activity;
+import android.text.Spannable;
+import android.text.SpannableString;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -112,10 +117,40 @@ public class Utils {
     }
 
     public static boolean validateSystemName(String systemName) {
+        ArrayList<MiniSystem> miniSystems = Storage.loadMiniSystems();
+
+        if(miniSystems != null) {
+            for (MiniSystem miniSystem : miniSystems) {
+                if (miniSystem.getName().equals(systemName)) {
+                    return false;
+                }
+            }
+        }
+
         return systemName.matches(AppConstants.SYSTEM_NAME_REGEX);
     }
 
-    public static boolean validateStationName(String stationName) {
+    public static SpannableString getTitleWithFont(Activity context, CharSequence titleText) {
+        SpannableString s = new SpannableString(titleText);
+        TypefaceSpan ts = new TypefaceSpan(context, "eurostile.TTF");
+        s.setSpan(ts, 0, s.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        return s;
+    }
+
+
+    public static boolean validateStationName(String stationName, String systemName) {
+
+        ArrayList<Station> stationsAlreadyInSystem = Storage.loadStationsForSystem(systemName);
+
+        if(stationsAlreadyInSystem != null) {
+            for (Station station : stationsAlreadyInSystem) {
+                if (stationName.equals(station.getName())) {
+                    return false;
+                }
+            }
+        }
+
         return stationName.matches(AppConstants.STATION_NAME_REGEX);
     }
 

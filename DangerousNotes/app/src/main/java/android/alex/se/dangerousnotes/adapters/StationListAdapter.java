@@ -5,7 +5,7 @@ import android.alex.se.dangerousnotes.R;
 import android.alex.se.dangerousnotes.activities.CommoditiesListActivity;
 import android.alex.se.dangerousnotes.common.AppConstants;
 import android.alex.se.dangerousnotes.common.Utils;
-import android.alex.se.dangerousnotes.model.*;
+import android.alex.se.dangerousnotes.model.Station;
 import android.alex.se.dangerousnotes.model.System;
 import android.alex.se.dangerousnotes.persistence.Storage;
 import android.app.Activity;
@@ -13,6 +13,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -87,8 +88,11 @@ public class StationListAdapter extends BaseAdapter {
 					convertView = layoutInflater_issue.inflate(R.layout.station_list_item, null);
 		
 					viewHolder = new ViewHolder();
-					viewHolder.station_name_textview = (TextView) convertView.findViewById(R.id.station_name_textview);
-					viewHolder.last_visited_textview = (TextView) convertView.findViewById(R.id.last_visited_textview);
+  					viewHolder.station_name_textview = (TextView) convertView.findViewById(R.id.station_name_textview);
+                    Typeface font = Typeface.createFromAsset(activity.getAssets(), "fonts/eurostile.TTF");
+                    viewHolder.station_name_textview.setTypeface(font);
+
+                    //viewHolder.last_visited_textview = (TextView) convertView.findViewById(R.id.last_visited_textview);
 
 					convertView.setTag(viewHolder);
 				}
@@ -108,7 +112,7 @@ public class StationListAdapter extends BaseAdapter {
 */
                 viewHolder.station_name_textview.setText(station.getName());
                 String lastVisitedString = Utils.getDateAsTimePassed(station.getLastVisited());
-                viewHolder.last_visited_textview.setText(lastVisitedString);
+                //viewHolder.last_visited_textview.setText(lastVisitedString);
 
 				convertView.setOnClickListener(new OnClickListener() {
                     @Override
@@ -143,7 +147,7 @@ public class StationListAdapter extends BaseAdapter {
                                                 notifyDataSetChanged();
                                             }
                                         })
-                                .setNegativeButton("Cancel",
+                                .setNegativeButton("CANCEL",
                                         new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog,int id) {
                                                 dialog.cancel();
@@ -168,7 +172,7 @@ public class StationListAdapter extends BaseAdapter {
 	}
 
 	private static class ViewHolder {
-		TextView station_name_textview, last_visited_textview;
+		TextView station_name_textview;//, last_visited_textview;
 	}
 	
 	public void setSystem(System system) {
