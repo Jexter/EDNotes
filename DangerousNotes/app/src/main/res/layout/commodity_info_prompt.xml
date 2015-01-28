@@ -4,30 +4,47 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:orientation="vertical"
+        android:padding="@dimen/item_inner_padding"
+
         >
+
+        <TextView
+            android:id="@+id/popup_commodity_name_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            style="@style/text_big"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            />
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/availability_container"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:orientation="horizontal"
+        android:gravity="left"
+
         >
 
         <TextView
             android:id="@+id/demand_title_textview"
-            android:layout_width="wrap_content"
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
-            android:text="SUPPLY/DEMAND:"
-            style="@style/text_medium" />
+            android:text="SELECT:"
+            style="@style/text_medium"
+            android:layout_gravity="center_vertical"
+            android:gravity="left"
+            />
 
         <Switch
             android:id="@+id/demand_button"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textOn="SUPPLY"
             android:textOff="DEMAND"
-            style="@style/text_medium"/>
-
+            android:layout_gravity="center_vertical"
+            style="@style/text_small"/>
 
     </LinearLayout>
 
@@ -41,9 +58,11 @@
         >
         <TextView
             android:id="@+id/price_title_textview"
-            android:layout_width="wrap_content"
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:text="PRICE:"
+            android:gravity="left"
+
             style="@style/text_medium"/>
 
         <EditText

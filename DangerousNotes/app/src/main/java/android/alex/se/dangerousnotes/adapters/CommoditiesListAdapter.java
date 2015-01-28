@@ -175,20 +175,25 @@ public class CommoditiesListAdapter extends BaseAdapter {
                                 alertDialogBuilder.setView(promptsView);
 
                                 final EditText userInput = (EditText) promptsView.findViewById(R.id.price_edittext);
-                                //supply_button = (ToggleButton) promptsView.findViewById(R.id.supply_button);
+                                Switch supply_button = (Switch) promptsView.findViewById(R.id.demand_button);
                                 final Switch demand_button = (Switch) promptsView.findViewById(R.id.demand_button);
                                 TextView price_title_textview = (TextView) promptsView.findViewById(R.id.price_title_textview);
+                                TextView popup_commodity_name_textview = (TextView) promptsView.findViewById(R.id.popup_commodity_name_textview);
                                 TextView demand_title_textview = (TextView) promptsView.findViewById(R.id.demand_title_textview);
 
 
                                 Typeface font = Typeface.createFromAsset(activity.getAssets(), "fonts/eurostile.TTF");
-                                //supply_button.setTypeface(font);
+                                supply_button.setTypeface(font);
                                 demand_button.setTypeface(font);
                                 userInput.setTypeface(font);
                                 userInput.setRawInputType(InputType.TYPE_CLASS_NUMBER);
                                 price_title_textview.setTypeface(font);
                                 demand_title_textview.setTypeface(font);
+                                popup_commodity_name_textview.setTypeface(font);
 
+                                popup_commodity_name_textview.setText(commodity.getName());
+                                demand_button.setChecked(commodity.getAvailability()==Availability.DEMAND?false:true);
+                                userInput.setText(commodity.getPrice()>0?String.valueOf(commodity.getPrice()):"");
 
                             // set dialog message
                                 alertDialogBuilder
@@ -199,9 +204,18 @@ public class CommoditiesListAdapter extends BaseAdapter {
                                                         String comPrice = userInput.getText().toString();
                                                         boolean isValid = Utils.validateCommodityPrice(comPrice);
 
-                                                        if(isValid) {
+                                                        if(isValid || "".equals(comPrice)) {
+                                                            if("".equals(comPrice)) {
+                                                                comPrice = "0";
+                                                            }
+
                                                             commodity.setPrice(Integer.valueOf(comPrice));
-                                                            commodity.setAvailability(demand_button.isChecked() ? Availability.SUPPLY : Availability.DEMAND);
+                                                            if(commodity.getPrice()==0) {
+                                                                commodity.setAvailability(null);
+                                                            }
+                                                            else {
+                                                                commodity.setAvailability(demand_button.isChecked() ? Availability.SUPPLY : Availability.DEMAND);
+                                                            }
                                                             Storage.saveSystem(system);
                                                             notifyDataSetChanged();
                                                         }

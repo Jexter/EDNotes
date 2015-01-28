@@ -1,4 +1,6 @@
-﻿* Supply/Demand switch should be set to the current state, as well as price
+﻿* Add clear button to commodity price popup
+* Treat empty input as 0 price
+
 * Supply/Demand should be cleared together with price
 * System list says "Never visited" and 0 stations
 * Station list seems to always show 60 minutes (or something else wrong)
@@ -7,12 +9,10 @@
 * Remove + from commodities screen
 * Make matchmaking screen
 * Keyboards should start with proper key types and start opened
-* Add illegal status on commodities
 * Make sure user can’t enter system duplicates (names)
 
 * Put loading operations in tasks :)
 * Check if notifyDataSetChanged() is called unnecessarily
-* Make sure empty lists aren't ugly
 * Find proper icon for matchmaking
 
 ---
@@ -21,7 +21,7 @@ DONE
 * Have proper titles on each page
 * Generate proper market
 * Input type validation on systems, stations and commodity prices
-
+* Supply/Demand switch should be set to the current state, as well as price
 
 
 
