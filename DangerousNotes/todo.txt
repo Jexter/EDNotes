@@ -1,10 +1,15 @@
 ﻿
-
-
---- Release cut
-* Add instructions on empty lists
+--- Next version
+* Better switch for supply/demand
+* Landscape mode
 * Selectors
-* Find a nice icon
+* Thicker rows for stations and systems
+* Error popups
+* Add instructions on empty lists
+
+--- Other versions
+
+
 * Have "last updated" on systems and stations
 * Set font on delete popup
 * Differentiate SUPPLY and DEMAND better
@@ -21,6 +26,7 @@
 ---
 
 DONE
+* Find a nice icon
 * Set font in all 3 lists
 
 * Systems list screen only gets title "Systems" after having opened and closed the sidemenu
