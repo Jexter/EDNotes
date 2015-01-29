@@ -1,18 +1,29 @@
 ﻿
---- Next version
+--- Next version TODO
 * Better switch for supply/demand
-* Landscape mode
-* Selectors
-* Thicker rows for stations and systems
+
+
 * Error popups
-* Add instructions on empty lists
 
---- Other versions
+* Differentiate SUPPLY and DEMAND better
 
 
+--- Fixed for next version
+* Landscape mode
+* Thicker rows for stations and systems
+* Selectors
+
+
+
+
+
+
+--- TODO
+
+* Flashes white when restarting app after garbaged
 * Have "last updated" on systems and stations
 * Set font on delete popup
-* Differentiate SUPPLY and DEMAND better
+* Add instructions on empty lists
 * Implement commodity matching
 * Add clear button to commodity price popup
 * Add last visited to systems and stations

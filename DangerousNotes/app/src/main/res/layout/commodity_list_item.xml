@@ -5,7 +5,7 @@
 	    android:layout_height="wrap_content"
 	    android:orientation="horizontal"
         android:layout_margin="@dimen/item_outer_margin"
-        android:background="@color/color_three"
+        android:background="@drawable/row_background_selector"
     >
 
     <LinearLayout
@@ -38,7 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/text_tiny"
-            android:textColor="@color/color_one"
+            android:textColor="#FFAAAAFF"
             android:layout_marginRight="4dp"
             />
         <TextView
@@ -46,7 +46,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/text_small"
-            android:textColor="@color/color_one"
+            android:textColor="#FF44AA44"
             android:layout_marginRight="4dp"
             />
     </LinearLayout>
