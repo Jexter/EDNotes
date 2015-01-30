@@ -1,25 +1,23 @@
 ﻿
 --- Next version TODO
 * Better switch for supply/demand
-
-
 * Error popups
-
-* Differentiate SUPPLY and DEMAND better
 
 
 --- Fixed for next version
 * Landscape mode
 * Thicker rows for stations and systems
 * Selectors
-
-
-
-
-
+* Differentiate SUPPLY and DEMAND better
 
 --- TODO
-
+* Smaller text on smaller screens
+* Add station info: black market
+* Add station info: station/outpost graphic
+* Add system info: Allegiance
+* Add station info: notes
+* Add system info: notes
+* Use all three supply/demand states
 * Flashes white when restarting app after garbaged
 * Have "last updated" on systems and stations
 * Set font on delete popup

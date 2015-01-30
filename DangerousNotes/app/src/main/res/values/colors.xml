@@ -5,6 +5,7 @@
     <color name="color_three">#FF281B19</color>
     <color name="color_four">#FFF06810</color>
     <color name="color_five">#FF381B19</color>
-
-
+    <color name="color_six">#FFAAAAFF</color>
+    <color name="color_seven">#FF44AA44</color>
+    <color name="color_error">#FFFF0000</color>
 </resources>

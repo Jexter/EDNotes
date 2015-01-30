@@ -12,11 +12,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
 
 import myapps.alex.se.ednotes.R;
+import myapps.alex.se.ednotes.common.DNApplication;
 import myapps.alex.se.ednotes.common.Utils;
 import myapps.alex.se.ednotes.model.Availability;
 import myapps.alex.se.ednotes.model.Commodity;
@@ -152,14 +154,29 @@ public class CommoditiesListAdapter extends BaseAdapter {
                         priceString = String.valueOf(commodity.getPrice()) + " CR";
                     }
 
+                    Availability availability = commodity.getAvailability();
+
                     String supplyString = "";
 
-                    if(commodity.getAvailability() != null) {
-                        supplyString = String.valueOf(commodity.getAvailability()) + "";
+                    if(availability != null) {
+                        supplyString = String.valueOf(commodity.getAvailability());
+
+                        if(availability == Availability.DEMAND) {
+                            viewHolder.supply_textview.setTextColor(DNApplication.getContext().getResources().getColor(R.color.color_six));
+                        }
+                        else {
+                            viewHolder.supply_textview.setTextColor(DNApplication.getContext().getResources().getColor(R.color.color_seven));
+                        }
                     }
 
-                    viewHolder.price_textview.setText(priceString);
                     viewHolder.supply_textview.setText(supplyString);
+                    viewHolder.price_textview.setText(priceString);
+
+
+
+
+
+
                     viewHolder.commodity_name_textview.setText(commodity.getName());
 
 
@@ -199,42 +216,60 @@ public class CommoditiesListAdapter extends BaseAdapter {
                             // set dialog message
                                 alertDialogBuilder
                                         .setCancelable(false)
-                                        .setPositiveButton("OK",
-                                                new DialogInterface.OnClickListener() {
-                                                    public void onClick(DialogInterface dialog,int id) {
-                                                        String comPrice = userInput.getText().toString();
-                                                        boolean isValid = Utils.validateCommodityPrice(comPrice);
-
-                                                        if(isValid || "".equals(comPrice)) {
-                                                            if("".equals(comPrice)) {
-                                                                comPrice = "0";
-                                                            }
-
-                                                            commodity.setPrice(Integer.valueOf(comPrice));
-                                                            if(commodity.getPrice()==0) {
-                                                                commodity.setAvailability(null);
-                                                            }
-                                                            else {
-                                                                commodity.setAvailability(demand_button.isChecked() ? Availability.SUPPLY : Availability.DEMAND);
-                                                            }
-                                                            Storage.saveSystem(system);
-                                                            notifyDataSetChanged();
-                                                        }
-
-
-                                                    }
-                                                })
-                                        .setNegativeButton("CANCEL",
-                                                new DialogInterface.OnClickListener() {
-                                                    public void onClick(DialogInterface dialog, int id) {
-                                                        dialog.cancel();
-                                                    }
-                                                });
+                                        .setPositiveButton("OK", null)
+                                        .setNegativeButton("CANCEL", null);
 
                                 // create alert dialog
-                                AlertDialog alertDialog = alertDialogBuilder.create();
+                                final AlertDialog alertDialog = alertDialogBuilder.create();
+
+                                alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+
+                                    @Override
+                                    public void onShow(DialogInterface dialog) {
+
+                                        Button pos = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                                        pos.setOnClickListener(new View.OnClickListener() {
+
+                                            @Override
+                                            public void onClick(View view) {
+                                                String comPrice = userInput.getText().toString();
+                                                boolean isValid = Utils.validateCommodityPrice(comPrice);
+
+                                                if(isValid || "".equals(comPrice)) {
+                                                    if("".equals(comPrice)) {
+                                                        comPrice = "0";
+                                                    }
+
+                                                    commodity.setPrice(Integer.valueOf(comPrice));
+                                                    if(commodity.getPrice()==0) {
+                                                        commodity.setAvailability(null);
+                                                    }
+                                                    else {
+                                                        commodity.setAvailability(demand_button.isChecked() ? Availability.SUPPLY : Availability.DEMAND);
+                                                    }
+                                                    Storage.saveSystem(system);
+                                                    notifyDataSetChanged();
+
+                                                    alertDialog.dismiss();
+                                                }
+                                                else {
+                                                    alertDialog.findViewById(R.id.price_popup_error_message).setVisibility(View.VISIBLE);
+                                                }
 
 
+                                            }
+                                        });
+
+                                        // Cencel button
+                                        Button neg = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+                                        neg.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View view) {
+                                                alertDialog.dismiss();
+                                            }
+                                        });
+                                    }
+                                });
 
                                 // show it
                                 alertDialog.show();

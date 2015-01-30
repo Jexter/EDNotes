@@ -74,8 +74,26 @@
             android:singleLine="true">
 
             <requestFocus />
-
         </EditText>
     </LinearLayout>
 
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/error_message_container"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="horizontal"
+        >
+        <View
+            android:layout_width="70dp"
+            android:layout_height="1dp"/>
+        <TextView
+            android:id="@+id/price_popup_error_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/numerics_error_message"
+            android:gravity="left"
+            android:textColor="@color/color_error"
+            style="@style/text_tiny"
+            android:visibility="gone"/>
+        </LinearLayout>
 </LinearLayout>

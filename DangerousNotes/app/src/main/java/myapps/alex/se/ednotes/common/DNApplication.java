@@ -22,5 +22,8 @@ public class DNApplication extends Application {
         return context;
     }
 
+    public static String getStringResource(String name) {
+        return context.getString(context.getResources().getIdentifier(name, "string", context.getPackageName()));
+    }
 
 }

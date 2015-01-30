@@ -5,7 +5,7 @@
 
     <dimen name="item_outer_margin">4dp</dimen>
     <dimen name="item_inner_padding">12dp</dimen>
-    <dimen name="inner_item_spacing">1dp</dimen>
+    <dimen name="inner_item_spacing">4dp</dimen>
 
     <dimen name="divider_height_small">1px</dimen>
     <dimen name="divider_height_medium">2dp</dimen>
