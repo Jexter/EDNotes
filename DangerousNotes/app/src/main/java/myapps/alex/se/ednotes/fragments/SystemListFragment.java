@@ -14,6 +14,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -158,35 +159,57 @@ public class SystemListFragment extends Fragment {
             // set dialog message
             alertDialogBuilder
                     .setCancelable(false)
-                    .setPositiveButton("OK",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    String systemName = userInput.getText().toString();
-                                    boolean isValid = Utils.validateSystemName(systemName);
-
-                                    if (isValid) {
-                                        Storage.createAndSaveNewSystem(systemName);
-                                        ArrayList<MiniSystem> minis = Storage.loadMiniSystems();
-                                        MiniSystem[] miniSystems = new MiniSystem[minis.size()];
-                                        miniSystems = minis.toArray(miniSystems);
-
-                                        adapter.setSystems(miniSystems);
-                                        adapter.notifyDataSetChanged();
-                                    }
-                                    else {
-                                        Log.d("Dialog for new systems says:", "input name invalid");
-                                    }
-                                }
-                            })
-                    .setNegativeButton("CANCEL",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    dialog.cancel();
-                                }
-                            });
+                    .setPositiveButton("OK", null)
+                    .setNegativeButton("CANCEL", null);
 
             // create alert dialog
-            AlertDialog alertDialog = alertDialogBuilder.create();
+            final AlertDialog alertDialog = alertDialogBuilder.create();
+
+
+            alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+
+                @Override
+                public void onShow(DialogInterface dialog) {
+
+                    Button pos = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                    pos.setOnClickListener(new View.OnClickListener() {
+
+                        @Override
+                        public void onClick(View view) {
+                            String systemName = userInput.getText().toString();
+                            boolean isValid = Utils.validateSystemName(systemName);
+
+                            if (isValid) {
+                                Storage.createAndSaveNewSystem(systemName);
+                                ArrayList<MiniSystem> minis = Storage.loadMiniSystems();
+                                MiniSystem[] miniSystems = new MiniSystem[minis.size()];
+                                miniSystems = minis.toArray(miniSystems);
+
+                                adapter.setSystems(miniSystems);
+                                adapter.notifyDataSetChanged();
+
+                                alertDialog.dismiss();
+                            }
+                            else {
+                                alertDialog.findViewById(R.id.system_name_popup_error_message).setVisibility(View.VISIBLE);
+                            }
+
+
+                        }
+                    });
+
+                    // Cencel button
+                    Button neg = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+                    neg.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            alertDialog.dismiss();
+                        }
+                    });
+                }
+            });
+
+
 
             // show it
             alertDialog.show();

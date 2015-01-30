@@ -9,12 +9,12 @@ import android.graphics.Typeface;
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import myapps.alex.se.ednotes.R;
@@ -39,6 +39,8 @@ public class CommoditiesListAdapter extends BaseAdapter {
     private int totalRowCount;
     private int[] positionsForHeaders;
     private int currentHeaderPositionIndex;
+    Button supply_button = null;
+    Button demand_button = null;
 
 	public CommoditiesListAdapter(Activity activity) {
 		this.activity = activity;
@@ -193,8 +195,10 @@ public class CommoditiesListAdapter extends BaseAdapter {
                                 alertDialogBuilder.setView(promptsView);
 
                                 final EditText userInput = (EditText) promptsView.findViewById(R.id.price_edittext);
-                                Switch supply_button = (Switch) promptsView.findViewById(R.id.demand_button);
-                                final Switch demand_button = (Switch) promptsView.findViewById(R.id.demand_button);
+
+                                supply_button = (Button) promptsView.findViewById(R.id.supply_button);
+                                demand_button = (Button) promptsView.findViewById(R.id.demand_button);
+
                                 TextView price_title_textview = (TextView) promptsView.findViewById(R.id.price_title_textview);
                                 TextView popup_commodity_name_textview = (TextView) promptsView.findViewById(R.id.popup_commodity_name_textview);
                                 TextView demand_title_textview = (TextView) promptsView.findViewById(R.id.demand_title_textview);
@@ -210,8 +214,47 @@ public class CommoditiesListAdapter extends BaseAdapter {
                                 popup_commodity_name_textview.setTypeface(font);
 
                                 popup_commodity_name_textview.setText(commodity.getName());
-                                demand_button.setChecked(commodity.getAvailability()== Availability.DEMAND?false:true);
+                                demand_button.setPressed(commodity.getAvailability() == Availability.DEMAND ? true : false);
+                                supply_button.setPressed(commodity.getAvailability() == Availability.DEMAND ? false : true);
                                 userInput.setText(commodity.getPrice()>0?String.valueOf(commodity.getPrice()):"");
+
+                            demand_button.setOnTouchListener(new View.OnTouchListener() {
+                                @Override
+                                public boolean onTouch(View v, MotionEvent event) {
+                                    if(event.getAction() == MotionEvent.ACTION_DOWN) {
+                                        demand_button.setPressed(true);
+                                        supply_button.setPressed(false);
+                                    }
+/*
+                                    if(event.getAction() == MotionEvent.ACTION_UP) {
+                                        demand_button.setPressed(true);
+                                        supply_button.setPressed(false);
+                                    }
+*/
+                                    return true;
+                                }
+                            });
+
+                            supply_button.setOnTouchListener(new View.OnTouchListener() {
+                                @Override
+                                public boolean onTouch(View v, MotionEvent event) {
+  /*
+                                    if(event.getAction() == MotionEvent.ACTION_UP) {
+                                        demand_button.setPressed(false);
+                                        supply_button.setPressed(true);
+                                    }
+*/
+                                    if(event.getAction() == MotionEvent.ACTION_DOWN) {
+                                        demand_button.setPressed(false);
+                                        supply_button.setPressed(true);
+                                    }
+
+                                    return true;
+                                }
+                            });
+
+
+
 
                             // set dialog message
                                 alertDialogBuilder
@@ -245,8 +288,9 @@ public class CommoditiesListAdapter extends BaseAdapter {
                                                         commodity.setAvailability(null);
                                                     }
                                                     else {
-                                                        commodity.setAvailability(demand_button.isChecked() ? Availability.SUPPLY : Availability.DEMAND);
+                                                        commodity.setAvailability(supply_button.isPressed() ? Availability.SUPPLY : Availability.DEMAND);
                                                     }
+
                                                     Storage.saveSystem(system);
                                                     notifyDataSetChanged();
 
@@ -292,9 +336,20 @@ public class CommoditiesListAdapter extends BaseAdapter {
 		return convertView;
 	}
 
-    private void updatePriceOnCommodity(String price) {
-        Log.d("New price on commodity:", price);
+/*
+    public void onSupplyToggleClicked(View v) {
+
+        if(supply_button.isChecked()) {
+            demand_button.setChecked(false);
+        }
     }
+
+    public void onDemandToggleClicked(View v) {
+        if(demand_button.isChecked()) {
+            supply_button.setChecked(false);
+        }
+    }
+*/
 
 	private static class ViewHolder {
 		TextView commodity_name_textview, price_textview, supply_textview, category_name_textview;

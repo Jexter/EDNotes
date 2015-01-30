@@ -17,38 +17,7 @@
             android:layout_gravity="center_horizontal"
             android:gravity="center_horizontal"
             />
-<!--
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/availability_container"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="horizontal"
-        android:gravity="left"
 
-        >
-
-        <TextView
-            android:id="@+id/demand_title_textview"
-            android:layout_width="70dp"
-            android:layout_height="wrap_content"
-            android:text="SELECT:"
-            style="@style/text_medium"
-            android:layout_gravity="center_vertical"
-            android:gravity="left"
-            />
-
-        <Switch
-            android:id="@+id/demand_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textOn="SUPPLY"
-            android:textOff="DEMAND"
-            android:layout_gravity="center_vertical"
-            style="@style/text_small"/>
-
-    </LinearLayout>
-
--->
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/price_container"
@@ -58,7 +27,7 @@
         >
         <TextView
             android:id="@+id/new_system_title_textview"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:text="NAME:"
 
@@ -76,4 +45,23 @@
         </EditText>
     </LinearLayout>
 
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/error_message_container"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="horizontal"
+        >
+        <View
+            android:layout_width="53dp"
+            android:layout_height="1dp"/>
+        <TextView
+            android:id="@+id/system_name_popup_error_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/system_names_error_message"
+            android:gravity="left"
+            android:textColor="@color/color_error"
+            style="@style/text_tiny"
+            android:visibility="gone"/>
+    </LinearLayout>
 </LinearLayout>

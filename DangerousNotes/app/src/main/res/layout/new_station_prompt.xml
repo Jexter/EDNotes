@@ -58,7 +58,7 @@
         >
         <TextView
             android:id="@+id/new_station_title_textview"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:text="NAME:"
 
@@ -75,5 +75,23 @@
 
         </EditText>
     </LinearLayout>
-
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/error_message_container"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="horizontal"
+        >
+        <View
+            android:layout_width="53dp"
+            android:layout_height="1dp"/>
+        <TextView
+            android:id="@+id/station_name_popup_error_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/station_names_error_message"
+            android:gravity="left"
+            android:textColor="@color/color_error"
+            style="@style/text_tiny"
+            android:visibility="gone"/>
+    </LinearLayout>
 </LinearLayout>

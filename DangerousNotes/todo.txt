@@ -1,10 +1,11 @@
 ﻿
 --- Next version TODO
 * Better switch for supply/demand
-* Error popups
+
 
 
 --- Fixed for next version
+* Error popups
 * Landscape mode
 * Thicker rows for stations and systems
 * Selectors

@@ -13,6 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -136,33 +137,53 @@ public class StationListFragment extends Fragment {
             // set dialog message
             alertDialogBuilder
                     .setCancelable(false)
-                    .setPositiveButton("OK",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    String stationName = userInput.getText().toString();
-                                    boolean isValid = Utils.validateStationName(stationName, systemName);
-
-                                    if (isValid) {
-                                        Storage.createAndSaveNewStationForSystem(systemName, stationName);
-
-                                        loadedSystem = Storage.loadSystem(systemName);
-                                        adapter.setSystem(loadedSystem);
-                                        adapter.notifyDataSetChanged();
-
-                                    } else {
-                                        Log.d("Dialog for new systems says:", "input name invalid");
-                                    }
-                                }
-                            })
-                    .setNegativeButton("CANCEL",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    dialog.cancel();
-                                }
-                            });
+                    .setPositiveButton("OK", null)
+                    .setNegativeButton("CANCEL", null);
 
             // create alert dialog
-            AlertDialog alertDialog = alertDialogBuilder.create();
+            final AlertDialog alertDialog = alertDialogBuilder.create();
+
+            alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+
+                @Override
+                public void onShow(DialogInterface dialog) {
+
+                    Button pos = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                    pos.setOnClickListener(new View.OnClickListener() {
+
+                        @Override
+                        public void onClick(View view) {
+                            String stationName = userInput.getText().toString();
+                            boolean isValid = Utils.validateStationName(stationName, systemName);
+
+                            if (isValid) {
+                                Storage.createAndSaveNewStationForSystem(systemName, stationName);
+
+                                loadedSystem = Storage.loadSystem(systemName);
+                                adapter.setSystem(loadedSystem);
+                                adapter.notifyDataSetChanged();
+
+                                alertDialog.dismiss();
+                            }
+                            else {
+                                alertDialog.findViewById(R.id.station_name_popup_error_message).setVisibility(View.VISIBLE);
+                            }
+
+
+                        }
+                    });
+
+                    // Cencel button
+                    Button neg = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+                    neg.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            alertDialog.dismiss();
+                        }
+                    });
+                }
+            });
+
 
             // show it
             alertDialog.show();

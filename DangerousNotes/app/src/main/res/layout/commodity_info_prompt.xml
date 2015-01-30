@@ -37,15 +37,17 @@
             android:gravity="left"
             />
 
-        <Switch
+        <Button
+            android:id="@+id/supply_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Supply"/>
+
+        <Button
             android:id="@+id/demand_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textOn="SUPPLY"
-            android:textOff="DEMAND"
-            android:showText="true"
-            android:layout_gravity="center_vertical"
-            style="@style/text_small"/>
+            android:text="Demand"/>
 
     </LinearLayout>
 
