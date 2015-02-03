@@ -153,7 +153,7 @@ public class Storage {
         saveSystem(newSystem);
     }
 
-    public static void createAndSaveNewStationForSystem(String systemName, String stationName) {
+    public static System createAndSaveNewStationForSystem(String systemName, String stationType, boolean hasBlackMarket, String stationName) {
         System system = loadSystem(systemName);
 
 
@@ -164,11 +164,16 @@ public class Storage {
         }
 
         Station newStation = StationFactory.createNewStationWithMarket(stationName);
+        newStation.getMisc().put(AppConstants.STATION_TYPE, stationType);
+        newStation.getMisc().put(AppConstants.BLACK_MARKET, hasBlackMarket);
+
         stationsInSystem.add(newStation);
 
         system.setStations(stationsInSystem);
 
         saveSystem(system);
+
+        return system;
     }
 
 

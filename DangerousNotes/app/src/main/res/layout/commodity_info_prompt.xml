@@ -32,7 +32,7 @@
             android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:text="SELECT:"
-            style="@style/text_medium"
+            style="@style/text_small"
             android:layout_gravity="center_vertical"
             android:gravity="left"
             />
@@ -40,14 +40,16 @@
         <Button
             android:id="@+id/supply_button"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Supply"/>
+            android:layout_height="35dp"
+            style="@style/text_small"
+            android:text="SUPPLY"/>
 
         <Button
             android:id="@+id/demand_button"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Demand"/>
+            android:layout_height="35dp"
+            style="@style/text_small"
+            android:text="DEMAND"/>
 
     </LinearLayout>
 
@@ -64,15 +66,16 @@
             android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:text="PRICE:"
+
             android:gravity="left"
 
-            style="@style/text_medium"/>
+            style="@style/text_small"/>
 
         <EditText
             android:id="@+id/price_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/text_medium"
+            style="@style/text_small"
             android:singleLine="true">
 
             <requestFocus />

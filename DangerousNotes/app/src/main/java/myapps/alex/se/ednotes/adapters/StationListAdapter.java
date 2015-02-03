@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import myapps.alex.se.ednotes.R;
@@ -89,7 +90,8 @@ public class StationListAdapter extends BaseAdapter {
 					convertView = layoutInflater_issue.inflate(R.layout.station_list_item, null);
 		
 					viewHolder = new ViewHolder();
-  					viewHolder.station_name_textview = (TextView) convertView.findViewById(R.id.station_name_textview);
+                    viewHolder.station_name_textview = (TextView) convertView.findViewById(R.id.station_name_textview);
+                    viewHolder.station_type_icon = (ImageView) convertView.findViewById(R.id.station_type_icon);
                     Typeface font = Typeface.createFromAsset(activity.getAssets(), "fonts/eurostile.TTF");
                     viewHolder.station_name_textview.setTypeface(font);
 
@@ -112,6 +114,24 @@ public class StationListAdapter extends BaseAdapter {
                 viewHolder.station_count_textView.setText(stationCountText);
 */
                 viewHolder.station_name_textview.setText(station.getName());
+
+                String station_type_string = (String) station.getMisc().get(AppConstants.STATION_TYPE);
+
+                if(station_type_string == null) {
+                    viewHolder.station_type_icon.setVisibility(View.GONE);
+                }
+                else {
+                    viewHolder.station_type_icon.setVisibility(View.VISIBLE);
+
+                    if("station".equals(station_type_string)) {
+                        viewHolder.station_type_icon.setImageResource(R.drawable.station);
+                    }
+                    else {
+                        viewHolder.station_type_icon.setImageResource(R.drawable.outpost);
+                    }
+                }
+
+
                 String lastVisitedString = Utils.getDateAsTimePassed(station.getLastVisited());
                 //viewHolder.last_visited_textview.setText(lastVisitedString);
 
@@ -174,6 +194,7 @@ public class StationListAdapter extends BaseAdapter {
 
 	private static class ViewHolder {
 		TextView station_name_textview;//, last_visited_textview;
+        ImageView station_type_icon;
 	}
 	
 	public void setSystem(System system) {

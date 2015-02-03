@@ -4,13 +4,14 @@
 * Add station info: station/outpost graphic
 * Add system info: Allegiance
 * Switch perf enh and Prog cells (?)
-
+* New error message for duplicates
 
 
 
 --- Fixed for next version
 
 --- TODO
+* Fix loading times
 * Rename stations
 * Smaller text on smaller screens
 

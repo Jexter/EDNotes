@@ -18,7 +18,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import myapps.alex.se.ednotes.R;
-import myapps.alex.se.ednotes.common.AppConstants;
 import myapps.alex.se.ednotes.common.DNApplication;
 import myapps.alex.se.ednotes.common.Utils;
 import myapps.alex.se.ednotes.model.Availability;
@@ -226,12 +225,7 @@ public class CommoditiesListAdapter extends BaseAdapter {
                                         demand_button.setPressed(true);
                                         supply_button.setPressed(false);
                                     }
-/*
-                                    if(event.getAction() == MotionEvent.ACTION_UP) {
-                                        demand_button.setPressed(true);
-                                        supply_button.setPressed(false);
-                                    }
-*/
+
                                     return true;
                                 }
                             });
@@ -239,12 +233,7 @@ public class CommoditiesListAdapter extends BaseAdapter {
                             supply_button.setOnTouchListener(new View.OnTouchListener() {
                                 @Override
                                 public boolean onTouch(View v, MotionEvent event) {
-  /*
-                                    if(event.getAction() == MotionEvent.ACTION_UP) {
-                                        demand_button.setPressed(false);
-                                        supply_button.setPressed(true);
-                                    }
-*/
+
                                     if(event.getAction() == MotionEvent.ACTION_DOWN) {
                                         demand_button.setPressed(false);
                                         supply_button.setPressed(true);
@@ -293,7 +282,7 @@ public class CommoditiesListAdapter extends BaseAdapter {
                                                     }
 
 
-                                                    system.getMisc().put(AppConstants.STATION_TYPE, stationType);
+                                                    //system.getMisc().put(AppConstants.STATION_TYPE, stationType);
                                                     Storage.saveSystem(system);
                                                     notifyDataSetChanged();
 

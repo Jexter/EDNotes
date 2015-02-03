@@ -17,4 +17,5 @@ public class AppConstants {
     public static final String APPDATA_FOLDER = "appdata";
 
     public static final int MAX_COMMODITY_PRICE = 1000000;
+    public static final String BLACK_MARKET = "BLACK_MARKET";
 }

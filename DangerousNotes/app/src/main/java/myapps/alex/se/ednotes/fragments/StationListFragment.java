@@ -11,9 +11,11 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -126,13 +128,45 @@ public class StationListFragment extends Fragment {
             final EditText userInput = (EditText) promptsView.findViewById(R.id.price_edittext);
             TextView new_station_popup_title_textview = (TextView) promptsView.findViewById(R.id.new_station_popup_title_textview);
             TextView new_station_title_textview = (TextView) promptsView.findViewById(R.id.new_station_title_textview);
+            final Button station_button = (Button) promptsView.findViewById(R.id.station_button);
+            final Button outpost_button = (Button) promptsView.findViewById(R.id.outpost_button);
+            final CheckBox black_market_checkbox = (CheckBox) promptsView.findViewById(R.id.black_market_checkbox);
+
+            station_button.setPressed(true);
+
             new_station_popup_title_textview.setText("NEW STATION IN " + systemName);
 
             Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "fonts/eurostile.TTF");
             userInput.setTypeface(font);
             new_station_popup_title_textview.setTypeface(font);
+            outpost_button.setTypeface(font);
+            station_button.setTypeface(font);
             new_station_title_textview.setTypeface(font);
 
+            station_button.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    if(event.getAction() == MotionEvent.ACTION_DOWN) {
+                        station_button.setPressed(true);
+                        outpost_button.setPressed(false);
+                    }
+
+
+                    return true;
+                }
+            });
+
+            outpost_button.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    if(event.getAction() == MotionEvent.ACTION_DOWN) {
+                        station_button.setPressed(false);
+                        outpost_button.setPressed(true);
+                    }
+
+                    return true;
+                }
+            });
 
             // set dialog message
             alertDialogBuilder
@@ -157,9 +191,11 @@ public class StationListFragment extends Fragment {
                             boolean isValid = Utils.validateStationName(stationName, systemName);
 
                             if (isValid) {
-                                Storage.createAndSaveNewStationForSystem(systemName, stationName);
+                                String station_type_string = station_button.isPressed() ? "station" : "outpost";
+                                boolean hasBlackMarket = black_market_checkbox.isChecked();
 
-                                loadedSystem = Storage.loadSystem(systemName);
+                                loadedSystem = Storage.createAndSaveNewStationForSystem(systemName, station_type_string, hasBlackMarket, stationName);
+
                                 adapter.setSystem(loadedSystem);
                                 adapter.notifyDataSetChanged();
 
