@@ -1,16 +1,20 @@
 package myapps.alex.se.ednotes.common;
 
-import myapps.alex.se.ednotes.model.Commodity;
-import myapps.alex.se.ednotes.model.CommodityCategory;
-import myapps.alex.se.ednotes.model.MiniSystem;
-import myapps.alex.se.ednotes.model.Station;
-import myapps.alex.se.ednotes.persistence.Storage;
 import android.app.Activity;
 import android.text.Spannable;
 import android.text.SpannableString;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+
+import myapps.alex.se.ednotes.model.Availability;
+import myapps.alex.se.ednotes.model.Commodity;
+import myapps.alex.se.ednotes.model.CommodityCategory;
+import myapps.alex.se.ednotes.model.CommodityTradeRoute;
+import myapps.alex.se.ednotes.model.MiniSystem;
+import myapps.alex.se.ednotes.model.Station;
+import myapps.alex.se.ednotes.persistence.Storage;
 
 /**
  * Created by atkinson on 19/12/14.
@@ -165,7 +169,73 @@ public class Utils {
         else {
             return Integer.valueOf(price) < AppConstants.MAX_COMMODITY_PRICE ? true : false;
         }
+    }
 
+    private static ArrayList<Commodity> getFlatCommodityList(Station station) {
+        ArrayList<Commodity> commodities = new ArrayList<Commodity>();
+
+        for(CommodityCategory cat : station.getCategories()) {
+            for(Commodity com : cat.getCommodities()) {
+                commodities.add(com);
+            }
+        }
+
+        return commodities;
+    }
+
+
+    public static ArrayList<CommodityTradeRoute> getTradesForTwoStations(Station fromStation, Station toStation, int minimumProfit) {
+        ArrayList<CommodityTradeRoute> commodityTradeRoutes = new ArrayList<CommodityTradeRoute>();
+
+        HashMap<Integer, Commodity> fromSupply = new HashMap<Integer, Commodity>();
+        HashMap<Integer, Commodity> fromDemand = new HashMap<Integer, Commodity>();
+
+        for(CommodityCategory cat : fromStation.getCategories()) {
+            for(Commodity com : cat.getCommodities()) {
+                if(com.getAvailability() != null) {
+                    if (com.getAvailability() == Availability.DEMAND) {
+                        fromDemand.put(com.getId(), com);
+                    }
+                    if (com.getAvailability() == Availability.SUPPLY) {
+                        fromSupply.put(com.getId(), com);
+                    }
+                }
+            }
+        }
+
+        for(CommodityCategory cat : toStation.getCategories()) {
+            for(Commodity com : cat.getCommodities()) {
+                if(com.getAvailability() != null) {
+                    Commodity fromCom;
+
+                    if(com.getAvailability() == Availability.DEMAND) {
+                        fromCom = fromDemand.get(com.getId());
+
+                        if(fromCom != null) {
+                            if(com.getPrice() - fromCom.getPrice() >= minimumProfit) {
+                                CommodityTradeRoute trade = new CommodityTradeRoute();
+                                // Continue here
+                            }
+                        }
+                    }
+
+                    if(com.getAvailability() == Availability.SUPPLY) {
+                        fromCom = fromDemand.get(com.getId());
+
+                        if(fromCom != null) {
+                            if(fromCom.getPrice() - com.getPrice() >= minimumProfit) {
+                                // Add to results
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+
+
+
+        return commodityTradeRoutes;
     }
 
 

@@ -155,6 +155,8 @@ public class Storage {
 
     public static void createAndSaveNewStationForSystem(String systemName, String stationName) {
         System system = loadSystem(systemName);
+
+
         ArrayList<Station> stationsInSystem = system.getStations();
 
         if(stationsInSystem == null) {

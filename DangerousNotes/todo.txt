@@ -1,21 +1,19 @@
 ﻿
 --- Next version TODO
-* Better switch for supply/demand
+* Add station info: black market
+* Add station info: station/outpost graphic
+* Add system info: Allegiance
+* Switch perf enh and Prog cells (?)
+
 
 
 
 --- Fixed for next version
-* Error popups
-* Landscape mode
-* Thicker rows for stations and systems
-* Selectors
-* Differentiate SUPPLY and DEMAND better
 
 --- TODO
+* Rename stations
 * Smaller text on smaller screens
-* Add station info: black market
-* Add station info: station/outpost graphic
-* Add system info: Allegiance
+
 * Add station info: notes
 * Add system info: notes
 * Use all three supply/demand states
@@ -36,6 +34,13 @@
 ---
 
 DONE
+* Better switch for supply/demand
+* Error popups
+* Landscape mode
+* Thicker rows for stations and systems
+* Selectors
+* Differentiate SUPPLY and DEMAND better
+
 * Find a nice icon
 * Set font in all 3 lists
 

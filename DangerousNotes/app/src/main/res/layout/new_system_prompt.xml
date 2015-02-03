@@ -61,7 +61,7 @@
             android:text="@string/system_names_error_message"
             android:gravity="left"
             android:textColor="@color/color_error"
-            style="@style/text_tiny"
+            style="@style/text_small"
             android:visibility="gone"/>
     </LinearLayout>
 </LinearLayout>

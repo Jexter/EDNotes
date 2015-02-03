@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import myapps.alex.se.ednotes.R;
+import myapps.alex.se.ednotes.common.AppConstants;
 import myapps.alex.se.ednotes.common.DNApplication;
 import myapps.alex.se.ednotes.common.Utils;
 import myapps.alex.se.ednotes.model.Availability;
@@ -291,6 +292,8 @@ public class CommoditiesListAdapter extends BaseAdapter {
                                                         commodity.setAvailability(supply_button.isPressed() ? Availability.SUPPLY : Availability.DEMAND);
                                                     }
 
+
+                                                    system.getMisc().put(AppConstants.STATION_TYPE, stationType);
                                                     Storage.saveSystem(system);
                                                     notifyDataSetChanged();
 
