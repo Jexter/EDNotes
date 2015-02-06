@@ -1,20 +1,16 @@
 ﻿
 --- Next version TODO
-* Add system info: Allegiance
+
 * New error message for duplicates
+
 * Allow renaming of systems and stations.
 
 
 --- Fixed for next version
-* Add station info: black market
-* Add station info: station/outpost graphic
-
 
 --- TODO
-* Fix loading times
-* Rename stations
+* Fix loading times even more
 * Smaller text on smaller screens
-
 * Add station info: notes
 * Add system info: notes
 * Use all three supply/demand states
@@ -35,6 +31,10 @@
 ---
 
 DONE
+* Add station info: black market
+* Add station info: station/outpost graphic
+* Add system info: Allegiance
+* New error message for very high ints on price entering
 * Better switch for supply/demand
 * Error popups
 * Landscape mode

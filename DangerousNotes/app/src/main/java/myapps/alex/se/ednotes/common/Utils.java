@@ -167,7 +167,16 @@ public class Utils {
             return false;
         }
         else {
-            return Integer.valueOf(price) < AppConstants.MAX_COMMODITY_PRICE ? true : false;
+            Integer priceInt;
+
+            try {
+                priceInt = Integer.valueOf(price);
+            }
+            catch(Exception e) {
+                return false;
+            }
+
+            return priceInt < AppConstants.MAX_COMMODITY_PRICE ? true : false;
         }
     }
 

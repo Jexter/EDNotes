@@ -139,15 +139,19 @@ public class Storage {
     }
 
 
-    public static void createAndSaveNewSystem(String systemName) {
+    public static void createAndSaveNewSystem(String systemName, String allegianceString) {
         ArrayList<MiniSystem> miniSystems = loadMiniSystems();
 
         if(miniSystems == null) {
             miniSystems = new ArrayList<MiniSystem>();
         }
 
-        miniSystems.add(new MiniSystem(systemName));
+        MiniSystem newMiniSystem = new MiniSystem(systemName);
+        newMiniSystem.getMisc().put(AppConstants.ALLEGIANCE_MISC_KEY, allegianceString);
+        miniSystems.add(newMiniSystem);
+
         System newSystem = new System(null, systemName);
+        newSystem.getMisc().put(AppConstants.ALLEGIANCE_MISC_KEY, allegianceString);
 
         saveMiniSystems(miniSystems);
         saveSystem(newSystem);

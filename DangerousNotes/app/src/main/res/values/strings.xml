@@ -15,5 +15,12 @@
     <string name="station_name_duplicate_error_message">station name already in use</string>
     <string name="system_name_duplicate_error_message">System name already in use</string>
 
+    <string-array name="allegiance_spinner_options">
+        <item>NONE</item>
+        <item>EMPIRE</item>
+        <item>INDEPENDANT</item>
+        <item>FEDERATION</item>
+        <item>ALLIANCE</item>
+    </string-array>
 
 </resources>

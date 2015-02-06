@@ -23,33 +23,19 @@
                 style="@style/text_big"
                 android:textColor="@color/color_four"
                 android:gravity="left"
-            />
-        </LinearLayout>
-    <!--
-        <LinearLayout
-                android:id="@+id/other_info_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="@dimen/item_inner_padding"
-        >
-            <TextView
-                android:id="@+id/station_count_textview"
+                />
+            <View
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                style="@style/text_small"
-                android:textColor="@color/color_one"
-                android:gravity="left"
-            />
+                />
             <TextView
-                android:id="@+id/last_visited_textview"
+                android:id="@+id/system_allegiance_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/text_small"
-                android:textColor="@color/color_one"
-                android:gravity="right"
-            />
+                android:textColor="@color/color_six"
+                android:gravity="left"
+                />
         </LinearLayout>
-        -->
-	</LinearLayout>
+   	</LinearLayout>

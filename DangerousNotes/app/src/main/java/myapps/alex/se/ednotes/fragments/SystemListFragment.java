@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -131,7 +132,6 @@ public class SystemListFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
     }
 
@@ -150,11 +150,16 @@ public class SystemListFragment extends Fragment {
             final EditText userInput = (EditText) promptsView.findViewById(R.id.price_edittext);
             TextView new_system_popup_title_textview = (TextView) promptsView.findViewById(R.id.new_system_popup_title_textview);
             TextView new_system_title_textview = (TextView) promptsView.findViewById(R.id.new_system_title_textview);
+            TextView allegiance_title_textview = (TextView) promptsView.findViewById(R.id.allegiance_title_textview);
+            final Spinner allegiance_spinner = (Spinner) promptsView.findViewById(R.id.allegiance_spinner);
 
             Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "fonts/eurostile.TTF");
             userInput.setTypeface(font);
             new_system_popup_title_textview.setTypeface(font);
             new_system_title_textview.setTypeface(font);
+            allegiance_title_textview.setTypeface(font);
+
+
 
             // set dialog message
             alertDialogBuilder
@@ -178,9 +183,10 @@ public class SystemListFragment extends Fragment {
                         public void onClick(View view) {
                             String systemName = userInput.getText().toString();
                             boolean isValid = Utils.validateSystemName(systemName);
+                            String allegianceString = (String) allegiance_spinner.getSelectedItem();
 
                             if (isValid) {
-                                Storage.createAndSaveNewSystem(systemName);
+                                Storage.createAndSaveNewSystem(systemName, allegianceString);
                                 ArrayList<MiniSystem> minis = Storage.loadMiniSystems();
                                 MiniSystem[] miniSystems = new MiniSystem[minis.size()];
                                 miniSystems = minis.toArray(miniSystems);

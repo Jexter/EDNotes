@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import myapps.alex.se.ednotes.R;
 import myapps.alex.se.ednotes.activities.StationListActivity;
 import myapps.alex.se.ednotes.common.AppConstants;
+import myapps.alex.se.ednotes.common.DNApplication;
 import myapps.alex.se.ednotes.model.MiniSystem;
 import myapps.alex.se.ednotes.persistence.Storage;
 
@@ -89,10 +90,10 @@ public class SystemListAdapter extends BaseAdapter {
 		
 					viewHolder = new ViewHolder();
                     Typeface font = Typeface.createFromAsset(activity.getAssets(), "fonts/eurostile.TTF");
-					viewHolder.system_name_textview = (TextView) convertView.findViewById(R.id.system_name_textview);
+                    viewHolder.system_name_textview = (TextView) convertView.findViewById(R.id.system_name_textview);
+                    viewHolder.system_allegiance_textview = (TextView) convertView.findViewById(R.id.system_allegiance_textview);
                     viewHolder.system_name_textview.setTypeface(font);
-					//viewHolder.station_count_textView = (TextView) convertView.findViewById(R.id.station_count_textview);
-					//viewHolder.last_visited_textview = (TextView) convertView.findViewById(R.id.last_visited_textview);
+                    viewHolder.system_allegiance_textview.setTypeface(font);
 
 					convertView.setTag(viewHolder);
 				}
@@ -103,12 +104,36 @@ public class SystemListAdapter extends BaseAdapter {
 				final MiniSystem miniSystem = miniSystems[position];
 				
 				viewHolder.system_name_textview.setText(miniSystem.getName());
-                //viewHolder.last_visited_textview.setText(Utils.getDateAsTimePassed(miniSystem.getLastVisited()));
 
-                String stationCountText = "No stations entered here yet";
-                stationCountText = miniSystem.getStationCount() + " stations";
+                Object allegianceObject = miniSystem.getMisc().get(AppConstants.ALLEGIANCE_MISC_KEY);
 
-               // viewHolder.station_count_textView.setText(stationCountText);
+                if(allegianceObject != null) {
+                    String allegianceString = (String) allegianceObject;
+
+                    if(!"NONE".equals(allegianceString)) {
+                        viewHolder.system_allegiance_textview.setText(allegianceString);
+                        if("EMPIRE".equals(allegianceString)) {
+                            viewHolder.system_allegiance_textview.setTextColor(DNApplication.getContext().getResources().getColor(R.color.color_red));
+                        }
+                        if("INDEPENDANT".equals(allegianceString)) {
+                            viewHolder.system_allegiance_textview.setTextColor(DNApplication.getContext().getResources().getColor(R.color.color_green));
+                        }
+                        if("FEDERATION".equals(allegianceString)) {
+                            viewHolder.system_allegiance_textview.setTextColor(DNApplication.getContext().getResources().getColor(R.color.color_blue));
+                        }
+                        if("ALLIANCE".equals(allegianceString)) {
+                            viewHolder.system_allegiance_textview.setTextColor(DNApplication.getContext().getResources().getColor(R.color.color_orange));
+                        }
+                        viewHolder.system_allegiance_textview.setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        viewHolder.system_allegiance_textview.setVisibility(View.GONE);
+                    }
+                }
+                else {
+                    viewHolder.system_allegiance_textview.setVisibility(View.GONE);
+                }
+
 
 
 				convertView.setOnClickListener(new OnClickListener() {
@@ -117,7 +142,7 @@ public class SystemListAdapter extends BaseAdapter {
 						Intent intent = new Intent(activity, StationListActivity.class);
 						intent.putExtra(AppConstants.SYSTEM_NAME, miniSystem.getName());
 						activity.startActivity(intent);
-                    }
+                             }
 				});
 
                 convertView.setOnLongClickListener(new View.OnLongClickListener() {
@@ -170,7 +195,7 @@ public class SystemListAdapter extends BaseAdapter {
 	}
 
 	private static class ViewHolder {
-		TextView system_name_textview;//, station_count_textView;//, last_visited_textview;
+		TextView system_name_textview, system_allegiance_textview;//, station_count_textView;//, last_visited_textview;
 	}
 	
 	public void setSystems(MiniSystem[] miniSystems) {

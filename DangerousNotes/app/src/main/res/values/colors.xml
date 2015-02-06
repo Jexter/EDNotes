@@ -8,4 +8,11 @@
     <color name="color_six">#FFAAAAFF</color>
     <color name="color_seven">#FF44AA44</color>
     <color name="color_error">#FFFF0000</color>
+
+    <color name="color_red">#FFff0606</color>
+    <color name="color_green">#FF15ff2a</color>
+    <color name="color_blue">#FF09b3ff</color>
+    <color name="color_orange">#FFff740a</color>
+
+
 </resources>
