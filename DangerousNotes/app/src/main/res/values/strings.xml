@@ -9,9 +9,11 @@
     <string name="action_example">Example action</string>
     <string name="action_settings">Settings</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="numerics_error_message">Only numerics allowed here</string>
-    <string name="system_names_error_message">Use only characters found in real system names</string>
-    <string name="station_names_error_message">Use only characters found in real station names</string>
+    <string name="numerics_error_message">Only numerics possible here</string>
+    <string name="system_names_error_message">Please use only characters found in real system names</string>
+    <string name="station_names_error_message">Please use only characters found in real station names</string>
+    <string name="station_name_duplicate_error_message">station name already in use</string>
+    <string name="system_name_duplicate_error_message">System name already in use</string>
 
 
 </resources>

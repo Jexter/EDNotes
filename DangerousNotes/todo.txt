@@ -1,14 +1,14 @@
 ﻿
 --- Next version TODO
-* Add station info: black market
-* Add station info: station/outpost graphic
 * Add system info: Allegiance
-* Switch perf enh and Prog cells (?)
 * New error message for duplicates
-
+* Allow renaming of systems and stations.
 
 
 --- Fixed for next version
+* Add station info: black market
+* Add station info: station/outpost graphic
+
 
 --- TODO
 * Fix loading times

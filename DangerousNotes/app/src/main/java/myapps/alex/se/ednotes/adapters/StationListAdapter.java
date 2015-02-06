@@ -91,10 +91,11 @@ public class StationListAdapter extends BaseAdapter {
 		
 					viewHolder = new ViewHolder();
                     viewHolder.station_name_textview = (TextView) convertView.findViewById(R.id.station_name_textview);
+                    viewHolder.blackmarket_textview = (TextView) convertView.findViewById(R.id.blackmarket_textview);
                     viewHolder.station_type_icon = (ImageView) convertView.findViewById(R.id.station_type_icon);
                     Typeface font = Typeface.createFromAsset(activity.getAssets(), "fonts/eurostile.TTF");
                     viewHolder.station_name_textview.setTypeface(font);
-
+                    viewHolder.blackmarket_textview.setTypeface(font);
                     //viewHolder.last_visited_textview = (TextView) convertView.findViewById(R.id.last_visited_textview);
 
 					convertView.setTag(viewHolder);
@@ -114,6 +115,23 @@ public class StationListAdapter extends BaseAdapter {
                 viewHolder.station_count_textView.setText(stationCountText);
 */
                 viewHolder.station_name_textview.setText(station.getName());
+
+
+                Object hasMarket = station.getMisc().get(AppConstants.BLACK_MARKET);
+
+                if(hasMarket != null) {
+                    boolean hasBlackMarket = (boolean) station.getMisc().get(AppConstants.BLACK_MARKET);
+
+                    if(hasBlackMarket) {
+                        viewHolder.blackmarket_textview.setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        viewHolder.blackmarket_textview.setVisibility(View.GONE);
+                    }
+                }
+                else {
+                    viewHolder.blackmarket_textview.setVisibility(View.GONE);
+                }
 
                 String station_type_string = (String) station.getMisc().get(AppConstants.STATION_TYPE);
 
@@ -193,7 +211,7 @@ public class StationListAdapter extends BaseAdapter {
 	}
 
 	private static class ViewHolder {
-		TextView station_name_textview;//, last_visited_textview;
+		TextView station_name_textview, blackmarket_textview;//, last_visited_textview;
         ImageView station_type_icon;
 	}
 	
