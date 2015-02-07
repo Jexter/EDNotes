@@ -9,25 +9,24 @@
 --- Fixed for next version
 
 --- TODO
+* New stations and systems should appear at the top of the list (not the bottom)
 * Fix loading times even more
-* Smaller text on smaller screens
 * Add station info: notes
 * Add system info: notes
 * Use all three supply/demand states
-* Flashes white when restarting app after garbaged
+* Flashes white when restarting app after garbaged (why does it not crash?)
 * Have "last updated" on systems and stations
 * Set font on delete popup
 * Add instructions on empty lists
 * Implement commodity matching
 * Add clear button to commodity price popup
 * Add last visited to systems and stations
-* Show dialog when regexp has caught something illegal
 * Make matchmaking screen
 * Keyboards should start with proper key types and start opened and in upper case if possible
-* Put loading operations in tasks :)
+* Put loading operations in tasks (maybe)
 * Check if notifyDataSetChanged() is called unnecessarily
 * Find proper icon for matchmaking
-
+* Smaller text on smaller screens
 ---
 
 DONE

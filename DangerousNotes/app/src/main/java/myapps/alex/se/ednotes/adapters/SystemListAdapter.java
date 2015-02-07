@@ -160,10 +160,7 @@ public class SystemListAdapter extends BaseAdapter {
                                 .setPositiveButton("OK",
                                         new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog,int id) {
-
-                                                Storage.deleteSystem(miniSystem);
-
-                                                ArrayList<MiniSystem> minis = Storage.loadMiniSystems();
+                                                ArrayList<MiniSystem> minis = Storage.deleteSystem(miniSystem);
                                                 miniSystems = new MiniSystem[minis.size()];
                                                 miniSystems = minis.toArray(miniSystems);
 

@@ -2,9 +2,7 @@ package myapps.alex.se.ednotes.adapters;
 
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
@@ -21,7 +19,6 @@ import myapps.alex.se.ednotes.common.AppConstants;
 import myapps.alex.se.ednotes.common.Utils;
 import myapps.alex.se.ednotes.model.Station;
 import myapps.alex.se.ednotes.model.System;
-import myapps.alex.se.ednotes.persistence.Storage;
 
 
 public class StationListAdapter extends BaseAdapter {
@@ -164,14 +161,17 @@ public class StationListAdapter extends BaseAdapter {
                     }
                 });
 
+                final StationListAdapter thisAdapter = this;
+
                 convertView.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View v) {
-
-                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(activity);
+                        Utils.showStationDialog(activity, system, station, thisAdapter);
+  /*
+                        //AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(activity);
                         // set prompts.xml to alertdialog builder
 //                        View promptsView = li.inflate(R.layout.commodity_info_prompt, null);
-//                        alertDialogBuilder.setView(promptsView);
+                        alertDialogBuilder.setView(promptsView);
 
                         alertDialogBuilder
                                 .setTitle("Delete station: " + station.getName())
@@ -181,8 +181,9 @@ public class StationListAdapter extends BaseAdapter {
                                             public void onClick(DialogInterface dialog,int id) {
                                                 // get user input and set it to result
                                                 // edit text
-                                                Storage.updateAndSaveStationInSystem(system, station);
-                                                setSystem(Storage.loadSystem(system.getName()));
+                                                system = Storage.deleteStationInSystem(system, station);
+                                                //setSystem(Storage.loadSystem(system.getName()));
+                                                setSystem(system);
                                                 notifyDataSetChanged();
                                             }
                                         })
@@ -199,7 +200,7 @@ public class StationListAdapter extends BaseAdapter {
                         // show it
                         alertDialog.show();
 
-
+*/
                         return false;
                     }
                 });

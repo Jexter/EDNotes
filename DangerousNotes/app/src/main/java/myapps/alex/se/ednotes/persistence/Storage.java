@@ -181,13 +181,15 @@ public class Storage {
     }
 
 
-    public static void updateAndSaveStationInSystem(System system, Station station) {
+    public static System deleteStationInSystem(System system, Station station) {
         ArrayList <Station> stationsInSystem = system.getStations();
         stationsInSystem.remove(station);
         saveSystem(system);
+
+        return system;
     }
 
-    public static void deleteSystem(MiniSystem miniSystem) {
+    public static ArrayList<MiniSystem> deleteSystem(MiniSystem miniSystem) {
         String systemName = miniSystem.getName();
         deleteFile(AppConstants.SYSTEM_BASE_FILENAME + systemName);
 
@@ -201,6 +203,7 @@ public class Storage {
 
         saveMiniSystems(miniSystems);
 
+        return miniSystems;
     }
 }
 
