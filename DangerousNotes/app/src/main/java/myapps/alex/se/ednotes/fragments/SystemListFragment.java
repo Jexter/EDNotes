@@ -1,9 +1,6 @@
 package myapps.alex.se.ednotes.fragments;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,11 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Spinner;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -139,89 +132,7 @@ public class SystemListFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.add_new_system) {
-            LayoutInflater li = LayoutInflater.from(getActivity());
-            View promptsView = li.inflate(R.layout.new_system_prompt, null);
-
-            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
-
-            // set prompts.xml to alertdialog builder
-            alertDialogBuilder.setView(promptsView);
-
-            final EditText userInput = (EditText) promptsView.findViewById(R.id.price_edittext);
-            TextView new_system_popup_title_textview = (TextView) promptsView.findViewById(R.id.new_system_popup_title_textview);
-            TextView new_system_title_textview = (TextView) promptsView.findViewById(R.id.new_system_title_textview);
-            TextView allegiance_title_textview = (TextView) promptsView.findViewById(R.id.allegiance_title_textview);
-            final Spinner allegiance_spinner = (Spinner) promptsView.findViewById(R.id.allegiance_spinner);
-
-            Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "fonts/eurostile.TTF");
-            userInput.setTypeface(font);
-            new_system_popup_title_textview.setTypeface(font);
-            new_system_title_textview.setTypeface(font);
-            allegiance_title_textview.setTypeface(font);
-
-
-
-            // set dialog message
-            alertDialogBuilder
-                    .setCancelable(false)
-                    .setPositiveButton("OK", null)
-                    .setNegativeButton("CANCEL", null);
-
-            // create alert dialog
-            final AlertDialog alertDialog = alertDialogBuilder.create();
-
-
-            alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
-
-                @Override
-                public void onShow(DialogInterface dialog) {
-
-                    Button pos = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                    pos.setOnClickListener(new View.OnClickListener() {
-
-                        @Override
-                        public void onClick(View view) {
-                            String systemName = userInput.getText().toString();
-                            boolean isValid = Utils.validateSystemName(systemName);
-                            String allegianceString = (String) allegiance_spinner.getSelectedItem();
-
-                            if (isValid) {
-                                Storage.createAndSaveNewSystem(systemName, allegianceString);
-                                ArrayList<MiniSystem> minis = Storage.loadMiniSystems();
-                                MiniSystem[] miniSystems = new MiniSystem[minis.size()];
-                                miniSystems = minis.toArray(miniSystems);
-
-                                adapter.setSystems(miniSystems);
-                                adapter.notifyDataSetChanged();
-
-                                alertDialog.dismiss();
-                            }
-                            else {
-                                alertDialog.findViewById(R.id.system_name_popup_error_message).setVisibility(View.VISIBLE);
-                            }
-
-
-                        }
-                    });
-
-                    // Cencel button
-                    Button neg = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
-                    neg.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            alertDialog.dismiss();
-                        }
-                    });
-                }
-            });
-
-
-
-            // show it
-            alertDialog.show();
-            alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTypeface(font);
-            alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTypeface(font);
-
+            Utils.showSystemDialog(getActivity(), adapter, null);
             return true;
         }
 

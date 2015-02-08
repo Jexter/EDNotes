@@ -138,8 +138,39 @@ public class Storage {
         }
     }
 
+    public static void renameFile(String oldFileName, String newFileName) {
+        File oldFile = new File(DNApplication.getContext().getDir(AppConstants.APPDATA_FOLDER, Context.MODE_PRIVATE), oldFileName);
+        File newFile = new File(DNApplication.getContext().getDir(AppConstants.APPDATA_FOLDER, Context.MODE_PRIVATE), newFileName);
 
-    public static void createAndSaveNewSystem(String systemName, String allegianceString) {
+        try {
+            if (oldFile.exists()) {
+                oldFile.renameTo(newFile);
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static ArrayList<MiniSystem> updateSystem(String oldSystemName, String newSystemName, String allegianceString) {
+        ArrayList<MiniSystem> miniSystems = loadMiniSystems();
+
+        for(MiniSystem miniSystem : miniSystems) {
+            if(oldSystemName.equals(miniSystem.getName())) {
+                miniSystem.setName(newSystemName);
+                miniSystem.getMisc().put(AppConstants.ALLEGIANCE_MISC_KEY, allegianceString);
+                renameFile(AppConstants.SYSTEM_BASE_FILENAME + oldSystemName, AppConstants.SYSTEM_BASE_FILENAME + newSystemName);
+                break;
+            }
+        }
+
+        saveMiniSystems(miniSystems);
+
+        return miniSystems;
+    }
+
+
+    public static ArrayList<MiniSystem> createAndSaveNewSystem(String systemName, String allegianceString) {
         ArrayList<MiniSystem> miniSystems = loadMiniSystems();
 
         if(miniSystems == null) {
@@ -148,13 +179,15 @@ public class Storage {
 
         MiniSystem newMiniSystem = new MiniSystem(systemName);
         newMiniSystem.getMisc().put(AppConstants.ALLEGIANCE_MISC_KEY, allegianceString);
-        miniSystems.add(newMiniSystem);
+        miniSystems.add(0, newMiniSystem);
 
         System newSystem = new System(null, systemName);
         newSystem.getMisc().put(AppConstants.ALLEGIANCE_MISC_KEY, allegianceString);
 
         saveMiniSystems(miniSystems);
         saveSystem(newSystem);
+
+        return miniSystems;
     }
 
     public static System createAndSaveNewStationForSystem(String systemName, String stationType, boolean hasBlackMarket, String stationName) {
@@ -164,14 +197,15 @@ public class Storage {
         ArrayList<Station> stationsInSystem = system.getStations();
 
         if(stationsInSystem == null) {
-            stationsInSystem= new ArrayList<Station>();
+            stationsInSystem = new ArrayList<Station>();
         }
 
         Station newStation = StationFactory.createNewStationWithMarket(stationName);
         newStation.getMisc().put(AppConstants.STATION_TYPE, stationType);
         newStation.getMisc().put(AppConstants.BLACK_MARKET, hasBlackMarket);
 
-        stationsInSystem.add(newStation);
+        stationsInSystem.add(0, newStation);
+
 
         system.setStations(stationsInSystem);
 
@@ -180,6 +214,28 @@ public class Storage {
         return system;
     }
 
+    public static System updateStationForSystem(String systemName, String stationType, boolean hasBlackMarket, String oldStationName, String newStationName) {
+        System system = loadSystem(systemName);
+
+        ArrayList<Station> stationsInSystem = system.getStations();
+
+
+        for(Station station : stationsInSystem) {
+            if(station.getName().equals(oldStationName)) {
+                station.setName(newStationName);
+                station.getMisc().put(AppConstants.STATION_TYPE, stationType);
+                station.getMisc().put(AppConstants.BLACK_MARKET, hasBlackMarket);
+
+                break;
+            }
+        }
+
+        system.setStations(stationsInSystem);
+
+        saveSystem(system);
+
+        return system;
+    }
 
     public static System deleteStationInSystem(System system, Station station) {
         ArrayList <Station> stationsInSystem = system.getStations();

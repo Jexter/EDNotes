@@ -28,6 +28,9 @@
             android:parentActivityName=".activities.MainActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="singleTop">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.MainActivity" />
         </activity>
 
         <activity
@@ -35,6 +38,9 @@
             android:parentActivityName=".activities.StationListActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="singleTop">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.StationListActivity" />
         </activity>
 
     </application>

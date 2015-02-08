@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ import java.util.HashMap;
 
 import myapps.alex.se.ednotes.R;
 import myapps.alex.se.ednotes.adapters.StationListAdapter;
+import myapps.alex.se.ednotes.adapters.SystemListAdapter;
 import myapps.alex.se.ednotes.model.*;
 import myapps.alex.se.ednotes.persistence.Storage;
 
@@ -127,10 +129,10 @@ public class Utils {
        return -1;
     }
 
-    public static boolean validateSystemName(String systemName) {
+    public static boolean validateSystemName(String systemName, boolean editing) {
         ArrayList<MiniSystem> miniSystems = Storage.loadMiniSystems();
 
-        if(miniSystems != null) {
+        if(miniSystems != null && (editing == false)) {
             for (MiniSystem miniSystem : miniSystems) {
                 if (miniSystem.getName().equals(systemName)) {
                     return false;
@@ -150,11 +152,11 @@ public class Utils {
     }
 
 
-    public static boolean validateStationName(String stationName, String systemName) {
+    public static boolean validateStationName(String stationName, String systemName, boolean editing) {
 
         ArrayList<Station> stationsAlreadyInSystem = Storage.loadStationsForSystem(systemName);
 
-        if(stationsAlreadyInSystem != null) {
+        if(stationsAlreadyInSystem != null && (editing == false)) {
             for (Station station : stationsAlreadyInSystem) {
                 if (stationName.equals(station.getName())) {
                     return false;
@@ -254,6 +256,141 @@ public class Utils {
         return commodityTradeRoutes;
     }
 
+    public static void showSystemDialog(Activity activity, final SystemListAdapter adapter, final MiniSystem miniSystem) {
+
+        LayoutInflater li = LayoutInflater.from(activity);
+        View promptsView = li.inflate(R.layout.new_system_prompt, null);
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(activity);
+
+        // set prompts.xml to alertdialog builder
+        alertDialogBuilder.setView(promptsView);
+
+        final EditText userInput = (EditText) promptsView.findViewById(R.id.price_edittext);
+        TextView new_system_popup_title_textview = (TextView) promptsView.findViewById(R.id.new_system_popup_title_textview);
+        TextView new_system_title_textview = (TextView) promptsView.findViewById(R.id.new_system_title_textview);
+        TextView allegiance_title_textview = (TextView) promptsView.findViewById(R.id.allegiance_title_textview);
+        final Spinner allegiance_spinner = (Spinner) promptsView.findViewById(R.id.allegiance_spinner);
+
+        Typeface font = Typeface.createFromAsset(activity.getAssets(), "fonts/eurostile.TTF");
+        userInput.setTypeface(font);
+        new_system_popup_title_textview.setTypeface(font);
+        new_system_title_textview.setTypeface(font);
+        allegiance_title_textview.setTypeface(font);
+
+
+
+        // set dialog message
+        alertDialogBuilder
+                .setCancelable(false)
+                .setPositiveButton("OK", null)
+                .setNegativeButton("CANCEL", null);
+
+        final boolean editing = miniSystem != null;
+
+        if(editing) {
+            alertDialogBuilder.setNeutralButton("DELETE", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    ArrayList<MiniSystem> minis = Storage.deleteSystem(miniSystem);
+                    MiniSystem[] miniSystems = new MiniSystem[minis.size()];
+                    miniSystems = minis.toArray(miniSystems);
+                    adapter.setSystems(miniSystems);
+                    adapter.notifyDataSetChanged();
+                }
+            });
+
+            userInput.setText(miniSystem.getName());
+            Object currentAllegianceObject = miniSystem.getMisc().get(AppConstants.ALLEGIANCE_MISC_KEY);
+            int foundIndex = -1;
+            if(currentAllegianceObject != null) {
+                String currentAllegianceText = (String) currentAllegianceObject;
+
+                int allegienceSpinnerCount = allegiance_spinner.getCount();
+                for(int i=0; i<allegienceSpinnerCount; i++) {
+                    if(currentAllegianceText.equals(allegiance_spinner.getItemAtPosition(i))) {
+                        foundIndex = i;
+                    }
+                }
+
+                if(foundIndex != -1) {
+                    allegiance_spinner.setSelection(foundIndex);
+                }
+            }
+        }
+
+
+
+
+        // create alert dialog
+        final AlertDialog alertDialog = alertDialogBuilder.create();
+
+
+        alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+
+            @Override
+            public void onShow(DialogInterface dialog) {
+
+                Button pos = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                pos.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View view) {
+                        String systemName = userInput.getText().toString();
+                        boolean isValid = Utils.validateSystemName(systemName, editing);
+                        String allegianceString = (String) allegiance_spinner.getSelectedItem();
+
+                        if (isValid) {
+                            ArrayList<MiniSystem> minis;
+                            MiniSystem[] miniSystems;
+
+                            if(editing) {
+                                minis = Storage.updateSystem(miniSystem.getName(), systemName, allegianceString);
+                                miniSystems = new MiniSystem[minis.size()];
+                                miniSystems = minis.toArray(miniSystems);
+                            }
+                            else {
+                                minis = Storage.createAndSaveNewSystem(systemName, allegianceString);
+                                miniSystems = new MiniSystem[minis.size()];
+                                miniSystems = minis.toArray(miniSystems);
+                            }
+
+                            adapter.setSystems(miniSystems);
+                            adapter.notifyDataSetChanged();
+
+                            alertDialog.dismiss();
+                        }
+                        else {
+                            alertDialog.findViewById(R.id.system_name_popup_error_message).setVisibility(View.VISIBLE);
+                        }
+
+
+                    }
+                });
+
+                // Cencel button
+                Button neg = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+                neg.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        alertDialog.dismiss();
+                    }
+                });
+            }
+        });
+
+
+
+        // show it
+        alertDialog.show();
+        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTypeface(font);
+        alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTypeface(font);
+
+
+
+    }
+
+
+
     // Massive function for the popup for creating or editing a station
     public static void showStationDialog(Activity activity, final myapps.alex.se.ednotes.model.System system, final Station station, final StationListAdapter adapter) {
         LayoutInflater li = LayoutInflater.from(activity);
@@ -313,16 +450,43 @@ public class Utils {
                 .setPositiveButton("OK", null)
                 .setNegativeButton("CANCEL", null);
 
+
+
         if(station != null) {
+            new_station_popup_title_textview.setText("EDIT STATION IN " + system.getName());
+
             alertDialogBuilder.setNeutralButton("DELETE", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     adapter.setSystem(Storage.deleteStationInSystem(system, station));
                     adapter.notifyDataSetChanged();
                 }
             });
+
+            userInput.setText(station.getName());
+
+
+            Object hasBlackMarketObject = station.getMisc().get(AppConstants.BLACK_MARKET);
+            if (hasBlackMarketObject != null) {
+                boolean hasBlackMarket = (boolean) hasBlackMarketObject;
+                black_market_checkbox.setChecked(hasBlackMarket);
+            }
+
+
+            Object stationTypeObject = station.getMisc().get(AppConstants.STATION_TYPE);
+
+            if (stationTypeObject != null) {
+                String stationType = (String) stationTypeObject;
+                station_button.setPressed("station".equals(stationType));
+                outpost_button.setPressed("outpost".equals(stationType));
+            }
+
+
         }
 
 
+
+
+        final String oldStationName = userInput.getText().toString();
 
         // create alert dialog
         final AlertDialog alertDialog = alertDialogBuilder.create();
@@ -338,15 +502,23 @@ public class Utils {
                     @Override
                     public void onClick(View view) {
                         String stationName = userInput.getText().toString();
-                        boolean isValid = Utils.validateStationName(stationName, system.getName());
+                        boolean isValid = Utils.validateStationName(stationName, system.getName(), station != null);
+
+
 
                         if (isValid) {
-                            String station_type_string = station_button.isPressed() ? "station" : "outpost";
-                            boolean hasBlackMarket = black_market_checkbox.isChecked();
+                            boolean isStation = station_button.isPressed();
+                            boolean isOutpost = outpost_button.isPressed();
+                            if(station == null) {
 
-                            adapter.setSystem(Storage.createAndSaveNewStationForSystem(system.getName(), station_type_string, hasBlackMarket, stationName));
+                                adapter.setSystem(Storage.createAndSaveNewStationForSystem(system.getName(), isStation ? "station" : (isOutpost?"outpost":null), black_market_checkbox.isChecked(), stationName));
+                            }
+                            else {
+                                adapter.setSystem(Storage.updateStationForSystem(system.getName(), isStation ? "station" : (isOutpost?"outpost":null), black_market_checkbox.isChecked(), oldStationName, stationName));
+                            }
+
+
                             adapter.notifyDataSetChanged();
-
                             alertDialog.dismiss();
                         }
                         else {

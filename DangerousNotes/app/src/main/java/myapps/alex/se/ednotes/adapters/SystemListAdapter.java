@@ -2,9 +2,7 @@ package myapps.alex.se.ednotes.adapters;
 
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
@@ -14,14 +12,12 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
 import myapps.alex.se.ednotes.R;
 import myapps.alex.se.ednotes.activities.StationListActivity;
 import myapps.alex.se.ednotes.common.AppConstants;
 import myapps.alex.se.ednotes.common.DNApplication;
+import myapps.alex.se.ednotes.common.Utils;
 import myapps.alex.se.ednotes.model.MiniSystem;
-import myapps.alex.se.ednotes.persistence.Storage;
 
 
 public class SystemListAdapter extends BaseAdapter {
@@ -145,10 +141,14 @@ public class SystemListAdapter extends BaseAdapter {
                              }
 				});
 
+                final SystemListAdapter sysAd = this;
                 convertView.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View v) {
 
+                        Utils.showSystemDialog(activity, sysAd, miniSystem);
+
+/*
                         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(activity);
                         // set prompts.xml to alertdialog builder
 //                        View promptsView = li.inflate(R.layout.commodity_info_prompt, null);
@@ -180,7 +180,7 @@ public class SystemListAdapter extends BaseAdapter {
                         // show it
                         alertDialog.show();
 
-
+*/
                         return false;
                     }
                 });
