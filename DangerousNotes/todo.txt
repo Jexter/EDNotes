@@ -2,11 +2,13 @@
 --- Next version TODO
 
 * New error message for duplicates and too high values on commodities
-* Allow renaming of systems and stations.
-* Get it working on 4.0 (back button trouble)
+
+
 
 --- Fixed for next version
 * New stations and systems now appear first in the list instead of last. Which reminds me I need to add some kind of filtering/sort feature when I can.
+* Get it working on 4.0 (back button trouble)
+* Allow renaming of systems and stations.
 
 --- TODO
 * Add filtering/sort.

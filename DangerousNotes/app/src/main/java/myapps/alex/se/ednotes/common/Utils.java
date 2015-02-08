@@ -129,7 +129,7 @@ public class Utils {
        return -1;
     }
 
-    public static boolean validateSystemName(String systemName, boolean editing) {
+    public static boolean validateSystemNameold(String systemName, boolean editing) {
         ArrayList<MiniSystem> miniSystems = Storage.loadMiniSystems();
 
         if(miniSystems != null && (editing == false)) {
@@ -143,6 +143,29 @@ public class Utils {
         return systemName.matches(AppConstants.SYSTEM_NAME_REGEX);
     }
 
+    public static String validateSystemName(String systemName, boolean editing) {
+        String errorMessage = "OK";
+
+        ArrayList<MiniSystem> miniSystems = Storage.loadMiniSystems();
+
+        if(miniSystems != null && (editing == false)) {
+            for (MiniSystem miniSystem : miniSystems) {
+                if (miniSystem.getName().equals(systemName)) {
+                    return "name already in use";
+                }
+            }
+        }
+
+        boolean regExpOK = systemName.matches(AppConstants.SYSTEM_NAME_REGEX);
+
+        if(!regExpOK) {
+            errorMessage = "Please use only real system names";
+        }
+
+        return errorMessage;
+    }
+
+
     public static SpannableString getTitleWithFont(Activity context, CharSequence titleText) {
         SpannableString s = new SpannableString(titleText);
         TypefaceSpan ts = new TypefaceSpan(context, "eurostile.TTF");
@@ -152,19 +175,25 @@ public class Utils {
     }
 
 
-    public static boolean validateStationName(String stationName, String systemName, boolean editing) {
-
+    public static String validateStationName(String stationName, String systemName, boolean editing) {
+        String errorMessage = "OK";
         ArrayList<Station> stationsAlreadyInSystem = Storage.loadStationsForSystem(systemName);
 
         if(stationsAlreadyInSystem != null && (editing == false)) {
             for (Station station : stationsAlreadyInSystem) {
                 if (stationName.equals(station.getName())) {
-                    return false;
+                    return "name already in use";
                 }
             }
         }
 
-        return stationName.matches(AppConstants.STATION_NAME_REGEX);
+        boolean regExpOK = stationName.matches(AppConstants.STATION_NAME_REGEX);
+
+        if(!regExpOK) {
+            errorMessage = "funny characters detected";
+        }
+
+        return errorMessage;
     }
 
 
@@ -287,8 +316,11 @@ public class Utils {
                 .setNegativeButton("CANCEL", null);
 
         final boolean editing = miniSystem != null;
+        new_system_popup_title_textview.setText("NEW SYSTEM");
 
         if(editing) {
+            new_system_popup_title_textview.setText("EDIT SYSTEM");
+
             alertDialogBuilder.setNeutralButton("DELETE", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     ArrayList<MiniSystem> minis = Storage.deleteSystem(miniSystem);
@@ -336,10 +368,10 @@ public class Utils {
                     @Override
                     public void onClick(View view) {
                         String systemName = userInput.getText().toString();
-                        boolean isValid = Utils.validateSystemName(systemName, editing);
+                        String errorMessage = Utils.validateSystemName(systemName, editing);
                         String allegianceString = (String) allegiance_spinner.getSelectedItem();
 
-                        if (isValid) {
+                        if (errorMessage.equals("OK")) {
                             ArrayList<MiniSystem> minis;
                             MiniSystem[] miniSystems;
 
@@ -361,6 +393,7 @@ public class Utils {
                         }
                         else {
                             alertDialog.findViewById(R.id.system_name_popup_error_message).setVisibility(View.VISIBLE);
+                            ((TextView) (alertDialog.findViewById(R.id.system_name_popup_error_message))).setText(errorMessage);
                         }
 
 
@@ -502,11 +535,11 @@ public class Utils {
                     @Override
                     public void onClick(View view) {
                         String stationName = userInput.getText().toString();
-                        boolean isValid = Utils.validateStationName(stationName, system.getName(), station != null);
+                        String errorMessage = Utils.validateStationName(stationName, system.getName(), station != null);
 
 
 
-                        if (isValid) {
+                        if ("OK".equals(errorMessage)) {
                             boolean isStation = station_button.isPressed();
                             boolean isOutpost = outpost_button.isPressed();
                             if(station == null) {
@@ -523,6 +556,7 @@ public class Utils {
                         }
                         else {
                             alertDialog.findViewById(R.id.station_name_popup_error_message).setVisibility(View.VISIBLE);
+                            ((TextView)(alertDialog.findViewById(R.id.station_name_popup_error_message))).setText(errorMessage);
                         }
 
 
