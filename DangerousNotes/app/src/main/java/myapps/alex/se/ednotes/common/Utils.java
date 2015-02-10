@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -23,6 +24,7 @@ import myapps.alex.se.ednotes.R;
 import myapps.alex.se.ednotes.adapters.StationListAdapter;
 import myapps.alex.se.ednotes.adapters.SystemListAdapter;
 import myapps.alex.se.ednotes.model.*;
+import myapps.alex.se.ednotes.model.System;
 import myapps.alex.se.ednotes.persistence.Storage;
 
 /**
@@ -284,6 +286,84 @@ public class Utils {
 
         return commodityTradeRoutes;
     }
+
+
+    public static ArrayList<CommodityTradeRoute> getStationToGalaxyTrades(Station fromStation, System fromSystem, ArrayList<System> systemsToLookIn) {
+        ArrayList<CommodityTradeRoute> trades = new ArrayList<CommodityTradeRoute>();
+
+        HashMap<Integer, Commodity> fromSupply = new HashMap<Integer, Commodity>();
+        HashMap<Integer, Commodity> fromDemand = new HashMap<Integer, Commodity>();
+
+        for(CommodityCategory cat : fromStation.getCategories()) {
+            for(Commodity com : cat.getCommodities()) {
+                if(com.getAvailability() != null) {
+                    if (com.getAvailability() == Availability.DEMAND) {
+                        fromDemand.put(com.getId(), com);
+                    }
+                    if (com.getAvailability() == Availability.SUPPLY) {
+                        fromSupply.put(com.getId(), com);
+                    }
+                }
+            }
+        }
+
+        for(System toSystem : systemsToLookIn) {
+            for(Station toStation : toSystem.getStations()) {
+                for (CommodityCategory cat : toStation.getCategories()) {
+                    for (Commodity toCom : cat.getCommodities()) {
+                        if (toCom.getAvailability() != null) {
+                            Commodity fromCom;
+
+                            if (toCom.getAvailability() == Availability.DEMAND) {
+                                fromCom = fromSupply.get(toCom.getId());
+
+                                if (fromCom != null) {
+                                    int profit = toCom.getPrice() - fromCom.getPrice();
+                                    if (profit > 0) {
+                                        CommodityTradeRoute trade = new CommodityTradeRoute();
+                                        trade.setFromStation(fromStation);
+                                        trade.setFromSystem(fromSystem);
+                                        trade.setFromStationCommodity(fromCom);
+                                        trade.setToStation(toStation);
+                                        trade.setToSystem(toSystem);
+                                        trade.setToStationCommodity(toCom);
+                                        trade.setProfit(profit);
+                                        trades.add(trade);
+                                    }
+                                }
+                            }
+
+                            if (toCom.getAvailability() == Availability.SUPPLY) {
+                                fromCom = fromDemand.get(toCom.getId());
+
+                                if (fromCom != null) {
+                                    int profit = fromCom.getPrice() - toCom.getPrice();
+                                    if (profit > 0) {
+                                        CommodityTradeRoute trade = new CommodityTradeRoute();
+                                        trade.setFromStation(toStation);
+                                        trade.setFromSystem(toSystem);
+                                        trade.setFromStationCommodity(toCom);
+                                        trade.setToStation(fromStation);
+                                        trade.setToSystem(fromSystem);
+                                        trade.setToStationCommodity(fromCom);
+                                        trade.setProfit(profit);
+                                        trades.add(trade);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        Log.d("TradeHelper found:", trades.size()==0?"nothing":trades.size()+" possible trades (omg!)");
+
+        return trades;
+    }
+
+
+
 
     public static void showSystemDialog(Activity activity, final SystemListAdapter adapter, final MiniSystem miniSystem) {
 

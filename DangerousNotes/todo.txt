@@ -1,4 +1,4 @@
-﻿
+
 --- Next version TODO
 
 * New error message for duplicates and too high values on commodities
@@ -11,6 +11,7 @@
 * Allow renaming of systems and stations.
 
 --- TODO
+* Clean up code in commodities popup where comPrice = "0"
 * Add filtering/sort.
 * Fix loading times even more
 * Add station info: notes

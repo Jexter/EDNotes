@@ -42,26 +42,8 @@ public class Storage {
     }
 
     public static ArrayList<MiniSystem> loadMiniSystems() {
-
         ArrayList<MiniSystem> miniSystems = (ArrayList<MiniSystem>) deserializeObject(AppConstants.MINI_SYSTEMS_FILENAME);
-/*
-        if(miniSystems == null) {
-            Log.d("Storage says", "miniSystems was null, saving some premade ones");
-            ArrayList<MiniSystem> newMiniSystems = new ArrayList<MiniSystem>();
 
-            MiniSystem ms1 = new MiniSystem("Leesti");
-            MiniSystem ms2 = new MiniSystem("Reorte");
-
-            newMiniSystems.add(ms1);
-            newMiniSystems.add(ms2);
-
-            saveMiniSystems(newMiniSystems);
-            miniSystems = (ArrayList<MiniSystem>) deserializeObject(AppConstants.MINI_SYSTEMS_FILENAME);
-        }
-        else {
-            Log.d("Storage says", "found some miniSystems (" + miniSystems.size() + ") on disk!");
-        }
-*/
         return miniSystems;
     }
 
@@ -69,7 +51,20 @@ public class Storage {
         serializeObject(miniSystems, AppConstants.MINI_SYSTEMS_FILENAME);
     }
 
+    public static ArrayList<System> loadAllSystemsForTrade() {
+        ArrayList<System> allSystems = new ArrayList<System>();
+        ArrayList<MiniSystem> miniSystems = loadMiniSystems();
 
+        for(MiniSystem miniSystem : miniSystems) {
+            System system = loadSystem(miniSystem.getName());
+
+            if(system.getStations() != null && system.getStations().size() > 0) {
+                allSystems.add(system);
+            }
+        }
+
+        return allSystems;
+    }
 
 
 
