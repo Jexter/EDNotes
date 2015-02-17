@@ -78,7 +78,7 @@
             style="@style/text_small"
             android:singleLine="true">
 
-            <requestFocus />
+            />
         </EditText>
     </LinearLayout>
 

@@ -12,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -218,6 +220,8 @@ public class CommoditiesListAdapter extends BaseAdapter {
                                 supply_button.setPressed(commodity.getAvailability() == Availability.DEMAND ? false : true);
                                 userInput.setText(commodity.getPrice()>0?String.valueOf(commodity.getPrice()):"");
 
+
+
                             demand_button.setOnTouchListener(new View.OnTouchListener() {
                                 @Override
                                 public boolean onTouch(View v, MotionEvent event) {
@@ -243,8 +247,8 @@ public class CommoditiesListAdapter extends BaseAdapter {
                                 }
                             });
 
-
-
+//                            InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+//                            imm.showSoftInput(userInput, InputMethodManager.SHOW_IMPLICIT);
 
                             // set dialog message
                                 alertDialogBuilder
@@ -307,10 +311,27 @@ public class CommoditiesListAdapter extends BaseAdapter {
                                     }
                                 });
 
-                                // show it
+                            userInput.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                                @Override
+                                public void onFocusChange(View v, boolean hasFocus) {
+                                    if(hasFocus) {
+                                        alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+//                                        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+//                                        imm.showSoftInput(v, InputMethodManager.SHOW_FORCED);
+                                    }
+                                }
+                            });
+
+                            // show it
                                 alertDialog.show();
+
+                            userInput.requestFocus();
+
                                 alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTypeface(font);
                                 alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTypeface(font);
+
+//                                userInput.requestFocus();
+  //                              alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
                             }
 
