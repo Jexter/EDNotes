@@ -11,7 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,6 +23,7 @@ import myapps.alex.se.ednotes.model.CommodityTradeRoute;
 import myapps.alex.se.ednotes.model.Station;
 import myapps.alex.se.ednotes.model.System;
 import myapps.alex.se.ednotes.persistence.Storage;
+import myapps.alex.se.ednotes.tasks.FindTradesTask;
 
 public class CommoditiesListFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
@@ -59,15 +59,21 @@ public class CommoditiesListFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.find_matches) {
-
             long timeStamp = new Date().getTime();
-            if(systemsToLookIn == null) {
-                systemsToLookIn = Storage.loadAllSystemsForTrade();
-            }
+
+
+            new FindTradesTask() {
+                @Override
+                public void onPostExecute(ArrayList<CommodityTradeRoute> trades) {
+                    Log.d("FindTradesTask", "onPostExecute");
+                }
+            }.execute(stationWeWantToLookAt, currentSystem, systemsToLookIn, getActivity());
+
+
 
 //            Log.d("LOADING ALL SYSTEMS:", "Took " + timeStamp + "ms");
 
-            ArrayList<CommodityTradeRoute> trades = Utils.getStationToGalaxyTrades(stationWeWantToLookAt, currentSystem, systemsToLookIn);
+
             timeStamp = (new Date().getTime() - timeStamp);
 
             Log.d("TRADES", "Took " + timeStamp + "ms");

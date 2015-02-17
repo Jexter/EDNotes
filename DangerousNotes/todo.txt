@@ -1,7 +1,11 @@
-
+﻿
 --- Next version TODO
 
-* New error message for duplicates and too high values on commodities
+* New error message for out of bounds prices
+* Trade finder: abort task when going back
+
+* Trade finder: show abort button/dialog
+
 
 
 
@@ -9,8 +13,12 @@
 * New stations and systems now appear first in the list instead of last. Which reminds me I need to add some kind of filtering/sort feature when I can.
 * Get it working on 4.0 (back button trouble)
 * Allow renaming of systems and stations.
+* New error message for duplicates
+
 
 --- TODO
+* Trade finder: show progress bar
+
 * Clean up code in commodities popup where comPrice = "0"
 * Add filtering/sort.
 * Fix loading times even more
