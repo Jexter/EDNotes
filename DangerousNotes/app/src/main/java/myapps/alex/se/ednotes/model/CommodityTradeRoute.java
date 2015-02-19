@@ -1,9 +1,11 @@
 package myapps.alex.se.ednotes.model;
 
+import java.io.Serializable;
+
 /**
  * Created by atkin_000 on 2015-01-31.
  */
-public class CommodityTradeRoute {
+public class CommodityTradeRoute implements Serializable {
     private System fromSystem;
     private System toSystem;
     private Station fromStation;

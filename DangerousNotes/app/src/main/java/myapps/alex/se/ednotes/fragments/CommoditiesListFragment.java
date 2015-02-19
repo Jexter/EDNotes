@@ -1,5 +1,6 @@
 package myapps.alex.se.ednotes.fragments;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import myapps.alex.se.ednotes.R;
+import myapps.alex.se.ednotes.activities.TradeListActivity;
 import myapps.alex.se.ednotes.adapters.CommoditiesListAdapter;
 import myapps.alex.se.ednotes.common.AppConstants;
 import myapps.alex.se.ednotes.common.Utils;
@@ -33,8 +35,6 @@ public class CommoditiesListFragment extends Fragment {
     private ArrayList<System> systemsToLookIn;
 
     public CommoditiesListFragment() {
-        Log.d("commoditieslistfragment says", "hi");
-        // Required empty public constructor
     }
 
     @Override
@@ -65,7 +65,11 @@ public class CommoditiesListFragment extends Fragment {
             new FindTradesTask() {
                 @Override
                 public void onPostExecute(ArrayList<CommodityTradeRoute> trades) {
-                    Log.d("FindTradesTask", "onPostExecute");
+                    Intent intent = new Intent(getActivity(), TradeListActivity.class);
+                    intent.putExtra(AppConstants.TRADES, trades);
+
+
+                    startActivity(intent);
                 }
             }.execute(stationWeWantToLookAt, currentSystem, systemsToLookIn, getActivity());
 
