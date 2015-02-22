@@ -31,7 +31,7 @@ public class FindTradesTask extends AsyncTask<Object, Integer, ArrayList<Commodi
         System currentSystem = (System) params[1];
         ArrayList<System> systemsToLookIn = (ArrayList<System>) params[2];
         final Activity activity = (Activity) params[3];
-
+        final FindTradesTask task = this;
 
         activity.runOnUiThread(new Runnable() {
             public void run() {
@@ -43,7 +43,7 @@ public class FindTradesTask extends AsyncTask<Object, Integer, ArrayList<Commodi
                     @Override
                     public void onCancel(DialogInterface dialog) {
                         Log.d("TradeFinderTask", "Cancelled!!!");
-
+                        task.cancel(true);
                     }
                 });
                 pd.show();
@@ -56,6 +56,10 @@ public class FindTradesTask extends AsyncTask<Object, Integer, ArrayList<Commodi
         // If we got an empty galaxy we need to load it all
         if(systemsToLookIn == null) {
             systemsToLookIn = Storage.loadAllSystemsForTrade();
+        }
+
+        if(isCancelled()) {
+            return null;
         }
 
         if(pd.isShowing()) {
@@ -71,6 +75,10 @@ public class FindTradesTask extends AsyncTask<Object, Integer, ArrayList<Commodi
 
         if(pd != null && pd.isShowing()){
             pd.dismiss();
+        }
+
+        if(isCancelled()) {
+            return null;
         }
 
         return trades;

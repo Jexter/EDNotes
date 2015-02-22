@@ -1,14 +1,17 @@
 package myapps.alex.se.ednotes.fragments;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+
 import myapps.alex.se.ednotes.R;
 import myapps.alex.se.ednotes.adapters.TradesListAdapter;
+import myapps.alex.se.ednotes.model.CommodityTradeRoute;
 
 public class TradesListFragment extends Fragment {
 
@@ -37,6 +40,11 @@ public class TradesListFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         ((ListView)view.findViewById(R.id.station_listview)).setAdapter(adapter);
     }
+
+    public void setTrades(ArrayList<CommodityTradeRoute> trades) {
+        adapter.setTrades(trades);
+    }
+
 
     @Override
     public void onDetach() {

@@ -65,12 +65,19 @@ public class CommoditiesListFragment extends Fragment {
             new FindTradesTask() {
                 @Override
                 public void onPostExecute(ArrayList<CommodityTradeRoute> trades) {
-                    Intent intent = new Intent(getActivity(), TradeListActivity.class);
-                    intent.putExtra(AppConstants.TRADES, trades);
 
-
-                    startActivity(intent);
+                    if(trades != null) {
+                        Intent intent = new Intent(getActivity(), TradeListActivity.class);
+                        intent.putExtra(AppConstants.TRADES, trades);
+                        startActivity(intent);
+                    }
                 }
+
+                @Override
+                public void onCancelled(ArrayList<CommodityTradeRoute> trades) {
+                    Log.d("Task says", "CANCELLED! not doing anything");
+                }
+
             }.execute(stationWeWantToLookAt, currentSystem, systemsToLookIn, getActivity());
 
 
