@@ -7,7 +7,7 @@
         android:id="@+id/add_new_station"
         android:icon="@drawable/ic_action_new"
         app:showAsAction="always"
-        android:title="Add new system">
+        android:title="Add new station">
     </item>
 
 </menu>

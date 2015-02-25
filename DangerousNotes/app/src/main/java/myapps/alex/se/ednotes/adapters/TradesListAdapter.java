@@ -3,6 +3,7 @@ package myapps.alex.se.ednotes.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import myapps.alex.se.ednotes.R;
+import myapps.alex.se.ednotes.common.AppConstants;
 import myapps.alex.se.ednotes.model.CommodityTradeRoute;
 
 
@@ -78,16 +80,23 @@ public class TradesListAdapter extends BaseAdapter {
 			case TRADE:
 				if (convertView == null) {		
 					LayoutInflater layoutInflater_issue = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-					convertView = layoutInflater_issue.inflate(R.layout.station_list_item, null);
+					convertView = layoutInflater_issue.inflate(R.layout.trade_list_single_item, null);
 		
-//					viewHolder = new ViewHolder();
-//                    viewHolder.station_name_textview = (TextView) convertView.findViewById(R.id.station_name_textview);
-//                    viewHolder.blackmarket_textview = (TextView) convertView.findViewById(R.id.blackmarket_textview);
-//                    viewHolder.station_type_icon = (ImageView) convertView.findViewById(R.id.station_type_icon);
-//                    Typeface font = Typeface.createFromAsset(activity.getAssets(), "fonts/eurostile.TTF");
-//                    viewHolder.station_name_textview.setTypeface(font);
-//                    viewHolder.blackmarket_textview.setTypeface(font);
-//                    //viewHolder.last_visited_textview = (TextView) convertView.findViewById(R.id.last_visited_textview);
+					viewHolder = new ViewHolder();
+                    viewHolder.fromstation_name_textview = (TextView) convertView.findViewById(R.id.fromstation_name_textview);
+                    viewHolder.tostation_name_textview = (TextView) convertView.findViewById(R.id.tostation_name_textview);
+                    viewHolder.commodity_textview = (TextView) convertView.findViewById(R.id.commodity_textview);
+                    viewHolder.profit_textview = (TextView) convertView.findViewById(R.id.profit_textview);
+
+                    viewHolder.fromstation_type_icon = (ImageView) convertView.findViewById(R.id.fromstation_type_icon);
+                    viewHolder.tostation_type_icon = (ImageView) convertView.findViewById(R.id.tostation_type_icon);
+
+                    Typeface font = Typeface.createFromAsset(activity.getAssets(), "fonts/eurostile.TTF");
+                    viewHolder.fromstation_name_textview.setTypeface(font);
+                    viewHolder.tostation_name_textview.setTypeface(font);
+                    viewHolder.commodity_textview.setTypeface(font);
+                    viewHolder.profit_textview.setTypeface(font);
+                    //viewHolder.last_visited_textview = (TextView) convertView.findViewById(R.id.last_visited_textview);
 
 					convertView.setTag(viewHolder);
 				}
@@ -95,18 +104,29 @@ public class TradesListAdapter extends BaseAdapter {
 					viewHolder = (ViewHolder) convertView.getTag();
 				}
 			
-				final CommodityTradeRoute station = trades[position];
-/*
-				viewHolder.system_name_textview.setText(station.getName());
-                viewHolder.last_visited_textview.setText(Utils.getDateAsTimePassed(station.getLastVisited()));
+				final CommodityTradeRoute tradeRoute = trades[position];
 
-                String stationCountText = "No stations entered here yet";
-                stationCountText = station.getStationCount() + " stations";
+                viewHolder.fromstation_name_textview.setText(tradeRoute.getFromSystem().getName() + " [" + tradeRoute.getFromStation().getName() + "]");
+                viewHolder.tostation_name_textview.setText(tradeRoute.getToSystem().getName() + " [" + tradeRoute.getToStation().getName() + "]");
+                viewHolder.commodity_textview.setText(tradeRoute.getFromStationCommodity().getName());
+                viewHolder.profit_textview.setText(" (" + tradeRoute.getProfit() + " profit)");
 
-                viewHolder.station_count_textView.setText(stationCountText);
-*/
+                String fromstation_type_string = (String) tradeRoute.getFromStation().getMisc().get(AppConstants.STATION_TYPE);
+                String tostation_type_string = (String) tradeRoute.getToStation().getMisc().get(AppConstants.STATION_TYPE);
 
+                if("station".equals(fromstation_type_string)) {
+                    viewHolder.fromstation_type_icon.setImageResource(R.drawable.station);
+                }
+                else {
+                    viewHolder.fromstation_type_icon.setImageResource(R.drawable.outpost);
+                }
 
+                if("station".equals(tostation_type_string)) {
+                    viewHolder.tostation_type_icon.setImageResource(R.drawable.station);
+                }
+                else {
+                    viewHolder.tostation_type_icon.setImageResource(R.drawable.outpost);
+                }
 
                 //viewHolder.last_visited_textview.setText(lastVisitedString);
 
@@ -121,7 +141,7 @@ public class TradesListAdapter extends BaseAdapter {
 //                    }
 //                });
 
-                final TradesListAdapter thisAdapter = this;
+
 
 
 
@@ -132,11 +152,12 @@ public class TradesListAdapter extends BaseAdapter {
 	}
 
 	private static class ViewHolder {
-		TextView station_name_textview, blackmarket_textview;//, last_visited_textview;
-        ImageView station_type_icon;
+		TextView fromstation_name_textview, tostation_name_textview, commodity_textview, profit_textview;
+        ImageView fromstation_type_icon, tostation_type_icon;
 	}
 	
 	public void setTrades(ArrayList<CommodityTradeRoute> trades) {
+
         CommodityTradeRoute[] tempTrades = new CommodityTradeRoute[trades.size()];
         this.trades = trades.toArray(tempTrades);
 

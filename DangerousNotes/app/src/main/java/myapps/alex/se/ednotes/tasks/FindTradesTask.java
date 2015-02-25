@@ -62,7 +62,7 @@ public class FindTradesTask extends AsyncTask<Object, Integer, ArrayList<Commodi
             return null;
         }
 
-        if(pd.isShowing()) {
+        if(pd != null && pd.isShowing()) {
             trades = Utils.getStationToGalaxyTrades(stationWeWantToLookAt, currentSystem, systemsToLookIn);
         }
         else {

@@ -2,18 +2,18 @@
 --- Next version TODO
 
 * New error message for out of bounds prices
-* Trade finder: abort task when going back
 
-* Trade finder: show abort button/dialog
+* Pressable stations in trades list (selectors are behaving funnily atm)
 
 
 
 
 --- Fixed for next version
-* New stations and systems now appear first in the list instead of last. Which reminds me I need to add some kind of filtering/sort feature when I can.
-* Get it working on 4.0 (back button trouble)
-* Allow renaming of systems and stations.
-* New error message for duplicates
+* New stations and systems now appear first in the list instead of last.
+* Now works on devices down to 4.0 (and not just 4.1 and up) 
+* Allow renaming of systems and stations without recreating them.
+* New error messages for things like duplicate names and ridiculous prices
+* Commodity price matcher accessable from the commodities list of each station. It has a look at all your other stations and finds possible trades. This feature can be improved upon in so many ways it's not even funny, but at least the core bit is there now.
 
 
 --- TODO

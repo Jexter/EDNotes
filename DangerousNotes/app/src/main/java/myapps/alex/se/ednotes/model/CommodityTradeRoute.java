@@ -12,6 +12,8 @@ public class CommodityTradeRoute implements Serializable {
     private Station toStation;
     private Commodity fromStationCommodity;
     private Commodity toStationCommodity;
+    private Commodity backCommodity;
+
     private int profit;
 
 

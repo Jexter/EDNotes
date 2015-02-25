@@ -5,9 +5,9 @@
 
     <item
         android:id="@+id/find_matches"
-        android:icon="@drawable/ic_action_new"
+        android:icon="@drawable/trade"
         app:showAsAction="always"
-        android:title="Add new system">
+        android:title="Find trades">
     </item>
 
 </menu>
