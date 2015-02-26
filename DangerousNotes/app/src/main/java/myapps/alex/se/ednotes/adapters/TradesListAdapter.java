@@ -3,6 +3,7 @@ package myapps.alex.se.ednotes.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import myapps.alex.se.ednotes.R;
+import myapps.alex.se.ednotes.activities.CommoditiesListActivity;
 import myapps.alex.se.ednotes.common.AppConstants;
 import myapps.alex.se.ednotes.model.CommodityTradeRoute;
 
@@ -127,6 +129,28 @@ public class TradesListAdapter extends BaseAdapter {
                 else {
                     viewHolder.tostation_type_icon.setImageResource(R.drawable.outpost);
                 }
+
+                viewHolder.fromstation_name_textview.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(activity, CommoditiesListActivity.class);
+                        intent.putExtra(AppConstants.STATION_NAME, tradeRoute.getFromStation().getName());
+                        intent.putExtra(AppConstants.SYSTEM_NAME, tradeRoute.getFromSystem().getName());
+
+                        activity.startActivity(intent);
+                    }
+                });
+
+                viewHolder.tostation_name_textview.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(activity, CommoditiesListActivity.class);
+                        intent.putExtra(AppConstants.STATION_NAME, tradeRoute.getToStation().getName());
+                        intent.putExtra(AppConstants.SYSTEM_NAME, tradeRoute.getToSystem().getName());
+
+                        activity.startActivity(intent);
+                    }
+                });
 
                 //viewHolder.last_visited_textview.setText(lastVisitedString);
 
