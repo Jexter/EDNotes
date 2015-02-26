@@ -13,7 +13,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -270,9 +269,9 @@ public class CommoditiesListAdapter extends BaseAdapter {
                                             @Override
                                             public void onClick(View view) {
                                                 String comPrice = userInput.getText().toString();
-                                                boolean isValid = Utils.validateCommodityPrice(comPrice);
+                                                String validationResponse = Utils.validateCommodityPrice(comPrice);
 
-                                                if(isValid || "".equals(comPrice)) {
+                                                if("OK".equals(validationResponse) || "".equals(comPrice)) {
                                                     if("".equals(comPrice)) {
                                                         comPrice = "0";
                                                     }
@@ -286,7 +285,6 @@ public class CommoditiesListAdapter extends BaseAdapter {
                                                     }
 
 
-                                                    //system.getMisc().put(AppConstants.STATION_TYPE, stationType);
                                                     Storage.saveSystem(system);
                                                     notifyDataSetChanged();
 
@@ -294,6 +292,7 @@ public class CommoditiesListAdapter extends BaseAdapter {
                                                 }
                                                 else {
                                                     alertDialog.findViewById(R.id.price_popup_error_message).setVisibility(View.VISIBLE);
+                                                    ((TextView)(alertDialog.findViewById(R.id.price_popup_error_message))).setText(validationResponse);
                                                 }
 
 

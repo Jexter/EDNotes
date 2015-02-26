@@ -1,10 +1,10 @@
 package myapps.alex.se.ednotes.common;
 
+import java.util.ArrayList;
+
 import myapps.alex.se.ednotes.model.Commodity;
 import myapps.alex.se.ednotes.model.CommodityCategory;
 import myapps.alex.se.ednotes.model.Station;
-
-import java.util.ArrayList;
 
 /**
  * Created by atkinson on 19/12/14.
@@ -37,8 +37,8 @@ public class StationFactory {
 
         ArrayList<Commodity> industrialMaterials = new ArrayList<Commodity>();
         industrialMaterials.add(new Commodity("POLYMERS", 17));
-        industrialMaterials.add(new Commodity("SUPERCONDUCTORS", 18));
         industrialMaterials.add(new Commodity("SEMICONDUCTORS", 19));
+        industrialMaterials.add(new Commodity("SUPERCONDUCTORS", 18));
 
         ArrayList<Commodity> legalDrugs = new ArrayList<Commodity>();
         legalDrugs.add(new Commodity("BEER", 20));

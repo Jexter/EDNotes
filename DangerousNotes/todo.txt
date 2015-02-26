@@ -1,46 +1,48 @@
 ﻿
 --- Next version TODO
 
-* New error message for out of bounds prices
 
-* Pressable stations in trades list (selectors are behaving funnily atm)
 
 
 
 
 --- Fixed for next version
 * New stations and systems now appear first in the list instead of last.
-* Now works on devices down to 4.0 (and not just 4.1 and up) 
+* App now works on devices down to 4.0 (down from 4.1). 
 * Allow renaming of systems and stations without recreating them.
-* New error messages for things like duplicate names and ridiculous prices
-* Commodity price matcher accessable from the commodities list of each station. It has a look at all your other stations and finds possible trades. This feature can be improved upon in so many ways it's not even funny, but at least the core bit is there now.
+* New error messages for things like duplicate names and ridiculous prices.
+* Swapped places for Semiconductors and Superconductors in the list of commodities, although you'll only see it when creating a new station.
+* Commodity price matcher accessable from the commodities list of each station. It's the double orange arrows icon up in the top right corner. Nothing to get excited about really, it just looks at all your other stations and finds possible trades. This feature can be improved upon in so many ways it's not even funny but at least the core bit is there. I've done a bit of testing but if you find it's giving you funny results PLEASE let me know so I can fix it because the only thing worse than no information at all is false information!
+
+Anyway, have a good weekend and fly utterly dangerously.
 
 
 --- TODO
-* Trade finder: show progress bar
 
-* Clean up code in commodities popup where comPrice = "0"
-* Add filtering/sort.
+* New error message for out of bounds prices
+* Fix renaming to duplicate names* Add filtering/sort.
 * Fix loading times even more
 * Add station info: notes
 * Add system info: notes
-* Use all three supply/demand states
+* Use all three supply/demand states?
 * Flashes white when restarting app after garbaged (why does it not crash?)
 * Have "last updated" on systems and stations
 * Set font on delete popup
 * Add instructions on empty lists
-* Implement commodity matching
+
 * Add clear button to commodity price popup
 * Add last visited to systems and stations
 * Make matchmaking screen
 * Keyboards should start with proper key types and start opened and in upper case if possible
 * Put loading operations in tasks (maybe)
 * Check if notifyDataSetChanged() is called unnecessarily
-* Find proper icon for matchmaking
+
 * Smaller text on smaller screens
 ---
 
 DONE
+* Find proper icon for matchmaking
+* Trade finder: show progress bar
 * Add station info: black market
 * Add station info: station/outpost graphic
 * Add system info: Allegiance
@@ -51,7 +53,7 @@ DONE
 * Thicker rows for stations and systems
 * Selectors
 * Differentiate SUPPLY and DEMAND better
-
+* Implement commodity matching
 * Find a nice icon
 * Set font in all 3 lists
 

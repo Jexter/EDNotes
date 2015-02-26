@@ -157,7 +157,12 @@ public class Storage {
             if(oldSystemName.equals(miniSystem.getName())) {
                 miniSystem.setName(newSystemName);
                 miniSystem.getMisc().put(AppConstants.ALLEGIANCE_MISC_KEY, allegianceString);
-                renameFile(AppConstants.SYSTEM_BASE_FILENAME + oldSystemName, AppConstants.SYSTEM_BASE_FILENAME + newSystemName);
+
+                System system = loadSystem(oldSystemName);
+                system.setName(newSystemName);
+                saveSystem(system);
+                deleteFile(AppConstants.SYSTEM_BASE_FILENAME + oldSystemName);
+
                 break;
             }
         }

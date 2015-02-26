@@ -150,10 +150,10 @@ public class Utils {
 
         ArrayList<MiniSystem> miniSystems = Storage.loadMiniSystems();
 
-        if(miniSystems != null && (editing == false)) {
+        if(miniSystems != null) { // && (editing == false)) {
             for (MiniSystem miniSystem : miniSystems) {
                 if (miniSystem.getName().equals(systemName)) {
-                    return "name already in use";
+                    return "Name already in use";
                 }
             }
         }
@@ -181,10 +181,10 @@ public class Utils {
         String errorMessage = "OK";
         ArrayList<Station> stationsAlreadyInSystem = Storage.loadStationsForSystem(systemName);
 
-        if(stationsAlreadyInSystem != null && (editing == false)) {
+        if(stationsAlreadyInSystem != null) { // && (editing == false)) {
             for (Station station : stationsAlreadyInSystem) {
                 if (stationName.equals(station.getName())) {
-                    return "name already in use";
+                    return "Name already in use";
                 }
             }
         }
@@ -192,19 +192,19 @@ public class Utils {
         boolean regExpOK = stationName.matches(AppConstants.STATION_NAME_REGEX);
 
         if(!regExpOK) {
-            errorMessage = "funny characters detected";
+            errorMessage = "Funny characters detected";
         }
 
         return errorMessage;
     }
 
 
-    public static boolean validateCommodityPrice(String price) {
+    public static String validateCommodityPrice(String price) {
 
         boolean regexMatches = price.matches(AppConstants.COMMODITY_PRICE_REGEX);
 
         if(!regexMatches) {
-            return false;
+            return "Only numerics allowed here";
         }
         else {
             Integer priceInt;
@@ -213,10 +213,10 @@ public class Utils {
                 priceInt = Integer.valueOf(price);
             }
             catch(Exception e) {
-                return false;
+                return "Only numerics allowed here";
             }
 
-            return priceInt < AppConstants.MAX_COMMODITY_PRICE ? true : false;
+            return priceInt < AppConstants.MAX_COMMODITY_PRICE ? "OK" : "Please keep below a million";
         }
     }
 
