@@ -44,8 +44,8 @@ public class StationListFragment extends Fragment {
         }
 
         adapter = new StationListAdapter(getActivity());
-
         systemName = getActivity().getIntent().getStringExtra(AppConstants.SYSTEM_NAME);
+
         loadedSystem = Storage.loadSystem(systemName);
 
     }
@@ -70,6 +70,7 @@ public class StationListFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
 
         ((ListView)view.findViewById(R.id.station_listview)).setAdapter(adapter);
+
 
         ArrayList<Station> stations = loadedSystem.getStations();
 

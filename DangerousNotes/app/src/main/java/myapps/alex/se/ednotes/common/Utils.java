@@ -451,7 +451,7 @@ public class Utils {
                         String errorMessage = Utils.validateSystemName(systemName, editing);
                         String allegianceString = (String) allegiance_spinner.getSelectedItem();
 
-                        if (errorMessage.equals("OK")) {
+                        if (errorMessage.equals("OK") || (editing && miniSystem.getName().equals(systemName))) {
                             ArrayList<MiniSystem> minis;
                             MiniSystem[] miniSystems;
 
@@ -615,11 +615,12 @@ public class Utils {
                     @Override
                     public void onClick(View view) {
                         String stationName = userInput.getText().toString();
-                        String errorMessage = Utils.validateStationName(stationName, system.getName(), station != null);
+                        boolean editing = (station != null);
+                        String errorMessage = Utils.validateStationName(stationName, system.getName(), editing);
 
 
 
-                        if ("OK".equals(errorMessage)) {
+                        if ("OK".equals(errorMessage) || (editing && station.getName().equals(stationName))) {
                             boolean isStation = station_button.isPressed();
                             boolean isOutpost = outpost_button.isPressed();
                             if(station == null) {

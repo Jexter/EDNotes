@@ -160,8 +160,8 @@ public class Storage {
 
                 System system = loadSystem(oldSystemName);
                 system.setName(newSystemName);
-                saveSystem(system);
                 deleteFile(AppConstants.SYSTEM_BASE_FILENAME + oldSystemName);
+                saveSystem(system);
 
                 break;
             }
