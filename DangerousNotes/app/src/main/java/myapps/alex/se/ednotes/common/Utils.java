@@ -17,13 +17,20 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 
 import myapps.alex.se.ednotes.R;
 import myapps.alex.se.ednotes.adapters.StationListAdapter;
 import myapps.alex.se.ednotes.adapters.SystemListAdapter;
-import myapps.alex.se.ednotes.model.*;
+import myapps.alex.se.ednotes.model.Availability;
+import myapps.alex.se.ednotes.model.Commodity;
+import myapps.alex.se.ednotes.model.CommodityCategory;
+import myapps.alex.se.ednotes.model.CommodityTradeRoute;
+import myapps.alex.se.ednotes.model.MiniSystem;
+import myapps.alex.se.ednotes.model.Station;
 import myapps.alex.se.ednotes.model.System;
 import myapps.alex.se.ednotes.persistence.Storage;
 
@@ -664,6 +671,16 @@ public class Utils {
     }
 
 
+    public static void sortTrades(ArrayList<CommodityTradeRoute> trades) {
+
+        Collections.sort(trades, new Comparator<CommodityTradeRoute>() {
+
+            @Override
+            public int compare(CommodityTradeRoute ctr1, CommodityTradeRoute ctr2) {
+                return (ctr1.getProfit() < ctr2.getProfit() ) ? 1: (ctr1.getProfit() > ctr2.getProfit() ) ? -1:0 ;
+            }
+        });
+    }
 }
 
 

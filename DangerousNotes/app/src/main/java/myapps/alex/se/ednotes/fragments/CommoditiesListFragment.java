@@ -67,6 +67,10 @@ public class CommoditiesListFragment extends Fragment {
                 public void onPostExecute(ArrayList<CommodityTradeRoute> trades) {
 
                     if(trades != null) {
+
+                        Utils.sortTrades(trades);
+
+
                         Intent intent = new Intent(getActivity(), TradeListActivity.class);
                         intent.putExtra(AppConstants.TRADES, trades);
                         startActivity(intent);
