@@ -30,7 +30,7 @@ public class StationFactory {
         foods.add(new Commodity("COFFEE", 10));
         foods.add(new Commodity("FISH", 11));
         foods.add(new Commodity("FOOD CARTRIDGES", 12));
-        foods.add(new Commodity("FRUIT AND VEGITABLES", 13));
+        foods.add(new Commodity("FRUIT AND VEGETABLES", 13));
         foods.add(new Commodity("GRAIN", 14));
         foods.add(new Commodity("SYNTHETIC MEAT", 15));
         foods.add(new Commodity("TEA", 16));

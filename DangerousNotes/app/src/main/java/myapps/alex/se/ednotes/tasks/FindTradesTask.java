@@ -64,6 +64,7 @@ public class FindTradesTask extends AsyncTask<Object, Integer, ArrayList<Commodi
 
         if(pd != null && pd.isShowing()) {
             trades = Utils.getStationToGalaxyTrades(stationWeWantToLookAt, currentSystem, systemsToLookIn);
+            Utils.sortTrades(trades);
         }
         else {
             return null;

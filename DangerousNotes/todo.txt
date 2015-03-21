@@ -1,20 +1,17 @@
 ﻿
 --- Next version TODO
 
-
+* Spelling errors (Vegetables) maybe semi/super again?
+* Make files visible on device
+* Google cloud?
+* Sorting lists (alpha at least)
+* Options for trade finder?
 
 
 
 
 --- Fixed for next version
-* New stations and systems now appear first in the list instead of last.
-* App now works on devices down to 4.0 (down from 4.1). 
-* Allow renaming of systems and stations without recreating them.
-* New error messages for things like duplicate names and ridiculous prices.
-* Swapped places for Semiconductors and Superconductors in the list of commodities, although you'll only see it when creating a new station.
-* Commodity price matcher accessable from the commodities list of each station. It's the double orange arrows icon up in the top right corner. Nothing to get excited about really, it just looks at all your other stations and finds possible trades. This feature can be improved upon in so many ways it's not even funny but at least the core bit is there. I've done a bit of testing but if you find it's giving you funny results PLEASE let me know so I can fix it because the only thing worse than no information at all is false information!
 
-Anyway, have a good weekend and fly utterly dangerously.
 
 
 --- TODO

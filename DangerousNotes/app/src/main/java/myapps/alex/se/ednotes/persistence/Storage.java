@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import myapps.alex.se.ednotes.common.AppConstants;
 import myapps.alex.se.ednotes.common.DNApplication;
 import myapps.alex.se.ednotes.common.StationFactory;
+import myapps.alex.se.ednotes.model.CommodityTradeRoute;
 import myapps.alex.se.ednotes.model.MiniSystem;
 import myapps.alex.se.ednotes.model.Station;
 import myapps.alex.se.ednotes.model.System;
@@ -23,8 +24,15 @@ import myapps.alex.se.ednotes.model.System;
  */
 public class Storage {
 
+    private static ArrayList<CommodityTradeRoute> trades;
 
+    public static ArrayList<CommodityTradeRoute> getTrades() {
+        return trades;
+    }
 
+    public static void setTrades(ArrayList<CommodityTradeRoute> trades) {
+        Storage.trades = trades;
+    }
 
     public static System loadSystem(String systemName) {
         System system = (System) deserializeObject(AppConstants.SYSTEM_BASE_FILENAME + systemName);
@@ -37,11 +45,23 @@ public class Storage {
         serializeObject(system, fileName);
     }
 
+    public static void saveTrades(ArrayList<CommodityTradeRoute> trades) {
+        String fileName = AppConstants.TRADE_ROUTES_FILENAME;
+        serializeObject(trades, fileName);
+    }
+
     public static ArrayList<Station> loadStationsForSystem(String systemName) {
         System sys = loadSystem(systemName);
         ArrayList<Station> stationList = sys.getStations();
 
         return stationList;
+    }
+
+    public static ArrayList<CommodityTradeRoute> loadTradeRoutes() {
+        String fileName = AppConstants.TRADE_ROUTES_FILENAME;
+        ArrayList<CommodityTradeRoute> trades = (ArrayList<CommodityTradeRoute>) deserializeObject(AppConstants.TRADE_ROUTES_FILENAME);
+
+        return trades;
     }
 
     public static ArrayList<MiniSystem> loadMiniSystems() {

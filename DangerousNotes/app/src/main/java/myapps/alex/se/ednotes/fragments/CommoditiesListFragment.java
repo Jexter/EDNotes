@@ -68,11 +68,10 @@ public class CommoditiesListFragment extends Fragment {
 
                     if(trades != null) {
 
-                        Utils.sortTrades(trades);
-
+                        Storage.setTrades(trades);
 
                         Intent intent = new Intent(getActivity(), TradeListActivity.class);
-                        intent.putExtra(AppConstants.TRADES, trades);
+                        //intent.putExtra(AppConstants.TRADES, trades);
                         startActivity(intent);
                     }
                 }
