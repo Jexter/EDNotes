@@ -1,6 +1,8 @@
-﻿
+
 --- Next version TODO
 
+rename vegetables
+add painite
 
 
 
@@ -60,7 +62,8 @@ DONE
 * Systems list screen only gets title "Systems" after having opened and closed the sidemenu
 * Station list seems to always show 60 minutes (or something else wrong)
 * Make sure user can’t enter system duplicates (names)
-* Lock input popups to one line per editText
+
+* Lock input popups to one line per editText
 * Set font on Systems screen title
 * Have proper titles on each page
 * Generate proper market
