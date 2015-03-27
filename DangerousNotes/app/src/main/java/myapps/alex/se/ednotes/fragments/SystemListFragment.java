@@ -141,6 +141,17 @@ public class SystemListFragment extends Fragment {
         public void onFragmentInteraction(Uri uri);
     }
 
+    private void loadAndSortMiniSystems() {
+        loadedMiniSystems = Storage.loadMiniSystems();
+
+        if(loadedMiniSystems != null) {
+            Utils.sortSystems(loadedMiniSystems);
+            MiniSystem[] miniSystems = new MiniSystem[loadedMiniSystems.size()];
+            miniSystems = loadedMiniSystems.toArray(miniSystems);
+            adapter.setSystems(miniSystems);
+            adapter.notifyDataSetChanged();
+        }
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -155,22 +166,14 @@ public class SystemListFragment extends Fragment {
                 public boolean onMenuItemClick(MenuItem menuItem) {
                     if(menuItem.getItemId() == R.id.alpha) {
                         Storage.setSortType(AppConstants.SORT_ALPHA);
-                        Utils.sortSystems(loadedMiniSystems);
-                        MiniSystem[] miniSystems = new MiniSystem[loadedMiniSystems.size()];
-                        miniSystems = loadedMiniSystems.toArray(miniSystems);
-                        adapter.setSystems(miniSystems);
-                        adapter.notifyDataSetChanged();
+                        loadAndSortMiniSystems();
 
                         return true;
                     }
 
                     if(menuItem.getItemId() == R.id.last_edited) {
                         Storage.setSortType(AppConstants.SORT_LAST_EDITED);
-                        Utils.sortSystems(loadedMiniSystems);
-                        MiniSystem[] miniSystems = new MiniSystem[loadedMiniSystems.size()];
-                        miniSystems = loadedMiniSystems.toArray(miniSystems);
-                        adapter.setSystems(miniSystems);
-                        adapter.notifyDataSetChanged();
+                        loadAndSortMiniSystems();
 
                         return true;
                     }

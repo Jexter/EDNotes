@@ -8,7 +8,6 @@ import java.util.HashMap;
  * Created by atkin_000 on 2014-12-18.
  */
 public class MiniSystem implements Serializable {
-//    private ArrayList<Station> stations;
     private String name;
     private Date lastVisited;
     private int stationCount;
@@ -33,6 +32,7 @@ public class MiniSystem implements Serializable {
     }
 
     public void setName(String name) {
+        touch();
         this.name = name;
     }
 
