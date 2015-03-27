@@ -1,11 +1,17 @@
-﻿
+
 --- Next version TODO
 
+<<<<<<< HEAD
 * Spelling errors (Vegetables) maybe semi/super again?
 * Make files visible on device
 * Google cloud?
 * Sorting lists (alpha at least)
 * Options for trade finder?
+=======
+rename vegetables
+add painite
+
+>>>>>>> origin/master
 
 
 
@@ -57,7 +63,8 @@ DONE
 * Systems list screen only gets title "Systems" after having opened and closed the sidemenu
 * Station list seems to always show 60 minutes (or something else wrong)
 * Make sure user can’t enter system duplicates (names)
-* Lock input popups to one line per editText
+
+* Lock input popups to one line per editText
 * Set font on Systems screen title
 * Have proper titles on each page
 * Generate proper market

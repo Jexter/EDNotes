@@ -86,6 +86,7 @@ public class StationFactory {
         minerals.add(new Commodity("GALLITE", 54));
         minerals.add(new Commodity("INDITE", 55));
         minerals.add(new Commodity("LEPIDOLITE", 56));
+        minerals.add(new Commodity("PAINITE", 88)); // Highest current ID
         minerals.add(new Commodity("RUTILE", 57));
         minerals.add(new Commodity("URANITE", 58));
 
