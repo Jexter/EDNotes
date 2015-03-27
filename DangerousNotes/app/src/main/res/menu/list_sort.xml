@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/alpha"
+        android:icon="@android:drawable/ic_menu_search"
+        android:title="A to Z"/>
+    <item
+        android:id="@+id/last_edited"
+        android:icon="@android:drawable/ic_menu_add"
+        android:title="Last edited"/>
+
+
+</menu>

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.PopupMenu;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 
 import myapps.alex.se.ednotes.R;
 import myapps.alex.se.ednotes.adapters.SystemListAdapter;
+import myapps.alex.se.ednotes.common.AppConstants;
 import myapps.alex.se.ednotes.common.Utils;
 import myapps.alex.se.ednotes.model.MiniSystem;
 import myapps.alex.se.ednotes.persistence.Storage;
@@ -25,6 +27,7 @@ public class SystemListFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     private SystemListAdapter adapter;
     private View inflatedView;
+    ArrayList<MiniSystem> loadedMiniSystems;
 
     // TODO: Rename and change types and number of parameters
     public static SystemListFragment newInstance() {
@@ -69,7 +72,17 @@ public class SystemListFragment extends Fragment {
 
         ((ListView)view.findViewById(R.id.systems_listview)).setAdapter(adapter);
 
-        ArrayList<MiniSystem> loadedMiniSystems = Storage.loadMiniSystems();
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+
+        loadedMiniSystems = Storage.loadMiniSystems();
+        Utils.sortSystems(loadedMiniSystems);
+
 
         if(loadedMiniSystems != null && loadedMiniSystems.size() > 0) {
             MiniSystem[] miniSystems = new MiniSystem[loadedMiniSystems.size()];
@@ -131,10 +144,54 @@ public class SystemListFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.sort) {
+            View sortButton = getActivity().findViewById(R.id.sort);
+
+            PopupMenu popupMenu = new PopupMenu(getActivity(), sortButton);
+            popupMenu.inflate(R.menu.list_sort);
+
+            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem menuItem) {
+                    if(menuItem.getItemId() == R.id.alpha) {
+                        Storage.setSortType(AppConstants.SORT_ALPHA);
+                        Utils.sortSystems(loadedMiniSystems);
+                        MiniSystem[] miniSystems = new MiniSystem[loadedMiniSystems.size()];
+                        miniSystems = loadedMiniSystems.toArray(miniSystems);
+                        adapter.setSystems(miniSystems);
+                        adapter.notifyDataSetChanged();
+
+                        return true;
+                    }
+
+                    if(menuItem.getItemId() == R.id.last_edited) {
+                        Storage.setSortType(AppConstants.SORT_LAST_EDITED);
+                        Utils.sortSystems(loadedMiniSystems);
+                        MiniSystem[] miniSystems = new MiniSystem[loadedMiniSystems.size()];
+                        miniSystems = loadedMiniSystems.toArray(miniSystems);
+                        adapter.setSystems(miniSystems);
+                        adapter.notifyDataSetChanged();
+
+                        return true;
+                    }
+
+                    return false;
+                }
+            });
+
+
+            popupMenu.show();
+
+            return true;
+        }
+
         if (item.getItemId() == R.id.add_new_system) {
             Utils.showSystemDialog(getActivity(), adapter, null);
             return true;
         }
+
+
+
 
         return super.onOptionsItemSelected(item);
     }

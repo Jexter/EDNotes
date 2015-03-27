@@ -286,6 +286,9 @@ public class CommoditiesListAdapter extends BaseAdapter {
 
 
                                                     Storage.saveSystem(system);
+                                                    Storage.updateMiniSystemLastVisited(system.getName());
+
+
                                                     notifyDataSetChanged();
 
                                                     alertDialog.dismiss();

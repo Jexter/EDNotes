@@ -1,6 +1,8 @@
 package myapps.alex.se.ednotes.persistence;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import java.io.File;
@@ -234,7 +236,22 @@ public class Storage {
 
         saveSystem(system);
 
+        updateMiniSystemLastVisited(system.getName());
+
         return system;
+    }
+
+    public static void updateMiniSystemLastVisited(String name) {
+        ArrayList<MiniSystem> miniSystems = loadMiniSystems();
+
+        for(MiniSystem mini : miniSystems) {
+            if(mini.getName().equals(name)) {
+                mini.touch();
+            }
+        }
+
+        saveMiniSystems(miniSystems);
+
     }
 
     public static System updateStationForSystem(String systemName, String stationType, boolean hasBlackMarket, String oldStationName, String newStationName) {
@@ -256,6 +273,8 @@ public class Storage {
         system.setStations(stationsInSystem);
 
         saveSystem(system);
+
+        updateMiniSystemLastVisited(system.getName());
 
         return system;
     }
@@ -283,6 +302,25 @@ public class Storage {
         saveMiniSystems(miniSystems);
 
         return miniSystems;
+    }
+
+    public static String getSortType() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(DNApplication.getContext());
+        return preferences.getString(AppConstants.SORT_TYPE, null);
+    }
+
+    public static void setSortType(String sortType) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(DNApplication.getContext());
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(AppConstants.SORT_TYPE, sortType);
+        editor.apply();
+    }
+
+    public static void resetPrefsProperty(String key) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(DNApplication.getContext());
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(key, null);
+        editor.apply();
     }
 }
 

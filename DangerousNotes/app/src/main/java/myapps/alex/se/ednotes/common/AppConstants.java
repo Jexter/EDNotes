@@ -20,4 +20,7 @@ public class AppConstants {
 
     public static final int MAX_COMMODITY_PRICE = 1000000;
     public static final String BLACK_MARKET = "BLACK_MARKET";
+    public static final String SORT_TYPE = "SORT_TYPE";
+    public static final String SORT_ALPHA = "SORT_ALPHA";
+    public static final String SORT_LAST_EDITED = "SORT_LAST_EDITED";
 }

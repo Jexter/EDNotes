@@ -3,6 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
 
     <item
+        android:id="@+id/sort"
+        android:icon="@drawable/action_sort"
+        app:showAsAction="always"
+        android:title="Sort list">
+    </item>
+
+
+    <item
         android:id="@+id/add_new_system"
         android:icon="@drawable/ic_action_new"
         app:showAsAction="always"

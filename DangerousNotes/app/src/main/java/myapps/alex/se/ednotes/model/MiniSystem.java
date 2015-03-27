@@ -17,11 +17,11 @@ public class MiniSystem implements Serializable {
     public MiniSystem(String name) {
         this.name = name;
         misc = new HashMap<String, Object>();
+        touch();
     }
 
     public void setStationCount(int stationCount) {
         this.stationCount = stationCount;
-        lastVisited = new Date();
     }
 
     public int getStationCount() {
@@ -40,11 +40,16 @@ public class MiniSystem implements Serializable {
         return lastVisited;
     }
 
+    public void touch() {
+        lastVisited = new Date();
+    }
+
     public HashMap<String, Object> getMisc() {
         return misc;
     }
 
     public void setMisc(HashMap<String, Object> misc) {
         this.misc = misc;
+        touch();
     }
 }

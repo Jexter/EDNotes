@@ -464,14 +464,16 @@ public class Utils {
 
                             if(editing) {
                                 minis = Storage.updateSystem(miniSystem.getName(), systemName, allegianceString);
-                                miniSystems = new MiniSystem[minis.size()];
-                                miniSystems = minis.toArray(miniSystems);
                             }
                             else {
                                 minis = Storage.createAndSaveNewSystem(systemName, allegianceString);
-                                miniSystems = new MiniSystem[minis.size()];
-                                miniSystems = minis.toArray(miniSystems);
                             }
+
+                            sortSystems(minis);
+
+                            miniSystems = new MiniSystem[minis.size()];
+                            miniSystems = minis.toArray(miniSystems);
+
 
                             adapter.setSystems(miniSystems);
                             adapter.notifyDataSetChanged();
@@ -651,7 +653,7 @@ public class Utils {
                     }
                 });
 
-                // Cencel button
+                // Cancel button
                 Button neg = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
                 neg.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -678,6 +680,67 @@ public class Utils {
             @Override
             public int compare(CommodityTradeRoute ctr1, CommodityTradeRoute ctr2) {
                 return (ctr1.getProfit() < ctr2.getProfit() ) ? 1: (ctr1.getProfit() > ctr2.getProfit() ) ? -1:0 ;
+            }
+        });
+    }
+
+    public static void sortSystems(ArrayList<MiniSystem> systems) {
+        String sort_type = Storage.getSortType();
+
+        if(sort_type == null) {
+            sortSystemsLastVisited(systems);
+        }
+        else if(sort_type.equals(AppConstants.SORT_ALPHA)) {
+            sortSystemsAlpha(systems);
+        }
+        else if(sort_type.equals(AppConstants.SORT_LAST_EDITED)) {
+            sortSystemsLastVisited(systems);
+        }
+    }
+
+    public static void sortSystemsAlpha(ArrayList<MiniSystem> systems) {
+        if(systems == null) {
+            return;
+        }
+
+        Collections.sort(systems, new Comparator<MiniSystem>() {
+
+            @Override
+            public int compare(MiniSystem ms1, MiniSystem ms2) {
+                int res = String.CASE_INSENSITIVE_ORDER.compare(ms1.getName(), ms2.getName());
+
+                if (res == 0) {
+                    res = ms1.getName().compareTo(ms2.getName());
+                }
+
+                return res;
+            }
+        });
+    }
+
+    public static void sortSystemsLastVisited(ArrayList<MiniSystem> systems) {
+        if(systems == null) {
+            return;
+        }
+
+        Collections.sort(systems, new Comparator<MiniSystem>() {
+            @Override
+            public int compare(MiniSystem ms1, MiniSystem ms2) {
+                if(ms1.getLastVisited() == null && ms2.getLastVisited() == null){
+                    return 0;
+                }
+
+                if(ms1.getLastVisited() == null){
+                    return 1;
+                }
+
+                if(ms2.getLastVisited() == null){
+                    return -1;
+                }
+
+                int res = ms2.getLastVisited().compareTo(ms1.getLastVisited());
+
+                return res;
             }
         });
     }
