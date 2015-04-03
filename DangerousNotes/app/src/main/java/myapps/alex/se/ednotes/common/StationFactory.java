@@ -86,7 +86,7 @@ public class StationFactory {
         minerals.add(new Commodity("GALLITE", 54));
         minerals.add(new Commodity("INDITE", 55));
         minerals.add(new Commodity("LEPIDOLITE", 56));
-        minerals.add(new Commodity("PAINITE", 88)); // Highest current ID
+        minerals.add(new Commodity("PAINITE", 88));
         minerals.add(new Commodity("RUTILE", 57));
         minerals.add(new Commodity("URANITE", 58));
 
@@ -123,12 +123,15 @@ public class StationFactory {
         weapons.add(new Commodity("REACTIVE ARMOUR", 80));
 
         ArrayList<Commodity> salvage = new ArrayList<Commodity>();
-        salvage.add(new Commodity("ANCIENT ARTIFACT", 81));
+        salvage.add(new Commodity("ANCIENT ARTIFACTS", 81));
         salvage.add(new Commodity("BLACK BOX", 82));
         salvage.add(new Commodity("EXPERIMENTAL CHEMICALS", 83));
         salvage.add(new Commodity("MILITARY PLANS", 84));
+        salvage.add(new Commodity("LIMPET", 89));
         salvage.add(new Commodity("PROTOTYPE TECH", 85));
         salvage.add(new Commodity("RARE ARTWORK", 86));
+        salvage.add(new Commodity("REBEL TRANSMISSIONS", 90));
+        salvage.add(new Commodity("TECHNICAL BLUEPRINTS", 91));
         salvage.add(new Commodity("TRADE DATA", 87));
 
         CommodityCategory chemicalsCat = new CommodityCategory(chemicals, "CHEMICALS", 1);

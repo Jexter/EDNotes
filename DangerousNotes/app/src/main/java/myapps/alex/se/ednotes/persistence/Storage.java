@@ -316,6 +316,19 @@ public class Storage {
         editor.apply();
     }
 
+    public static boolean getCommodityHide() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(DNApplication.getContext());
+        return preferences.getBoolean(AppConstants.HIDE_COMMODITIES, false);
+    }
+
+    public static void setCommodityHide(boolean hide) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(DNApplication.getContext());
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean(AppConstants.HIDE_COMMODITIES, hide);
+        editor.apply();
+    }
+
+
     public static void resetPrefsProperty(String key) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(DNApplication.getContext());
         SharedPreferences.Editor editor = preferences.edit();

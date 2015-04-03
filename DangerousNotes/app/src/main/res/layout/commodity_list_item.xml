@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             style="@style/text_small"
             android:textColor="#FFAAAAFF"
-            android:layout_marginRight="@dimen/inner_item_spacing"
+            android:layout_marginRight="@dimen/item_inner_padding"
             />
     </LinearLayout>
 </LinearLayout>

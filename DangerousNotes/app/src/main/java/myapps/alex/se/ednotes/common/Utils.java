@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -74,20 +75,16 @@ public class Utils {
     }
 
     public static int getTotalRowCountForCommoditiesListInStation(Station station) {
-        int rowCount = 0;
-
         ArrayList<CommodityCategory> categories = station.getCategories();
 
         if(categories == null || categories.size() == 0) {
             return 0;
         }
 
-        for(CommodityCategory cat : categories) {
-            rowCount++;
+        int rowCount = categories.size();
 
-            for(Commodity com : cat.getCommodities()) {
-                rowCount++;
-            }
+        for(CommodityCategory cat : categories) {
+            rowCount+= cat.getCommodities().size();
         }
 
         return rowCount;
@@ -112,7 +109,20 @@ public class Utils {
         return rowsForHeaders;
     }
 
-    public static int calculateHighestHeaderIndexForThisPosition(int[] positionsForHeaders, int position) {
+    private static int getNumberOfCommoditiesWithPriceGreaterThanZero(CommodityCategory category) {
+        int nrOfComs = 0;
+
+        for(Commodity com : category.getCommodities()) {
+            if(com.getPrice() != 0) {
+                nrOfComs++;
+            }
+        }
+
+        return nrOfComs;
+    }
+
+    public static int
+    calculateHighestHeaderIndexForThisPosition(int[] positionsForHeaders, int position) {
         int count = -1;
 
         for(int i : positionsForHeaders) {
@@ -507,6 +517,9 @@ public class Utils {
         alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTypeface(font);
         alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTypeface(font);
 
+        userInput.setSelection(userInput.getText().length());
+
+        alertDialog.getWindow().setSoftInputMode (WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
 
 
     }
@@ -670,6 +683,8 @@ public class Utils {
         alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTypeface(font);
         alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTypeface(font);
 
+        userInput.setSelection(userInput.getText().length());
+        alertDialog.getWindow().setSoftInputMode (WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
     }
 
 
@@ -743,6 +758,34 @@ public class Utils {
                 return res;
             }
         });
+    }
+
+    public static Station createHiddenStation(Station station) {
+        ArrayList<CommodityCategory> originalCategories = station.getCategories();
+        ArrayList<CommodityCategory> hiddenCategories = new ArrayList<CommodityCategory>();
+
+        for(CommodityCategory orgCat : originalCategories) {
+            ArrayList<Commodity> originalCommodities = orgCat.getCommodities();
+            ArrayList<Commodity> hiddenCommodities = new ArrayList<Commodity>();
+
+            boolean addingThisCategory = false;
+
+            for(Commodity orgCom : originalCommodities) {
+                if(orgCom.getPrice() != 0) {
+                    hiddenCommodities.add(orgCom);
+                    addingThisCategory = true;
+                }
+            }
+
+            if(addingThisCategory) {
+                hiddenCategories.add(new CommodityCategory(hiddenCommodities, orgCat.getName(), orgCat.getId()));
+            }
+        }
+
+        String hiddenName = station.getName();
+        Station hiddenStation = new Station(hiddenCategories, hiddenName);
+
+        return hiddenStation;
     }
 }
 

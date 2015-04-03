@@ -23,4 +23,5 @@ public class AppConstants {
     public static final String SORT_TYPE = "SORT_TYPE";
     public static final String SORT_ALPHA = "SORT_ALPHA";
     public static final String SORT_LAST_EDITED = "SORT_LAST_EDITED";
+    public static final String HIDE_COMMODITIES = "HIDE_COMMODITIES";
 }

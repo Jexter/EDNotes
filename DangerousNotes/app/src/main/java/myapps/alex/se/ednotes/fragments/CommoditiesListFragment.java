@@ -33,6 +33,7 @@ public class CommoditiesListFragment extends Fragment {
     private Station stationWeWantToLookAt;
     private System currentSystem;
     private ArrayList<System> systemsToLookIn;
+    
 
     public CommoditiesListFragment() {
     }
@@ -95,6 +96,19 @@ public class CommoditiesListFragment extends Fragment {
             return true;
         }
 
+        if (item.getItemId() == R.id.hide_unedited) {
+
+            boolean shouldHide = Storage.getCommodityHide();
+
+            shouldHide = !shouldHide;
+
+            adapter.toggleShowHideUnedited(shouldHide);
+
+            Storage.setCommodityHide(shouldHide);
+
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -123,7 +137,7 @@ public class CommoditiesListFragment extends Fragment {
             stationWeWantToLookAt = Utils.findStation(stationArray, stationName);
 
             adapter.setStationAndSystem(stationWeWantToLookAt, currentSystem);
-            adapter.notifyDataSetChanged();
+
         }
 
     }

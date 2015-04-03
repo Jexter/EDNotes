@@ -161,6 +161,7 @@ public class SystemListFragment extends Fragment {
             PopupMenu popupMenu = new PopupMenu(getActivity(), sortButton);
             popupMenu.inflate(R.menu.list_sort);
 
+
             popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem menuItem) {

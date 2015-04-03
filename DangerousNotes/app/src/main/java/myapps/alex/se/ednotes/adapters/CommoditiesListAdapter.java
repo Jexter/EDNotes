@@ -35,13 +35,15 @@ public class CommoditiesListAdapter extends BaseAdapter {
     private final int CATEGORY = 0;
     private final int COMMODITY = 1;
     private final int NO_COMMODITIES = 2;
-    private Station station;
+    private Station station, stationHidden, stationToUse;
     private System system;
     private int totalRowCount;
     private int[] positionsForHeaders;
     private int currentHeaderPositionIndex;
     Button supply_button = null;
     Button demand_button = null;
+    private boolean hiding = false;
+
 
 	public CommoditiesListAdapter(Activity activity) {
 		this.activity = activity;
@@ -53,7 +55,7 @@ public class CommoditiesListAdapter extends BaseAdapter {
 	}
 
 	public int getItemViewType(int position) {
-		if(station == null || station.getCategories() ==  null || station.getCategories().size() == 0) {
+		if(stationToUse == null || stationToUse.getCategories() ==  null || stationToUse.getCategories().size() == 0) {
 			return NO_COMMODITIES;
 		}
 		else if((currentHeaderPositionIndex = Utils.calculateWhichHeaderThisIs(positionsForHeaders, position)) != -1) {
@@ -117,7 +119,7 @@ public class CommoditiesListAdapter extends BaseAdapter {
 					viewHolder = (ViewHolder) convertView.getTag();
 				}
 
-				final CommodityCategory category = station.getCategories().get(currentHeaderPositionIndex);
+				final CommodityCategory category = stationToUse.getCategories().get(currentHeaderPositionIndex);
 				
 				viewHolder.category_name_textview.setText(category.getName());
 
@@ -150,7 +152,10 @@ public class CommoditiesListAdapter extends BaseAdapter {
                 try {
                     //currentHeaderPositionIndex = Utils.contains(positionsForHeaders, position);
 
-                    final Commodity commodity = station.getCategories().get(currentHeaderPositionIndex).getCommodities().get(position - positionsForHeaders[currentHeaderPositionIndex] - 1);
+
+                    int comNr = position - positionsForHeaders[currentHeaderPositionIndex] - 1;
+                    final Commodity commodity = stationToUse.getCategories().get(currentHeaderPositionIndex).getCommodities().get(comNr);
+
                     String priceString = "";
 
                     if(commodity.getPrice() != 0) {
@@ -176,28 +181,29 @@ public class CommoditiesListAdapter extends BaseAdapter {
                     viewHolder.price_textview.setText(priceString);
 
 
-
-
-
-
                     viewHolder.commodity_name_textview.setText(commodity.getName());
+
+
+
 
 
                     convertView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                                 // get prompts.xml view
-                                LayoutInflater li = LayoutInflater.from(activity);
 
                                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(activity);
 
-                                // set prompts.xml to alertdialog builder
-                                View promptsView = li.inflate(R.layout.commodity_info_prompt, null);
-                                alertDialogBuilder.setView(promptsView);
+                            LayoutInflater li = LayoutInflater.from(activity);
 
-                                final EditText userInput = (EditText) promptsView.findViewById(R.id.price_edittext);
+                            final View promptsView = li.inflate(R.layout.commodity_info_prompt, null);
 
-                                supply_button = (Button) promptsView.findViewById(R.id.supply_button);
+                            final EditText userInput = (EditText) promptsView.findViewById(R.id.price_edittext);
+
+                            alertDialogBuilder.setView(promptsView);
+
+
+                            supply_button = (Button) promptsView.findViewById(R.id.supply_button);
                                 demand_button = (Button) promptsView.findViewById(R.id.demand_button);
 
                                 TextView price_title_textview = (TextView) promptsView.findViewById(R.id.price_title_textview);
@@ -246,8 +252,7 @@ public class CommoditiesListAdapter extends BaseAdapter {
                                 }
                             });
 
-//                            InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-//                            imm.showSoftInput(userInput, InputMethodManager.SHOW_IMPLICIT);
+
 
                             // set dialog message
                                 alertDialogBuilder
@@ -289,7 +294,7 @@ public class CommoditiesListAdapter extends BaseAdapter {
                                                     Storage.updateMiniSystemLastVisited(system.getName());
 
 
-                                                    notifyDataSetChanged();
+                                                    refresh();
 
                                                     alertDialog.dismiss();
                                                 }
@@ -313,27 +318,17 @@ public class CommoditiesListAdapter extends BaseAdapter {
                                     }
                                 });
 
-                            userInput.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                                @Override
-                                public void onFocusChange(View v, boolean hasFocus) {
-                                    if(hasFocus) {
-                                        alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-//                                        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-//                                        imm.showSoftInput(v, InputMethodManager.SHOW_FORCED);
-                                    }
-                                }
-                            });
 
                             // show it
                                 alertDialog.show();
 
-                            userInput.requestFocus();
 
                                 alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTypeface(font);
                                 alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTypeface(font);
 
-//                                userInput.requestFocus();
-  //                              alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+                                userInput.setSelection(userInput.getText().length());
+
+                                alertDialog.getWindow().setSoftInputMode (WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
 
                             }
 
@@ -373,11 +368,31 @@ public class CommoditiesListAdapter extends BaseAdapter {
 	public void setStationAndSystem(Station station, System system) {
 		this.station = station;
         this.system = system;
-        totalRowCount = Utils.getTotalRowCountForCommoditiesListInStation(station);
-        positionsForHeaders = Utils.getPositionsForHeaders(station);
+        hiding = Storage.getCommodityHide();
+
+        refresh();
+	}
+
+    private void refresh() {
+        if(hiding) {
+            stationHidden = Utils.createHiddenStation(station);
+            totalRowCount = Utils.getTotalRowCountForCommoditiesListInStation(stationHidden);
+            positionsForHeaders = Utils.getPositionsForHeaders(stationHidden);
+            stationToUse = stationHidden;
+        }
+        else {
+            totalRowCount = Utils.getTotalRowCountForCommoditiesListInStation(station);
+            positionsForHeaders = Utils.getPositionsForHeaders(station);
+            stationToUse = station;
+        }
 
         notifyDataSetChanged();
-	}
+    }
+
+    public void toggleShowHideUnedited(boolean hide) {
+        hiding = hide;
+        refresh();
+    }
 
 }
 

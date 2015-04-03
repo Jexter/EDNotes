@@ -10,4 +10,11 @@
         android:title="Find trades">
     </item>
 
+    <item
+        android:id="@+id/hide_unedited"
+        android:icon="@drawable/action_toggle"
+        app:showAsAction="always"
+        android:title="Hide/show unedited">
+    </item>
+
 </menu>
