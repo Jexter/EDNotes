@@ -2,12 +2,17 @@ package myapps.alex.se.ednotes.persistence;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.AssetManager;
+import android.media.MediaScannerConnection;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
@@ -36,13 +41,24 @@ public class Storage {
         Storage.trades = trades;
     }
 
+    private static File mBaseDirectory;
+
     public static System loadSystem(String systemName) {
-        System system = (System) deserializeObject(AppConstants.SYSTEM_BASE_FILENAME + systemName);
+        return loadSystem(getBaseDirectory(), systemName);
+    }
+
+    public static System loadSystem(File directory, String systemName) {
+        System system = (System) deserializeObject(directory, AppConstants.SYSTEM_BASE_FILENAME + systemName);
 
         return system;
     }
 
     public static void saveSystem(System system) {
+        String fileName = AppConstants.SYSTEM_BASE_FILENAME + system.getName();
+        serializeObject(system, fileName);
+    }
+
+    public static void saveSystem(File directory, System system) {
         String fileName = AppConstants.SYSTEM_BASE_FILENAME + system.getName();
         serializeObject(system, fileName);
     }
@@ -61,22 +77,44 @@ public class Storage {
 
     public static ArrayList<CommodityTradeRoute> loadTradeRoutes() {
         String fileName = AppConstants.TRADE_ROUTES_FILENAME;
-        ArrayList<CommodityTradeRoute> trades = (ArrayList<CommodityTradeRoute>) deserializeObject(AppConstants.TRADE_ROUTES_FILENAME);
+        ArrayList<CommodityTradeRoute> trades = (ArrayList<CommodityTradeRoute>) deserializeObject(getBaseDirectory(), AppConstants.TRADE_ROUTES_FILENAME);
 
         return trades;
     }
 
     public static ArrayList<MiniSystem> loadMiniSystems() {
-        ArrayList<MiniSystem> miniSystems = (ArrayList<MiniSystem>) deserializeObject(AppConstants.MINI_SYSTEMS_FILENAME);
+        return loadMiniSystems(getBaseDirectory());
+    }
+
+    public static ArrayList<MiniSystem> loadMiniSystems(File directory) {
+        ArrayList<MiniSystem> miniSystems = (ArrayList<MiniSystem>) deserializeObject(directory, AppConstants.MINI_SYSTEMS_FILENAME);
 
         return miniSystems;
+    }
+
+    public static boolean dataExistsInOldDirectory() {
+        File file = new File(DNApplication.getContext().getDir(AppConstants.APPDATA_FOLDER, Context.MODE_PRIVATE), AppConstants.MINI_SYSTEMS_FILENAME);
+
+        try {
+            if (file.exists()) {
+                return true;
+            } else {
+                return false;
+            }
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
     }
 
     private static void saveMiniSystems(ArrayList<MiniSystem> miniSystems) {
         serializeObject(miniSystems, AppConstants.MINI_SYSTEMS_FILENAME);
     }
 
-    public static ArrayList<System> loadAllSystemsForTrade() {
+    public static ArrayList<System> loadAllSystems() {
         ArrayList<System> allSystems = new ArrayList<System>();
         ArrayList<MiniSystem> miniSystems = loadMiniSystems();
 
@@ -91,13 +129,54 @@ public class Storage {
         return allSystems;
     }
 
+    private static File getBaseDirectory() {
+        if (mBaseDirectory != null) {
+            return mBaseDirectory;
+        }
+
+//        File oldDirectory = DNApplication.getContext().getDir(AppConstants.APPDATA_FOLDER, Context.MODE_PRIVATE);
+//        File newDirectory = DNApplication.getContext().getExternalFilesDir(null);
+
+        mBaseDirectory = DNApplication.getContext().getExternalFilesDir(null);
+
+        return mBaseDirectory;
+    }
+
+    public static void exposeData() {
+
+        // List files in old directory
+        // If empty return
+        // Else copy and delete each file
+        // Return
+
+//        try {
+        boolean weHaveDataInOldDirectory = dataExistsInOldDirectory();
+
+        if (!weHaveDataInOldDirectory) {
+            return;
+        }
+
+        File fromDirectory = DNApplication.getContext().getDir(AppConstants.APPDATA_FOLDER, Context.MODE_PRIVATE);
+        File toDirectory = DNApplication.getContext().getExternalFilesDir(null);
+
+        moveFiles(fromDirectory, toDirectory);
+    }
+
+    private static void moveFiles(File fromDirectory, File toDirectory) {
+
+        ArrayList<MiniSystem> miniSystems = loadMiniSystems(fromDirectory);
+
+        ArrayList<System> systems = loadAllSystems();
 
 
-
-
+    }
 
     public static void serializeObject(Object object, String fileName) {
-        File file = new File(DNApplication.getContext().getDir(AppConstants.APPDATA_FOLDER, Context.MODE_PRIVATE), fileName);
+        serializeObject(getBaseDirectory(), object, fileName);
+    }
+
+    public static void serializeObject(File directory, Object object, String fileName) {
+        File file = new File(getBaseDirectory(), fileName);
 
         if (file.exists()) {
             file.delete();
@@ -118,7 +197,11 @@ public class Storage {
     }
 
     public static Object deserializeObject(String fileName) {
-        File file = new File(DNApplication.getContext().getDir(AppConstants.APPDATA_FOLDER, Context.MODE_PRIVATE), fileName);
+        return deserializeObject(getBaseDirectory(), fileName);
+    }
+
+    public static Object deserializeObject(File directory, String fileName) {
+        File file = new File(directory, fileName);
 
         Log.d("Storage says", "going to load file [" + fileName + "]");
 

@@ -12,6 +12,7 @@ import myapps.alex.se.ednotes.R;
 import myapps.alex.se.ednotes.common.Utils;
 import myapps.alex.se.ednotes.fragments.NavigationDrawerFragment;
 import myapps.alex.se.ednotes.fragments.SystemListFragment;
+import myapps.alex.se.ednotes.persistence.Storage;
 
 
 public class MainActivity extends ActionBarActivity
@@ -41,6 +42,7 @@ public class MainActivity extends ActionBarActivity
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
 
+        Storage.exposeData();
         //Storage.resetPrefsProperty(AppConstants.SORT_TYPE);
     }
 

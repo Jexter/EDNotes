@@ -55,7 +55,7 @@ public class FindTradesTask extends AsyncTask<Object, Integer, ArrayList<Commodi
 
         // If we got an empty galaxy we need to load it all
         //if(systemsToLookIn == null) {
-            systemsToLookIn = Storage.loadAllSystemsForTrade();
+            systemsToLookIn = Storage.loadAllSystems();
         //}
 
         if(isCancelled()) {
