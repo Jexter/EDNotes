@@ -42,10 +42,16 @@ public class MainActivity extends ActionBarActivity
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
 
-        Storage.exposeData();
+
         //Storage.resetPrefsProperty(AppConstants.SORT_TYPE);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        Storage.exposeData();
+    }
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
