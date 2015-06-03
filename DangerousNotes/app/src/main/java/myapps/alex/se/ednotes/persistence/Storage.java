@@ -63,6 +63,20 @@ public class Storage {
         serializeObject(system, fileName);
     }
 
+    public static void saveAllSystems(ArrayList<System> systems) {
+        saveAllSystems(getBaseDirectory(), systems);
+    }
+
+    public static void saveAllSystems(File directory, ArrayList<System> systems) {
+        if (systems == null || directory == null) {
+            return;
+        }
+
+        for (System system : systems) {
+            saveSystem(directory, system);
+        }
+    }
+
     public static void saveTrades(ArrayList<CommodityTradeRoute> trades) {
         String fileName = AppConstants.TRADE_ROUTES_FILENAME;
         serializeObject(trades, fileName);
@@ -92,6 +106,28 @@ public class Storage {
         return miniSystems;
     }
 
+    private static void deleteMiniSystems() {
+        deleteMiniSystems(getBaseDirectory());
+    }
+
+    private static void deleteMiniSystems(File directory) {
+        deleteFile(directory, AppConstants.MINI_SYSTEMS_FILENAME);
+    }
+
+    private static void deleteAllSystems(ArrayList<System> systems) {
+        deleteAllSystems(getBaseDirectory(), systems);
+    }
+
+    private static void deleteAllSystems(File directory, ArrayList<System> systems) {
+        if (systems == null || directory == null) {
+            return;
+        }
+
+        for (System system : systems) {
+            deleteFile(directory, AppConstants.SYSTEM_BASE_FILENAME + system.getName());
+        }
+    }
+
     public static boolean dataExistsInOldDirectory() {
         File file = new File(DNApplication.getContext().getDir(AppConstants.APPDATA_FOLDER, Context.MODE_PRIVATE), AppConstants.MINI_SYSTEMS_FILENAME);
 
@@ -111,15 +147,25 @@ public class Storage {
     }
 
     private static void saveMiniSystems(ArrayList<MiniSystem> miniSystems) {
-        serializeObject(miniSystems, AppConstants.MINI_SYSTEMS_FILENAME);
+        saveMiniSystems(getBaseDirectory(), miniSystems);
     }
 
+    private static void saveMiniSystems(File directory, ArrayList<MiniSystem> miniSystems) {
+        serializeObject(directory, miniSystems, AppConstants.MINI_SYSTEMS_FILENAME);
+    }
+
+
     public static ArrayList<System> loadAllSystems() {
-        ArrayList<System> allSystems = new ArrayList<System>();
-        ArrayList<MiniSystem> miniSystems = loadMiniSystems();
+        return loadAllSystems(getBaseDirectory());
+    }
+
+
+    public static ArrayList<System> loadAllSystems(File directory) {
+        ArrayList<System> allSystems = new ArrayList<>();
+        ArrayList<MiniSystem> miniSystems = loadMiniSystems(directory);
 
         for(MiniSystem miniSystem : miniSystems) {
-            System system = loadSystem(miniSystem.getName());
+            System system = loadSystem(directory, miniSystem.getName());
 
             if(system.getStations() != null && system.getStations().size() > 0) {
                 allSystems.add(system);
@@ -144,12 +190,6 @@ public class Storage {
 
     public static void exposeData() {
 
-        // List files in old directory
-        // If empty return
-        // Else copy and delete each file
-        // Return
-
-//        try {
         boolean weHaveDataInOldDirectory = dataExistsInOldDirectory();
 
         if (!weHaveDataInOldDirectory) {
@@ -164,10 +204,17 @@ public class Storage {
 
     private static void moveFiles(File fromDirectory, File toDirectory) {
 
+        // Load everything
         ArrayList<MiniSystem> miniSystems = loadMiniSystems(fromDirectory);
+        ArrayList<System> systems = loadAllSystems(fromDirectory);
 
-        ArrayList<System> systems = loadAllSystems();
+        // Save everything again in a new place
+        saveAllSystems(toDirectory, systems);
+        saveMiniSystems(toDirectory, miniSystems);
 
+        // Delete everything in the old directory
+        deleteMiniSystems(fromDirectory);
+        deleteAllSystems(fromDirectory, systems);
 
     }
 
@@ -176,7 +223,7 @@ public class Storage {
     }
 
     public static void serializeObject(File directory, Object object, String fileName) {
-        File file = new File(getBaseDirectory(), fileName);
+        File file = new File(directory, fileName);
 
         if (file.exists()) {
             file.delete();
@@ -229,7 +276,11 @@ public class Storage {
     }
 
     public static void deleteFile(String fileName) {
-        File file = new File(DNApplication.getContext().getDir(AppConstants.APPDATA_FOLDER, Context.MODE_PRIVATE), fileName);
+        deleteFile(getBaseDirectory(), fileName);
+    }
+
+    public static void deleteFile(File directory, String fileName) {
+        File file = new File(directory, fileName);
 
         try {
             if (file.exists()) {
