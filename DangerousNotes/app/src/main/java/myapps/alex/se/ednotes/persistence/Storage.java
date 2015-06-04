@@ -60,7 +60,7 @@ public class Storage {
 
     public static void saveSystem(File directory, System system) {
         String fileName = AppConstants.SYSTEM_BASE_FILENAME + system.getName();
-        serializeObject(system, fileName);
+        serializeObject(directory, system, fileName);
     }
 
     public static void saveAllSystems(ArrayList<System> systems) {
@@ -75,6 +75,8 @@ public class Storage {
         for (System system : systems) {
             saveSystem(directory, system);
         }
+
+        Log.d("Saved systems:", ""+systems.size());
     }
 
     public static void saveTrades(ArrayList<CommodityTradeRoute> trades) {
