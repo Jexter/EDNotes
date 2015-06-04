@@ -2,17 +2,12 @@ package myapps.alex.se.ednotes.persistence;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.AssetManager;
-import android.media.MediaScannerConnection;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
@@ -156,13 +151,28 @@ public class Storage {
         serializeObject(directory, miniSystems, AppConstants.MINI_SYSTEMS_FILENAME);
     }
 
-
     public static ArrayList<System> loadAllSystems() {
         return loadAllSystems(getBaseDirectory());
     }
 
-
     public static ArrayList<System> loadAllSystems(File directory) {
+        ArrayList<System> allSystems = new ArrayList<>();
+        ArrayList<MiniSystem> miniSystems = loadMiniSystems(directory);
+
+        for(MiniSystem miniSystem : miniSystems) {
+            System system = loadSystem(directory, miniSystem.getName());
+            allSystems.add(system);
+        }
+
+        return allSystems;
+    }
+
+    public static ArrayList<System> loadAllSystemsForTrade() {
+        return loadAllSystemsForTrade(getBaseDirectory());
+    }
+
+
+    public static ArrayList<System> loadAllSystemsForTrade(File directory) {
         ArrayList<System> allSystems = new ArrayList<>();
         ArrayList<MiniSystem> miniSystems = loadMiniSystems(directory);
 
