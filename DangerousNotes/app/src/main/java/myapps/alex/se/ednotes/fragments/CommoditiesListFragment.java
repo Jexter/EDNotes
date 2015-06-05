@@ -72,7 +72,7 @@ public class CommoditiesListFragment extends Fragment {
                         Storage.setTrades(trades);
 
                         Intent intent = new Intent(getActivity(), TradeListActivity.class);
-                        //intent.putExtra(AppConstants.TRADES, trades);
+                        intent.putExtra(AppConstants.STATION_NAME, stationWeWantToLookAt.getName());
                         startActivity(intent);
                     }
                 }

@@ -10,6 +10,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import myapps.alex.se.ednotes.R;
+import myapps.alex.se.ednotes.common.AppConstants;
 import myapps.alex.se.ednotes.common.TypefaceSpan;
 import myapps.alex.se.ednotes.fragments.TradesListFragment;
 import myapps.alex.se.ednotes.model.CommodityTradeRoute;
@@ -39,7 +40,7 @@ public class TradeListActivity extends ActionBarActivity {
         else {
             //ctr = ((ArrayList<CommodityTradeRoute>)(getIntent().getExtras().getSerializable(AppConstants.TRADES)));
             int nrOfTrades = ctr.size();
-            SpannableString s = new SpannableString(nrOfTrades + " POSSIBLE TRADE" + (nrOfTrades == 0 ? "S" : (nrOfTrades > 1 ? "S" : "")));
+            SpannableString s = new SpannableString(nrOfTrades + " POSSIBLE TRADE" + (nrOfTrades == 0 ? "S" : (nrOfTrades > 1 ? "S" : "")) + " WITH " + getIntent().getStringExtra(AppConstants.STATION_NAME));
             TypefaceSpan ts = new TypefaceSpan(this, "eurostile.TTF");
             s.setSpan(ts, 0, s.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
