@@ -72,13 +72,14 @@ public class StationListFragment extends Fragment {
         ((ListView)view.findViewById(R.id.station_listview)).setAdapter(adapter);
 
 
-        ArrayList<Station> stations = loadedSystem.getStations();
+        if (loadedSystem != null) {
+            ArrayList<Station> stations = loadedSystem.getStations();
 
-        if(stations != null && stations.size() > 0) {
-            adapter.setSystem(loadedSystem);
-            adapter.notifyDataSetChanged();
+            if (stations != null && stations.size() > 0) {
+                adapter.setSystem(loadedSystem);
+                adapter.notifyDataSetChanged();
+            }
         }
-
 
     }
 
