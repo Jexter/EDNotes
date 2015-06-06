@@ -100,6 +100,10 @@ public class Storage {
     public static ArrayList<MiniSystem> loadMiniSystems(File directory) {
         ArrayList<MiniSystem> miniSystems = (ArrayList<MiniSystem>) deserializeObject(directory, AppConstants.MINI_SYSTEMS_FILENAME);
 
+//        if (miniSystems == null) {
+//            miniSystems = new ArrayList<MiniSystem>();
+//        }
+
         return miniSystems;
     }
 
@@ -159,6 +163,10 @@ public class Storage {
         ArrayList<System> allSystems = new ArrayList<>();
         ArrayList<MiniSystem> miniSystems = loadMiniSystems(directory);
 
+        if (miniSystems == null || miniSystems.size() == 0) {
+            return allSystems;
+        }
+
         for(MiniSystem miniSystem : miniSystems) {
             System system = loadSystem(directory, miniSystem.getName());
             allSystems.add(system);
@@ -205,8 +213,11 @@ public class Storage {
         boolean weHaveDataInOldDirectory = dataExistsInOldDirectory();
 
         if (!weHaveDataInOldDirectory) {
+            Log.d("exposeData says", "we don't have any files to expose");
             return;
         }
+
+        Log.d("exposeData says", "we have files to expose");
 
         File fromDirectory = DNApplication.getContext().getDir(AppConstants.APPDATA_FOLDER, Context.MODE_PRIVATE);
         File toDirectory = DNApplication.getContext().getExternalFilesDir(null);
@@ -221,8 +232,10 @@ public class Storage {
         ArrayList<System> systems = loadAllSystems(fromDirectory);
 
         // Save everything again in a new place
-        saveAllSystems(toDirectory, systems);
-        saveMiniSystems(toDirectory, miniSystems);
+        if (miniSystems != null) {
+            saveAllSystems(toDirectory, systems);
+            saveMiniSystems(toDirectory, miniSystems);
+        }
 
         // Delete everything in the old directory
         deleteMiniSystems(fromDirectory);
