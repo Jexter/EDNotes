@@ -3,6 +3,7 @@
 
     <string name="app_name">Elite Notes</string>
     <string name="title_systems">SYSTEMS</string>
+    <string name="notes_title_prefix">NOTES FOR</string>
     <string name="trading_menu_item_title">Trade helper</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

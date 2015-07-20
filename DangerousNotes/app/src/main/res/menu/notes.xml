@@ -3,17 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
 
     <item
-        android:id="@+id/sort"
+        android:id="@+id/save"
         android:icon="@drawable/action_sort"
         app:showAsAction="always"
-        android:title="Sort list">
+        android:title="Save notes and exit">
     </item>
 
+
     <item
-        android:id="@+id/add_new_system"
+        android:id="@+id/erase"
         android:icon="@drawable/ic_action_new"
         app:showAsAction="always"
-        android:title="Add new system">
+        android:title="Erase notes">
     </item>
 
     <!--item android:id="@+id/action_settings" android:title="@string/action_settings"

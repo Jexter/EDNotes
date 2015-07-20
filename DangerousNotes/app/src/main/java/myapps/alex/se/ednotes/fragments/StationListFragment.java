@@ -1,5 +1,6 @@
 package myapps.alex.se.ednotes.fragments;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,6 +16,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 import myapps.alex.se.ednotes.R;
+import myapps.alex.se.ednotes.activities.SystemNotesActivity;
 import myapps.alex.se.ednotes.adapters.StationListAdapter;
 import myapps.alex.se.ednotes.common.AppConstants;
 import myapps.alex.se.ednotes.common.Utils;
@@ -22,11 +24,8 @@ import myapps.alex.se.ednotes.model.Station;
 import myapps.alex.se.ednotes.persistence.Storage;
 
 public class StationListFragment extends Fragment {
-    private OnFragmentInteractionListener mListener;
     private StationListAdapter adapter;
-    private View inflatedView;
     private String systemName;
-    //private ArrayList<Station> loadedStations;
     private myapps.alex.se.ednotes.model.System loadedSystem;
 
     public StationListFragment() {
@@ -89,7 +88,6 @@ public class StationListFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
     }
 
     /**
@@ -112,6 +110,13 @@ public class StationListFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.add_new_station) {
             Utils.showStationDialog(getActivity(), loadedSystem, null, adapter);
+            return true;
+        }
+
+        if (item.getItemId() == R.id.notes) {
+            Intent intent = new Intent(getActivity(), SystemNotesActivity.class);
+            intent.putExtra(AppConstants.SYSTEM_NAME, systemName);
+            getActivity().startActivity(intent);
             return true;
         }
 

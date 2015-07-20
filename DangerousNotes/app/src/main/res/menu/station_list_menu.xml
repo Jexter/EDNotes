@@ -4,6 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
 
     <item
+        android:id="@+id/notes"
+        android:icon="@drawable/ic_action_new"
+        app:showAsAction="always"
+        android:title="Notes">
+    </item>
+
+    <item
         android:id="@+id/add_new_station"
         android:icon="@drawable/ic_action_new"
         app:showAsAction="always"

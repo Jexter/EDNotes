@@ -138,49 +138,14 @@ public class SystemListAdapter extends BaseAdapter {
 						Intent intent = new Intent(activity, StationListActivity.class);
 						intent.putExtra(AppConstants.SYSTEM_NAME, miniSystem.getName());
 						activity.startActivity(intent);
-                             }
+                                             }
 				});
 
                 final SystemListAdapter sysAd = this;
                 convertView.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View v) {
-
                         Utils.showSystemDialog(activity, sysAd, miniSystem);
-
-/*
-                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(activity);
-                        // set prompts.xml to alertdialog builder
-//                        View promptsView = li.inflate(R.layout.commodity_info_prompt, null);
-//                        alertDialogBuilder.setView(promptsView);
-
-                        alertDialogBuilder
-                                .setTitle("Delete system: " + miniSystem.getName())
-                                .setCancelable(false)
-                                .setPositiveButton("OK",
-                                        new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog,int id) {
-                                                ArrayList<MiniSystem> minis = Storage.deleteSystem(miniSystem);
-                                                miniSystems = new MiniSystem[minis.size()];
-                                                miniSystems = minis.toArray(miniSystems);
-
-                                                notifyDataSetChanged();
-                                            }
-                                        })
-                                .setNegativeButton("Cancel",
-                                        new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog,int id) {
-                                                dialog.cancel();
-                                            }
-                                        });
-
-                        // create alert dialog
-                        AlertDialog alertDialog = alertDialogBuilder.create();
-
-                        // show it
-                        alertDialog.show();
-
-*/
                         return false;
                     }
                 });

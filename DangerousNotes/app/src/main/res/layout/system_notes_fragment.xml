@@ -1,0 +1,25 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="myapps.alex.se.ednotes.fragments.SystemNotesFragment">
+
+    <ScrollView
+        android:id="@+id/notes_scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_five">
+
+        <EditText
+            android:id="@+id/notes_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="#FFFFFF"
+            android:background="@null"
+            />
+
+
+    </ScrollView>
+
+
+</LinearLayout>
