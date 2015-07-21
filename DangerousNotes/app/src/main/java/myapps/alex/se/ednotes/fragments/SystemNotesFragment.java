@@ -1,5 +1,7 @@
 package myapps.alex.se.ednotes.fragments;
 
+import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -7,8 +9,11 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import myapps.alex.se.ednotes.R;
@@ -38,6 +43,22 @@ public class SystemNotesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View inflatedView = inflater.inflate(R.layout.system_notes_fragment, container, false);
         mNotesEditText = (EditText) inflatedView.findViewById(R.id.notes_edittext);
+        Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "fonts/eurostile.TTF");
+        mNotesEditText.setTypeface(font);
+
+        View scrollView = inflatedView.findViewById(R.id.notes_scrollview);
+
+        scrollView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                mNotesEditText.requestFocus();
+                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+                return false;
+            }
+        });
+
+
         return inflatedView;
     }
 
@@ -52,6 +73,7 @@ public class SystemNotesFragment extends Fragment {
 
         if (systemNotes != null) {
             mNotesEditText.setText(systemNotes);
+            mNotesEditText.setSelection(systemNotes.length());
         }
     }
 
@@ -91,6 +113,9 @@ public class SystemNotesFragment extends Fragment {
     public void onPause() {
         super.onPause();
         saveNotes();
+        InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(
+                Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(mNotesEditText.getWindowToken(), 0);
     }
 
 }
