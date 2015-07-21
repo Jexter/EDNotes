@@ -4,14 +4,14 @@
 
     <item
         android:id="@+id/sort"
-        android:icon="@drawable/action_sort"
+        android:icon="@drawable/action_sort_black"
         app:showAsAction="always"
         android:title="Sort list">
     </item>
 
     <item
         android:id="@+id/add_new_system"
-        android:icon="@drawable/ic_action_new"
+        android:icon="@drawable/ic_add_black_48dp"
         app:showAsAction="always"
         android:title="Add new system">
     </item>

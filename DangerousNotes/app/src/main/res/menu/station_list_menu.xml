@@ -12,7 +12,7 @@
 
     <item
         android:id="@+id/add_new_station"
-        android:icon="@drawable/ic_action_new"
+        android:icon="@drawable/ic_add_black_48dp"
         app:showAsAction="always"
         android:title="Add new station">
     </item>
