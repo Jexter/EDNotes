@@ -3,17 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
 
     <item
-        android:id="@+id/save"
-        android:icon="@drawable/action_sort"
-        app:showAsAction="always"
-        android:title="Save notes and exit">
-    </item>
-
-
-    <item
-        android:id="@+id/erase"
-        android:icon="@drawable/ic_action_new"
+        android:id="@+id/delete"
+        android:icon="@drawable/ic_delete_black_48dp"
         app:showAsAction="always"
         android:title="Erase notes">
+    </item>
+
+    <item
+        android:id="@+id/done"
+        android:icon="@drawable/ic_done_black_48dp"
+        app:showAsAction="always"
+        android:title="Save notes and exit">
     </item>
 </menu>

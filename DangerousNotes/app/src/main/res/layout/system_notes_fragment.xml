@@ -8,15 +8,19 @@
         android:id="@+id/notes_scrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/color_five">
+        android:background="@color/color_five"
+        android:paddingBottom="4dp"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:paddingTop="4dp">
 
         <EditText
             android:id="@+id/notes_edittext"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@null"
-            android:textColor="#FFFFFF"
             android:inputType="textNoSuggestions|textMultiLine|textCapSentences"
+            android:textColor="#FFFFFF"
             android:textCursorDrawable="@drawable/notes_cursor" />
 
 

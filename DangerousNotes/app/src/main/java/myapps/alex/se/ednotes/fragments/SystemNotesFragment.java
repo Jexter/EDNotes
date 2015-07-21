@@ -1,6 +1,8 @@
 package myapps.alex.se.ednotes.fragments;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,12 +14,16 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import java.util.ArrayList;
 
 import myapps.alex.se.ednotes.R;
 import myapps.alex.se.ednotes.common.AppConstants;
+import myapps.alex.se.ednotes.common.DNApplication;
+import myapps.alex.se.ednotes.model.MiniSystem;
 import myapps.alex.se.ednotes.persistence.Storage;
 
 public class SystemNotesFragment extends Fragment {
@@ -54,6 +60,7 @@ public class SystemNotesFragment extends Fragment {
                 mNotesEditText.requestFocus();
                 InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+
                 return false;
             }
         });
@@ -88,7 +95,7 @@ public class SystemNotesFragment extends Fragment {
             menu.clear();
         }
 
-        inflater.inflate(R.menu.notes, menu);
+        inflater.inflate(R.menu.notes_menu, menu);
     }
 
     @Override
@@ -98,24 +105,49 @@ public class SystemNotesFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.save) {
+        if (item.getItemId() == R.id.done) {
+            saveNotes();
+            Toast.makeText(getActivity(), "Notes saved", Toast.LENGTH_SHORT).show();
             return true;
         }
 
-        if (item.getItemId() == R.id.erase) {
+        if (item.getItemId() == R.id.delete) {
+            Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "fonts/eurostile.TTF");
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+            alertDialogBuilder.setCancelable(false);
+            alertDialogBuilder.setMessage("This will erase your notes.");
+            alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+               public void onClick(DialogInterface dialog, int id) {
+                   mLoadedSystem.setNotes(null);
+                   mNotesEditText.setText(null);
+                   Storage.saveSystem(mLoadedSystem);
+               }
+            });
+            alertDialogBuilder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    // Do nothing
+                }
+            });
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+            alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTypeface(font);
+            alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTypeface(font);
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        saveNotes();
+    private void hideKeyboard() {
         InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(
                 Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(mNotesEditText.getWindowToken(), 0);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        hideKeyboard();
     }
 
 }

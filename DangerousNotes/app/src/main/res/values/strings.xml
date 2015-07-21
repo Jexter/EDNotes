@@ -15,6 +15,7 @@
     <string name="station_names_error_message">Please use only characters found in real station names</string>
     <string name="station_name_duplicate_error_message">station name already in use</string>
     <string name="system_name_duplicate_error_message">System name already in use</string>
+    <string name="notes_saved">Notes saved</string>
 
     <string-array name="allegiance_spinner_options">
         <item>NONE</item>
