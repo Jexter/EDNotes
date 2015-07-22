@@ -64,6 +64,16 @@
                 android:value=".activities.StationListActivity" />
         </activity>
 
+        <activity
+            android:name=".activities.StationNotesActivity"
+            android:parentActivityName=".activities.CommoditiesListActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTop">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.CommoditiesListActivity" />
+        </activity>
+
     </application>
 
 </manifest>

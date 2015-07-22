@@ -16,6 +16,8 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 import myapps.alex.se.ednotes.R;
+import myapps.alex.se.ednotes.activities.CommoditiesListActivity;
+import myapps.alex.se.ednotes.activities.StationNotesActivity;
 import myapps.alex.se.ednotes.activities.SystemNotesActivity;
 import myapps.alex.se.ednotes.adapters.StationListAdapter;
 import myapps.alex.se.ednotes.common.AppConstants;
@@ -115,8 +117,10 @@ public class StationListFragment extends Fragment {
 
         if (item.getItemId() == R.id.notes) {
             Intent intent = new Intent(getActivity(), SystemNotesActivity.class);
-            intent.putExtra(AppConstants.SYSTEM_NAME, systemName);
+            intent.putExtra(AppConstants.SYSTEM_NAME, getActivity().getIntent().getStringExtra(AppConstants.SYSTEM_NAME));
+//            intent.putExtra(AppConstants.STATION_NAME, getActivity().getIntent().getStringExtra(AppConstants.STATION_NAME));
             getActivity().startActivity(intent);
+
             return true;
         }
 

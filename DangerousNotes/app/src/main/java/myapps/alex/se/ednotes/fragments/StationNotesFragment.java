@@ -22,17 +22,19 @@ import java.util.ArrayList;
 
 import myapps.alex.se.ednotes.R;
 import myapps.alex.se.ednotes.common.AppConstants;
-import myapps.alex.se.ednotes.common.DNApplication;
-import myapps.alex.se.ednotes.model.MiniSystem;
+import myapps.alex.se.ednotes.common.Utils;
+import myapps.alex.se.ednotes.model.Station;
 import myapps.alex.se.ednotes.persistence.Storage;
 
-public class SystemNotesFragment extends Fragment {
+public class StationNotesFragment extends Fragment {
     private String mSystemName;
     private myapps.alex.se.ednotes.model.System mLoadedSystem;
+    private Station mStation;
+    private String mStationName;
     private EditText mNotesEditText;
 
-    public SystemNotesFragment() {
-        Log.d("SystemNotesFragment says", "hi");
+    public StationNotesFragment() {
+        Log.d("StationNotesFragment says", "hi");
     }
 
     @Override
@@ -40,14 +42,23 @@ public class SystemNotesFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         mSystemName = getActivity().getIntent().getStringExtra(AppConstants.SYSTEM_NAME);
+        mStationName = getActivity().getIntent().getStringExtra(AppConstants.STATION_NAME);
         mLoadedSystem = Storage.loadSystem(mSystemName);
+
+        ArrayList<Station> loadedStations = mLoadedSystem.getStations();
+
+        if(loadedStations != null && loadedStations.size() > 0) {
+            Station[] stationArray = new Station[loadedStations.size()];
+            stationArray = loadedStations.toArray(stationArray);
+            mStation = Utils.findStation(stationArray, mStationName);
+        }
 
         setHasOptionsMenu(true);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View inflatedView = inflater.inflate(R.layout.system_notes_fragment, container, false);
+        View inflatedView = inflater.inflate(R.layout.station_notes_fragment, container, false);
         mNotesEditText = (EditText) inflatedView.findViewById(R.id.notes_edittext);
         Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "fonts/eurostile.TTF");
         mNotesEditText.setTypeface(font);
@@ -57,18 +68,17 @@ public class SystemNotesFragment extends Fragment {
 
     private void saveNotes(){
         String notes = mNotesEditText.getText().toString();
-        mLoadedSystem.setNotes(notes);
-        Storage.setNotesForSystem(notes, mLoadedSystem);
+        mStation.setNotes(notes);
         Storage.saveSystem(mLoadedSystem);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        String systemNotes  = mLoadedSystem.getNotes();
+        String stationNotes  = mStation.getNotes();
 
-        if (systemNotes != null) {
-            mNotesEditText.setText(systemNotes);
-            mNotesEditText.setSelection(systemNotes.length());
+        if (stationNotes != null) {
+            mNotesEditText.setText(stationNotes);
+            mNotesEditText.setSelection(stationNotes.length());
         }
     }
 
@@ -106,10 +116,9 @@ public class SystemNotesFragment extends Fragment {
             alertDialogBuilder.setMessage("This will erase your notes.");
             alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                public void onClick(DialogInterface dialog, int id) {
-                   mLoadedSystem.setNotes(null);
+                   mStation.setNotes(null);
                    mNotesEditText.setText(null);
                    Storage.saveSystem(mLoadedSystem);
-                   Storage.setNotesForSystem(null, mLoadedSystem);
                }
             });
             alertDialogBuilder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {

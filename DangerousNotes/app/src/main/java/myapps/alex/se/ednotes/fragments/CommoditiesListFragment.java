@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import myapps.alex.se.ednotes.R;
+import myapps.alex.se.ednotes.activities.StationNotesActivity;
 import myapps.alex.se.ednotes.activities.TradeListActivity;
 import myapps.alex.se.ednotes.adapters.CommoditiesListAdapter;
 import myapps.alex.se.ednotes.common.AppConstants;
@@ -28,7 +29,6 @@ import myapps.alex.se.ednotes.persistence.Storage;
 import myapps.alex.se.ednotes.tasks.FindTradesTask;
 
 public class CommoditiesListFragment extends Fragment {
-    private OnFragmentInteractionListener mListener;
     private CommoditiesListAdapter adapter;
     private Station stationWeWantToLookAt;
     private System currentSystem;
@@ -59,6 +59,15 @@ public class CommoditiesListFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.notes) {
+            Intent intent = new Intent(getActivity(), StationNotesActivity.class);
+            intent.putExtra(AppConstants.SYSTEM_NAME, getActivity().getIntent().getStringExtra(AppConstants.SYSTEM_NAME));
+            intent.putExtra(AppConstants.STATION_NAME, getActivity().getIntent().getStringExtra(AppConstants.STATION_NAME));
+            getActivity().startActivity(intent);
+
+            return true;
+        }
+
         if (item.getItemId() == R.id.find_matches) {
             long timeStamp = new Date().getTime();
 
@@ -121,7 +130,6 @@ public class CommoditiesListFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-
         ((ListView)view.findViewById(R.id.commodities_listview)).setAdapter(adapter);
 
         String systemName = getActivity().getIntent().getStringExtra(AppConstants.SYSTEM_NAME);
@@ -135,35 +143,12 @@ public class CommoditiesListFragment extends Fragment {
             stationArray = loadedStations.toArray(stationArray);
 
             stationWeWantToLookAt = Utils.findStation(stationArray, stationName);
-
             adapter.setStationAndSystem(stationWeWantToLookAt, currentSystem);
-
         }
-
     }
-
-
-
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
     }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
-    }
-
 }

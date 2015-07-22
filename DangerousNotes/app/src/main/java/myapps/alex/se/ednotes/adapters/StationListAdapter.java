@@ -89,6 +89,7 @@ public class StationListAdapter extends BaseAdapter {
 					viewHolder = new ViewHolder();
                     viewHolder.station_name_textview = (TextView) convertView.findViewById(R.id.station_name_textview);
                     viewHolder.blackmarket_textview = (TextView) convertView.findViewById(R.id.blackmarket_textview);
+                    viewHolder.notes_icon = convertView.findViewById(R.id.notes_icon);
                     viewHolder.station_type_icon = (ImageView) convertView.findViewById(R.id.station_type_icon);
                     Typeface font = Typeface.createFromAsset(activity.getAssets(), "fonts/eurostile.TTF");
                     viewHolder.station_name_textview.setTypeface(font);
@@ -102,17 +103,7 @@ public class StationListAdapter extends BaseAdapter {
 				}
 			
 				final Station station = stations[position];
-/*
-				viewHolder.system_name_textview.setText(station.getName());
-                viewHolder.last_visited_textview.setText(Utils.getDateAsTimePassed(station.getLastVisited()));
-
-                String stationCountText = "No stations entered here yet";
-                stationCountText = station.getStationCount() + " stations";
-
-                viewHolder.station_count_textView.setText(stationCountText);
-*/
                 viewHolder.station_name_textview.setText(station.getName());
-
 
                 Object hasMarket = station.getMisc().get(AppConstants.BLACK_MARKET);
 
@@ -146,11 +137,14 @@ public class StationListAdapter extends BaseAdapter {
                     }
                 }
 
+                String stationNotes = station.getNotes();
+                if (stationNotes != null && !"".equals(stationNotes)) {
+                    viewHolder.notes_icon.setVisibility(View.VISIBLE);
+                } else {
+                    viewHolder.notes_icon.setVisibility(View.GONE);
+                }
 
-                String lastVisitedString = Utils.getDateAsTimePassed(station.getLastVisited());
-                //viewHolder.last_visited_textview.setText(lastVisitedString);
-
-				convertView.setOnClickListener(new OnClickListener() {
+                convertView.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
 						Intent intent = new Intent(activity, CommoditiesListActivity.class);
@@ -167,40 +161,6 @@ public class StationListAdapter extends BaseAdapter {
                     @Override
                     public boolean onLongClick(View v) {
                         Utils.showStationDialog(activity, system, station, thisAdapter);
-  /*
-                        //AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(activity);
-                        // set prompts.xml to alertdialog builder
-//                        View promptsView = li.inflate(R.layout.commodity_info_prompt, null);
-                        alertDialogBuilder.setView(promptsView);
-
-                        alertDialogBuilder
-                                .setTitle("Delete station: " + station.getName())
-                                .setCancelable(false)
-                                .setPositiveButton("OK",
-                                        new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog,int id) {
-                                                // get user input and set it to result
-                                                // edit text
-                                                system = Storage.deleteStationInSystem(system, station);
-                                                //setSystem(Storage.loadSystem(system.getName()));
-                                                setSystem(system);
-                                                notifyDataSetChanged();
-                                            }
-                                        })
-                                .setNegativeButton("CANCEL",
-                                        new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog,int id) {
-                                                dialog.cancel();
-                                            }
-                                        });
-
-                        // create alert dialog
-                        AlertDialog alertDialog = alertDialogBuilder.create();
-
-                        // show it
-                        alertDialog.show();
-
-*/
                         return false;
                     }
                 });
@@ -214,6 +174,7 @@ public class StationListAdapter extends BaseAdapter {
 	private static class ViewHolder {
 		TextView station_name_textview, blackmarket_textview;//, last_visited_textview;
         ImageView station_type_icon;
+        View notes_icon;
 	}
 	
 	public void setSystem(System system) {
