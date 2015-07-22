@@ -88,6 +88,7 @@ public class SystemListAdapter extends BaseAdapter {
                     Typeface font = Typeface.createFromAsset(activity.getAssets(), "fonts/eurostile.TTF");
                     viewHolder.system_name_textview = (TextView) convertView.findViewById(R.id.system_name_textview);
                     viewHolder.system_allegiance_textview = (TextView) convertView.findViewById(R.id.system_allegiance_textview);
+                    viewHolder.notes_icon = convertView.findViewById(R.id.notes_icon);
                     viewHolder.system_name_textview.setTypeface(font);
                     viewHolder.system_allegiance_textview.setTypeface(font);
 
@@ -157,7 +158,8 @@ public class SystemListAdapter extends BaseAdapter {
 	}
 
 	private static class ViewHolder {
-		TextView system_name_textview, system_allegiance_textview;//, station_count_textView;//, last_visited_textview;
+		TextView system_name_textview, system_allegiance_textview;
+        View notes_icon;
 	}
 	
 	public void setSystems(MiniSystem[] miniSystems) {

@@ -14,7 +14,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="@dimen/item_inner_padding"
         >
             <TextView
                 android:id="@+id/system_name_textview"
@@ -25,6 +24,7 @@
                 android:gravity="left"
                 />
             <View
+                android:id="@+id/notes_icon"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -37,5 +37,13 @@
                 android:textColor="@color/color_six"
                 android:gravity="left"
                 />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_event_note_black_48dp"
+                android:visibility="gone"
+                />
+
+
         </LinearLayout>
    	</LinearLayout>
