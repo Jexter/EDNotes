@@ -32,7 +32,6 @@ public class StationListFragment extends Fragment {
 
     public StationListFragment() {
         Log.d("stationlistfragment says", "hi");
-        // Required empty public constructor
     }
 
     @Override
@@ -69,10 +68,8 @@ public class StationListFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-
         ((ListView)view.findViewById(R.id.station_listview)).setAdapter(adapter);
-
-
+/*
         if (loadedSystem != null) {
             ArrayList<Station> stations = loadedSystem.getStations();
 
@@ -81,32 +78,13 @@ public class StationListFragment extends Fragment {
                 adapter.notifyDataSetChanged();
             }
         }
-
+  */
     }
-
-
-
 
     @Override
     public void onDetach() {
         super.onDetach();
     }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
-    }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -118,7 +96,6 @@ public class StationListFragment extends Fragment {
         if (item.getItemId() == R.id.notes) {
             Intent intent = new Intent(getActivity(), SystemNotesActivity.class);
             intent.putExtra(AppConstants.SYSTEM_NAME, getActivity().getIntent().getStringExtra(AppConstants.SYSTEM_NAME));
-//            intent.putExtra(AppConstants.STATION_NAME, getActivity().getIntent().getStringExtra(AppConstants.STATION_NAME));
             getActivity().startActivity(intent);
 
             return true;
@@ -128,13 +105,25 @@ public class StationListFragment extends Fragment {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
-        outState.putString("systemName", systemName);
+    public void onResume() {
+        super.onResume();
 
+        if (adapter != null) {
+            loadedSystem = Storage.loadSystem(systemName);
 
+            if (loadedSystem != null) {
+                ArrayList<Station> stations = loadedSystem.getStations();
+
+                if (stations != null && stations.size() > 0) {
+                    adapter.setSystem(loadedSystem);
+                    adapter.notifyDataSetChanged();
+                }
+            }
+        }
     }
 
-
-
-
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putString("systemName", systemName);
+    }
 }
