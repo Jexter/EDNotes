@@ -11,6 +11,7 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import myapps.alex.se.ednotes.common.AppConstants;
@@ -71,7 +72,7 @@ public class Storage {
             saveSystem(directory, system);
         }
 
-        Log.d("Saved systems:", ""+systems.size());
+        Log.d("Saved systems:", "" + systems.size());
     }
 
     public static void saveTrades(ArrayList<CommodityTradeRoute> trades) {
@@ -100,23 +101,11 @@ public class Storage {
     public static ArrayList<MiniSystem> loadMiniSystems(File directory) {
         ArrayList<MiniSystem> miniSystems = (ArrayList<MiniSystem>) deserializeObject(directory, AppConstants.MINI_SYSTEMS_FILENAME);
 
-//        if (miniSystems == null) {
-//            miniSystems = new ArrayList<MiniSystem>();
-//        }
-
         return miniSystems;
-    }
-
-    private static void deleteMiniSystems() {
-        deleteMiniSystems(getBaseDirectory());
     }
 
     private static void deleteMiniSystems(File directory) {
         deleteFile(directory, AppConstants.MINI_SYSTEMS_FILENAME);
-    }
-
-    private static void deleteAllSystems(ArrayList<System> systems) {
-        deleteAllSystems(getBaseDirectory(), systems);
     }
 
     private static void deleteAllSystems(File directory, ArrayList<System> systems) {
@@ -139,12 +128,10 @@ public class Storage {
                 return false;
             }
 
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
-
     }
 
     private static void saveMiniSystems(ArrayList<MiniSystem> miniSystems) {
@@ -155,10 +142,6 @@ public class Storage {
         serializeObject(directory, miniSystems, AppConstants.MINI_SYSTEMS_FILENAME);
     }
 
-    public static ArrayList<System> loadAllSystems() {
-        return loadAllSystems(getBaseDirectory());
-    }
-
     public static ArrayList<System> loadAllSystems(File directory) {
         ArrayList<System> allSystems = new ArrayList<>();
         ArrayList<MiniSystem> miniSystems = loadMiniSystems(directory);
@@ -167,7 +150,7 @@ public class Storage {
             return allSystems;
         }
 
-        for(MiniSystem miniSystem : miniSystems) {
+        for (MiniSystem miniSystem : miniSystems) {
             System system = loadSystem(directory, miniSystem.getName());
             allSystems.add(system);
         }
@@ -184,10 +167,10 @@ public class Storage {
         ArrayList<System> allSystems = new ArrayList<>();
         ArrayList<MiniSystem> miniSystems = loadMiniSystems(directory);
 
-        for(MiniSystem miniSystem : miniSystems) {
+        for (MiniSystem miniSystem : miniSystems) {
             System system = loadSystem(directory, miniSystem.getName());
 
-            if(system.getStations() != null && system.getStations().size() > 0) {
+            if (system.getStations() != null && system.getStations().size() > 0) {
                 allSystems.add(system);
             }
         }
@@ -199,9 +182,6 @@ public class Storage {
         if (mBaseDirectory != null) {
             return mBaseDirectory;
         }
-
-//        File oldDirectory = DNApplication.getContext().getDir(AppConstants.APPDATA_FOLDER, Context.MODE_PRIVATE);
-//        File newDirectory = DNApplication.getContext().getExternalFilesDir(null);
 
         mBaseDirectory = DNApplication.getContext().getExternalFilesDir(null);
 
@@ -262,8 +242,7 @@ public class Storage {
             out.close();
 
             Log.d("Storage says", "just saved file [" + fileName + "]");
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -287,13 +266,11 @@ public class Storage {
                 Log.d("Storage says", "just loaded file [" + fileName + "]");
 
                 return (object == null) ? null : object;
-            }
-            else {
+            } else {
                 Log.d("Storage says", "could NOT load file [" + fileName + "]");
                 return null;
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             Log.d("Storage says", "BANG while doing load on [" + fileName + "]");
             e.printStackTrace();
             return null;
@@ -311,8 +288,7 @@ public class Storage {
             if (file.exists()) {
                 file.delete();
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -325,8 +301,7 @@ public class Storage {
             if (oldFile.exists()) {
                 oldFile.renameTo(newFile);
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -334,8 +309,8 @@ public class Storage {
     public static ArrayList<MiniSystem> updateSystem(String oldSystemName, String newSystemName, String allegianceString) {
         ArrayList<MiniSystem> miniSystems = loadMiniSystems();
 
-        for(MiniSystem miniSystem : miniSystems) {
-            if(oldSystemName.equals(miniSystem.getName())) {
+        for (MiniSystem miniSystem : miniSystems) {
+            if (oldSystemName.equals(miniSystem.getName())) {
                 miniSystem.setName(newSystemName);
                 miniSystem.getMisc().put(AppConstants.ALLEGIANCE_MISC_KEY, allegianceString);
 
@@ -357,7 +332,7 @@ public class Storage {
     public static ArrayList<MiniSystem> createAndSaveNewSystem(String systemName, String allegianceString) {
         ArrayList<MiniSystem> miniSystems = loadMiniSystems();
 
-        if(miniSystems == null) {
+        if (miniSystems == null) {
             miniSystems = new ArrayList<MiniSystem>();
         }
 
@@ -380,7 +355,7 @@ public class Storage {
 
         ArrayList<Station> stationsInSystem = system.getStations();
 
-        if(stationsInSystem == null) {
+        if (stationsInSystem == null) {
             stationsInSystem = new ArrayList<Station>();
         }
 
@@ -403,8 +378,8 @@ public class Storage {
     public static void updateMiniSystemLastVisited(String name) {
         ArrayList<MiniSystem> miniSystems = loadMiniSystems();
 
-        for(MiniSystem mini : miniSystems) {
-            if(mini.getName().equals(name)) {
+        for (MiniSystem mini : miniSystems) {
+            if (mini.getName().equals(name)) {
                 mini.touch();
             }
         }
@@ -419,8 +394,8 @@ public class Storage {
         ArrayList<Station> stationsInSystem = system.getStations();
 
 
-        for(Station station : stationsInSystem) {
-            if(station.getName().equals(oldStationName)) {
+        for (Station station : stationsInSystem) {
+            if (station.getName().equals(oldStationName)) {
                 station.setName(newStationName);
                 station.getMisc().put(AppConstants.STATION_TYPE, stationType);
                 station.getMisc().put(AppConstants.BLACK_MARKET, hasBlackMarket);
@@ -439,7 +414,7 @@ public class Storage {
     }
 
     public static System deleteStationInSystem(System system, Station station) {
-        ArrayList <Station> stationsInSystem = system.getStations();
+        ArrayList<Station> stationsInSystem = system.getStations();
         stationsInSystem.remove(station);
         saveSystem(system);
 
@@ -452,8 +427,8 @@ public class Storage {
 
         ArrayList<MiniSystem> miniSystems = loadMiniSystems();
 
-        for(int i = 0; i < miniSystems.size(); i++) {
-            if(miniSystem.getName().equals(miniSystems.get(i).getName())) {
+        for (int i = 0; i < miniSystems.size(); i++) {
+            if (miniSystem.getName().equals(miniSystems.get(i).getName())) {
                 miniSystems.remove(i);
             }
         }
@@ -493,6 +468,24 @@ public class Storage {
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(key, null);
         editor.apply();
+    }
+
+    public static void setNotesForSystem(String notes, System system) {
+        ArrayList<MiniSystem> miniSystems = loadMiniSystems();
+
+        boolean hasNotes = notes != null && !"".equals(notes);
+
+        for (MiniSystem miniSystem : miniSystems) {
+            if (miniSystem.getName().equals(system.getName())) {
+                if (hasNotes) {
+                    miniSystem.getMisc().put(AppConstants.NOTES_MISC_KEY, AppConstants.NOTES_MISC_KEY);
+                } else {
+                    miniSystem.getMisc().put(AppConstants.NOTES_MISC_KEY, null);
+                }
+            }
+        }
+
+        saveMiniSystems(miniSystems);
     }
 }
 

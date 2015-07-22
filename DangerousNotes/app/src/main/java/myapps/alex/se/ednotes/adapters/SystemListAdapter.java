@@ -99,7 +99,15 @@ public class SystemListAdapter extends BaseAdapter {
 				}
 			
 				final MiniSystem miniSystem = miniSystems[position];
-				
+
+                Object hasNotes = miniSystem.getMisc().get(AppConstants.NOTES_MISC_KEY);
+
+                if (hasNotes != null) {
+                    viewHolder.notes_icon.setVisibility(View.VISIBLE);
+                } else {
+                    viewHolder.notes_icon.setVisibility(View.GONE);
+                }
+
 				viewHolder.system_name_textview.setText(miniSystem.getName());
 
                 Object allegianceObject = miniSystem.getMisc().get(AppConstants.ALLEGIANCE_MISC_KEY);

@@ -12,7 +12,7 @@ public class AppConstants {
     public static final String STATION_NAME = "STATION_NAME";
     public static final String ALLEGIANCE_MISC_KEY = "ALLEGIANCE_MISC_KEY";
 
-    public static final String NOTES_TITLE_PREFIX = "notes_title_prefix";
+    public static final String NOTES_MISC_KEY = "hasnotes";
 
     public static final String STATION_NAME_REGEX = "([A-Za-z0-9'*+\\s-]+)";
     public static final String SYSTEM_NAME_REGEX = "([A-Za-z0-9'*+\\s-]+)";

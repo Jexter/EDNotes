@@ -65,12 +65,13 @@ public class SystemNotesFragment extends Fragment {
             }
         });
 
-
         return inflatedView;
     }
 
     private void saveNotes(){
-        mLoadedSystem.setNotes(mNotesEditText.getText().toString());
+        String notes = mNotesEditText.getText().toString();
+        mLoadedSystem.setNotes(notes);
+        Storage.setNotesForSystem(notes, mLoadedSystem);
         Storage.saveSystem(mLoadedSystem);
     }
 
@@ -121,6 +122,7 @@ public class SystemNotesFragment extends Fragment {
                    mLoadedSystem.setNotes(null);
                    mNotesEditText.setText(null);
                    Storage.saveSystem(mLoadedSystem);
+                   Storage.setNotesForSystem(null, mLoadedSystem);
                }
             });
             alertDialogBuilder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {

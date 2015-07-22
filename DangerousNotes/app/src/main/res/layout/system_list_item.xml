@@ -14,6 +14,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:paddingTop="@dimen/item_inner_padding"
+            android:paddingBottom="@dimen/item_inner_padding"
+            android:paddingLeft="@dimen/item_inner_padding"
         >
             <TextView
                 android:id="@+id/system_name_textview"
@@ -24,7 +27,6 @@
                 android:gravity="left"
                 />
             <View
-                android:id="@+id/notes_icon"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -35,13 +37,17 @@
                 android:layout_height="wrap_content"
                 style="@style/text_small"
                 android:textColor="@color/color_six"
-                android:gravity="left"
+                android:layout_gravity="center_vertical"
+                android:paddingRight="@dimen/item_inner_padding"
                 />
             <ImageView
+                android:id="@+id/notes_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:src="@drawable/ic_event_note_black_48dp"
+                android:src="@drawable/ic_event_note_white_24dp"
                 android:visibility="gone"
+                android:paddingRight="8dp"
+                android:paddingLeft="-4dp"
                 />
 
 
